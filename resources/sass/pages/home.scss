@@ -1,0 +1,139 @@
+.rental_companies {
+    img {
+        width: 100%;
+        max-width: 400px;
+        margin: auto
+    }
+
+    ul {
+        padding-left: 0;
+
+        li {
+            margin: 10px 0
+        }
+    }
+}
+
+.rental_deals {
+    // background-image: url('home-banner.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
+    background-color: rgba(0, 0, 0, .8);
+    background-blend-mode: overlay;
+    clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+    padding: 120px 0;
+    position: relative;
+
+    .lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+
+        ul {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            display: flex;
+
+            .line {
+                height: 100%;
+                width: 2px;
+                margin-right: 33%;
+                background-color: hsla(0, 0%, 100%, .651);
+                opacity: .2;
+            }
+        }
+
+    }
+
+    .rental_deal_card {
+        position: relative;
+        z-index: 999;
+        padding: 100px 40px
+    }
+
+    .rental_deal_card h3,
+    .rental_deal_card p,
+    .rental_deal_card i {
+        color: $light
+    }
+
+    .rental_deal_card p {
+        line-height: 1.8
+    }
+
+
+    .rental_deal_card .counts {
+        position: absolute;
+        z-index: -1;
+        font-size: 200px;
+        left: 0;
+        line-height: 1;
+        top: 50px;
+        opacity: .3;
+        font-weight: 700
+    }
+
+    .rental_deal_card .rental_deal_card_header {
+        display: flex;
+        align-items: center;
+        margin: 0 0 15px
+    }
+
+    .rental_deal_card .rental_deal_card_header .deals_icon {
+        background-color: hsla(0, 0%, 100%, .3);
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        margin: 0 15px 0 0
+    }
+}
+
+.home_content_area {
+    // background-image: url("../../assets/images/home-banner.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: $overlay;
+    background-blend-mode: overlay;
+
+    h2 {
+        margin-bottom: 20px;
+        color: $light;
+    }
+
+    p {
+        color: $light;
+    }
+
+    ul {
+
+        margin-bottom: 20px;
+        margin-left: 20px;
+
+        li {
+            position: relative;
+            padding-left: 10px;
+            color: $light;
+
+            &::before {
+                content: "";
+                content: "";
+                position: absolute;
+                height: 4px;
+                width: 4px;
+                background-color: $primary;
+                border-radius: 10px;
+                border: solid 2px $light;
+                left: -2px;
+                top: 8px;
+            }
+        }
+    }
+
+}

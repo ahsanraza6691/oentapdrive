@@ -1,0 +1,136 @@
+.driver_details_wrapper {
+    display: flex;
+
+    .filter_action {
+        display: none;
+        position: fixed;
+        right: 20px;
+        top: 90px;
+        z-index: 10;
+
+        button {
+            display: flex;
+            flex-direction: column;
+
+            div {
+                height: 2px;
+                background-color: $light;
+                width: calc(100% - 12px);
+                margin: 2px 0;
+                transition: $transition_light;
+            }
+        }
+    }
+
+    .filters {
+        min-width: 250px;
+        max-width: 250px;
+        border-right: solid 1px $border_color;
+
+        .filter_action {
+            display: none;
+        }
+
+
+
+        .accordion-button,
+        .accordion-body {
+            padding-left: 0;
+        }
+    }
+
+    .content_area {
+        padding-left: 30px;
+        flex: 1;
+
+        .styled_vehicle_card_2 {
+            margin-bottom: 40px;
+        }
+    }
+}
+
+
+@media screen and (max-width:$desktop) {
+
+    .driver_details_wrapper {
+        display: flex;
+        position: relative;
+
+        .filter_action {
+            display: flex;
+        }
+
+        .filter_action {
+
+            button {
+                &.x {
+                    div {
+
+                        &:nth-child(2) {
+                            display: none;
+                        }
+
+                        &:first-child {
+                            transform: rotate(-48deg);
+                            position: relative;
+                            top: 3px;
+                        }
+
+                        &:last-child {
+                            transform: rotate(48deg);
+                            position: relative;
+                            top: -3px;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        .filters {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            height: 100%;
+            width: 300px;
+            background-color: $light;
+            padding: 10px;
+            transition: $transition_light;
+            transform: translateX(-100%);
+
+
+
+            &.open_filters {
+                transform: translateX(0);
+            }
+
+        }
+
+        .content_area {
+            padding-left: 0;
+        }
+
+
+    }
+}
+
+@media screen and (max-width: $tablet) {
+    .driver_details_wrapper {
+        .filters {
+            width: 100%;
+            max-width: 400px;
+            min-width: 400px;
+        }
+    }
+}
+
+@media screen and (max-width: $mobile) {
+    .driver_details_wrapper {
+        .filters {
+            width: 100%;
+            max-width: 300px;
+            min-width: 300px;
+        }
+    }
+}

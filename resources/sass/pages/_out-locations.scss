@@ -1,0 +1,63 @@
+.our_locations_wrapper {
+
+    .location_headers {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -10px;
+        margin-bottom: 30px;
+        border-bottom: solid 1px $border_color;
+        padding: 20px;
+        padding-left: 0;
+
+        a {
+            display: flex;
+            background: $light;
+            color: $primary;
+            font-size: $title_desktop;
+            text-transform: uppercase;
+            height: 45px;
+            width: 45px;
+            border-radius: $radius_medium;
+            margin-right: 12px;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+
+            border: 2px solid rgba($color: $primary, $alpha: 0.3);
+            transition: $transition_light;
+            box-shadow: 0 0 0 4px rgba($color: $primary, $alpha: 0.25);
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: unset;
+            }
+        }
+    }
+
+    .locations {
+        h1 {
+            text-transform: uppercase;
+        }
+
+        .location_list {
+            column-count: 3;
+            column-gap: 5px;
+            padding-left: 0;
+            padding-right: 0;
+
+            li {
+                list-style: none;
+
+                a {
+                    color: $text_color;
+
+                    &:hover {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+
+
+}

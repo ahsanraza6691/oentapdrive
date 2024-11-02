@@ -1,0 +1,43 @@
+.contact_wrapper {
+    .map {
+        iframe {
+            width: 100%;
+        }
+    }
+
+    .contact_form {
+        position: relative;
+        padding-right: 20px;
+        overflow: hidden;
+        border-radius: $radius_medium;
+
+
+        &::after {
+            content: "";
+            height: 500px;
+            width: 500px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: $lime;
+            z-index: -1;
+            border-radius: 999px;
+            transform: translate(60%, -60%);
+            transition: $transition_light;
+        }
+
+        &:hover {
+
+            // &::after {
+            //     border-radius: 0;
+            //     width: 300%;
+            //     height: 300%;
+            // }
+
+
+
+        }
+
+
+    }
+}

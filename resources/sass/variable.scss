@@ -1,0 +1,71 @@
+// Colors
+
+$primary: #2a8f;
+$secondary: #191a19;
+
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #ffffff;
+$dark: #1b1b1b;
+$text_color: #444444;
+$light_gray: #f0f0f0;
+$border_color: #dedede;
+$medium_gray: #d4d4d4;
+$body_color: red;
+$overlay: #000000cc;
+$lime: #fff8ee;
+$desert: #FAD5A5;
+// Fonts
+
+$title_desktop: 30px;
+$title_tablet: 26px;
+$title_mobile: 18px;
+
+$subtitle_desktop: 26px;
+$subtitle_tablet: 22px;
+$subtitle_mobile: 18px;
+
+$paragraph_desktop: 16px;
+$paragraph_tablet: 16px;
+$paragraph_mobile: 16px;
+
+$font_regular: 400;
+$font_medium: 500;
+$font_semi_bold: 600;
+$font_bold: 700;
+
+// others
+
+$shadow: 0px 0px 10px $medium_gray;
+$shadow_text_input: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow_medium: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow_high: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+$shadow_extraHigh: 0 14px 28px rgba(0, 0, 0, 0.25),
+  0 10px 10px rgba(0, 0, 0, 0.22);
+
+$transition_light: 0.3s ease;
+$transition_medium: 0.5s ease;
+$transition_slow: 0.7s ease;
+$transition_slowest: 1s ease;
+
+// radius
+
+$radius_low: 5px;
+$radius_medium: 10px;
+$radius_high: 15px;
+$radius_extraHigh: 20px;
+
+// sec padding
+
+$sec_padding: 60px;
+$sec_padding_tablet: 40px;
+$sec_padding_mobile: 30px;
+
+// responsive breakpoints
+
+$desktop: 1365px;
+$tablet: 992px;
+$mobile: 768px;
+$mobile_small: 576px;

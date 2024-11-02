@@ -1,0 +1,866 @@
+@media (max-width: 1440px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1366px) {
+
+    .collapse_wrap .custom_collapse button {
+        padding: 1rem 0.5rem;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    html {
+        font-size: 13px;
+    }
+
+    .mobileAdd {
+        height: 100px;
+    }
+
+    .adsBannerCont .swiper-button-next, .adsBannerCont .swiper-button-prev {
+        position: absolute;
+    }
+
+    .adsBannerCont .adsBannerSlider {
+        flex: 0 1 100%;
+    }
+
+    .adsBannerSlider .addBanner img {
+        height: 100px;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 1024px) {
+}
+
+@media (max-width: 991.98px) {
+    html {
+        font-size: 12px;
+    }
+
+    section {
+        padding: 2rem 0;
+    }
+
+    .mobileMenu {
+        display: block;
+    }
+
+    header.mobileMenu .closeBtn,
+    header.mobileMenu .subMenuCloseBtn {
+        position: absolute;
+        top: 0;
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--theme-color);
+        font-size: 2rem;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        z-index: 1;
+    }
+
+    .desktopMenu,
+    .heroSec,
+    .searchBar.desktop,
+    .testiSec,
+    .docSec {
+        display: none;
+    }
+
+    .mobileSearchBar form .inputCont {
+        display: flex;
+        align-items: center;
+        box-shadow: 0px -0.25px 2.38px 0px #00000012;
+        box-shadow: 0px -2px 19px 0px #00000024;
+        border-radius: 10px;
+        background: #fff;
+        overflow: hidden;
+        padding: 0 1rem;
+    }
+
+    .mobileSearchBar form .inputCont button {
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--theme-color);
+        width: 30px;
+        padding: 0;
+        height: 30px;
+        font-size: 1.5rem;
+    }
+
+    .mobileSearchBar form .inputCont input {
+        border: none;
+        outline: none;
+        height: 40px;
+        width: 100%;
+        flex: 0 1 calc(100% - 60px);
+    }
+
+    header.mobileMenu nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem 0 0;
+        gap: 1.5rem;
+    }
+
+    header.mobileMenu nav > button {
+        border: none;
+        background: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--theme-color);
+        gap: 0.5rem;
+    }
+
+    header.mobileMenu nav > button i {
+        font-size: 2.5rem;
+    }
+
+    header.mobileMenu nav button span {
+        color: var(--text-color);
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+
+    .mobileSearchBar {
+        width: 100%;
+    }
+
+    .sideMenu .nav {
+        position: fixed;
+        top: 0;
+        left: -350px;
+        width: 350px;
+        background: #fff;
+        z-index: 1;
+        box-shadow: 0px -2px 19px 0px #00000024;
+        height: 100vh;
+        transition: all 0.5s ease;
+    }
+
+    .sideMenu.active .nav {
+        left: 0;
+    }
+
+    .sideMenu ul {
+        padding: 4rem 0 2rem;
+        width: 100%;
+    }
+
+    .sideMenu ul li a, .sideMenu ul li form button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        color: var(--text-color);
+        font-size: 1.2rem;
+        font-weight: 600;
+        border: none;
+        width: 100%;
+    }
+
+    .sideMenu ul li {
+        border-top: 2px solid #0005;
+    }
+
+    .sideMenu ul li:last-child {
+        border-bottom: 2px solid #0005;
+    }
+
+    .sideMenu::before {
+        position: fixed;
+        inset: 0;
+        background: #0005;
+        width: 100vw;
+        content: '';
+        user-select: none;
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+
+    .sideMenu.active::before {
+        opacity: 1;
+        visibility: visible;
+        user-select: auto;
+        pointer-events: auto;
+    }
+
+    .sideMenu {
+        position: relative;
+        z-index: 11111111111;
+    }
+
+    .categoryCard .cardImg {
+        height: 100px;
+    }
+
+    .categoryCard .cardImg img {
+        width: 60%;
+    }
+
+    .categoryCard .cardContent {
+        flex-direction: column;
+        border-top: none;
+    }
+
+    footer .row {
+        gap: 2rem 0;
+        align-items: center;
+    }
+
+    footer, .bannerSec {
+        display: none;
+    }
+
+    header.mobileMenu .sideMenu .subMenu {
+        position: absolute;
+        inset: 0;
+        min-height: 100vh;
+        background: #fff;
+        width: 350px;
+        left: -350px;
+        transition: all 0.5s ease;
+    }
+
+    header.mobileMenu .sideMenu .subMenu.active {
+        left: 0;
+    }
+
+    header.mobileMenu .sideMenu .subMenu ul {
+        height: 100vh;
+        overflow: auto;
+    }
+
+    body:has(.mobileMenu .sideMenu.active) {
+        overflow: hidden;
+    }
+
+    .sideMenu ul li a img {
+        width: 70px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .sideMenu .subMenu ul li a {
+        font-size: 1rem;
+    }
+
+    .sideMenu .subMenu ul li h4 {
+        margin: 0;
+        background: #D9D9D9;
+        color: #878787;
+        padding: 0.25rem;
+        text-align: center;
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+
+    .filterCont {
+        position: fixed;
+        z-index: 1111;
+        background: #fff;
+        top: 0;
+        left: -350px;
+        max-width: 350px;
+        width: 100%;
+        min-height: 100vh;
+        transition: all 0.3s ease;
+    }
+
+    .filterCont .filters {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
+    }
+
+    body:has(.filterCont.active) {
+        overflow: hidden;
+    }
+
+    .filterBtnRow .filter_action {
+        display: block;
+    }
+
+    .filterCont.active {
+        left: 0;
+        box-shadow: 0px -7px 80px 0px #0005;
+    }
+
+    .filterCont .collapse_wrap .btnCont {
+        position: absolute;
+        bottom: 0;
+        padding: 2rem 1rem;
+        background: #fff;
+    }
+
+    .filterCont .collapse_wrap {
+        height: 90vh;
+        overflow: auto;
+    }
+
+
+    .filterCont > form {
+        position: relative;
+        height: 100vh;
+    }
+
+    .collapse_wrap .custom_collapse .collapse_content {
+        padding: 2rem 1rem 0;
+    }
+
+    .filterCont .filters > *:last-child {
+        padding: 1rem;
+        border-top: 1px solid #0002;
+    }
+
+    .filterCont .filters h2 {
+        padding: 1rem 0.5rem;
+    }
+
+    .contentArea .secHeading {
+        text-align: center;
+        font-size: 1.5rem;
+        margin: auto;
+    }
+
+    .carRow .carCard .imgCont {
+        height: 200px;
+    }
+
+    .carRow .carCard .imgCont img {
+        width: 80%;
+        margin: auto;
+        display: block;
+    }
+
+    .carRow .carCard .content .rent_details {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .carCard.serviceCard.cwdCard .content h2 {
+        margin: 0;
+    }
+
+    .carRow .carCard.fullCard {
+        height: 100%;
+    }
+
+    .filterBtnRow .filter_action {
+        margin-left: auto;
+    }
+
+    .linkingCont li:not(:last-child):after {
+        margin: 0 0.5rem;
+    }
+
+    .linkingCont li a, .linkingCont li span {
+        font-size: 12px;
+    }
+
+    .blogCard figure {
+        height: 250px;
+    }
+
+    .enquirySec .aboutContent {
+        text-align: center;
+    }
+
+    .enquirySec .aboutContent.contentWrap .secHeading {
+        margin: 0 auto 2rem;
+    }
+
+    .enquirySec .aboutContent.contentWrap ul li {
+        justify-content: center;
+    }
+
+    .enquirySec .aboutContent.contentWrap ul {
+        margin: 1rem 0 2rem;
+    }
+
+    .carCard.fullCard.serviceCard {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .carCard.fullCard.serviceCard .imgCont {
+        min-height: 0;
+        height: 200px;
+        border: none;
+        border-bottom: 1px solid var(--theme-color);
+    }
+
+    .carCard.fullCard.serviceCard .wishlistCont {
+        left: auto;
+        right: 10px;
+    }
+
+    .carCard.fullCard.serviceCard .contentWrap {
+        min-height: auto;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .carCard.fullCard.serviceCard .contentWrap .content,
+    .carCard.fullCard.serviceCard.cwdCard .contentWrap .content {
+        padding: 1rem;
+    }
+
+    .carCard.fullCard.serviceCard .btnCont {
+        position: unset;
+        justify-content: end;
+        margin: auto 10px 10px 0;
+    }
+
+    .carCard.fullCard.serviceCard .btnCont .themeBtn,
+    .carCard.fullCard.serviceCard .btnCont .themeBtn.enquiry {
+        flex: 0 1 50px;
+    }
+
+    .carCard.fullCard.serviceCard .left_details_area {
+        margin: 1rem 0 0;
+    }
+
+    .carCard.serviceCard.fullCard .content .rent_details {
+        flex-direction: row;
+    }
+
+    .productDetailSec .aboutContent.contentWrap,
+    .productDetailSec .aboutContent.contentWrap {
+        display: none;
+    }
+
+    .productDetailSec {
+        padding: 0;
+    }
+
+    .productDetailSec [class*='container'],
+    .productDetailSec [class*='row'],
+    .productDetailSec [class*='col-'],
+    .productDetailSec [class*='col'] {
+        padding: 0;
+        margin: 0;
+    }
+
+    .productDetailSec .imgCont {
+        border-radius: 0;
+    }
+
+    .prodContent {
+        padding: 0 1rem;
+    }
+
+    .bookingBox .bookingHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .bookingBox {
+        margin: 0 1rem;
+    }
+
+    .timingCont {
+        margin: 2rem 1rem 0;
+    }
+
+    .bookingBox .btnCont {
+        position: fixed;
+        bottom: 1rem;
+        z-index: 1;
+        width: calc(100% - 2rem);
+        margin: 0 auto;
+    }
+
+    .bookingBox .btnCont .themeBtn {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .bookingBox .btnCont .themeBtn i {
+        font-size: 2rem;
+    }
+
+    .productDetailSec .imgCont .imgTags {
+        justify-content: start;
+        gap: 0.5rem;
+    }
+
+    .productDetailSec .imgCont .imgTags > *:last-child {
+        margin-left: auto;
+    }
+
+    .productDetailSec .imgCont .imgTags .backBtn {
+        color: var(--theme-color);
+        width: 25px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        border-radius: 100%;
+        box-shadow: 0 0 15px #0005;
+        font-size: 1.25rem;
+    }
+
+    .sideMenu ul li:first-child {
+        border: none;
+    }
+
+    .sideMenu ul li:first-child .themeBtn {
+        text-align: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        border-radius: 0;
+    }
+
+    .sideMenu ul .userCont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin: 0 0 1rem;
+    }
+
+    .sideMenu ul .userCont span {
+        color: var(--black);
+        display: block;
+        font-size: 1.25rem;
+        margin: 0.5rem 0 0;
+        font-weight: 600;
+    }
+
+    .sideMenu ul .userCont img {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        object-fit: contain;
+        background: #fff;
+        box-shadow: 0 0 15px #0005;
+    }
+
+    .sideMenu ul li a.logoutBtn, .sideMenu ul li form button.logoutBtn {
+        background: var(--bs-red);
+        color: var(--white);
+    }
+
+    .adsRow {
+        display: none;
+    }
+
+    .carCard.serviceCard.fullCard.cwdCard .content .rent_details {
+        flex-direction: column;
+    }
+
+    .carCard.fullCard.serviceCard.cwdCard .content .other_details .right_details_area {
+        margin: 1rem 0 0;
+    }
+
+    .carCard.fullCard.serviceCard.cwdCard .content .other_details .right_details_area p span {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    html {
+        font-size: 14px;
+    }
+
+    .bannerSec .content h2 {
+        font-size: 2rem;
+    }
+
+    .bannerSec .content {
+        text-align: left;
+    }
+
+    .bannerSec .content p {
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .bannerSec {
+        height: 250px;
+    }
+
+    .bannerSec .content h2 a, .bannerSec .content h2 span {
+        text-align: center;
+        display: block;
+    }
+
+    .carCard:not(.fullCard) {
+        display: flex;
+    }
+
+    .carCard:not(.fullCard) .content .other_details, .carCard:not(.fullCard) .left_details_area, .carCard:not(.fullCard) .content .tags {
+        display: none;
+    }
+
+    .carCard:not(.fullCard) .imgCont {
+        height: 150px;
+        border: none;
+        flex: 0 1 60%;
+        width: 60%;
+        border-right: 1px solid var(--theme-color);
+        margin-right: 1rem;
+    }
+
+    .carCard:not(.fullCard) .wishlistCont {
+        right: auto;
+        left: 10px;
+    }
+
+    .carCard:not(.fullCard) .content {
+        height: 100%;
+    }
+
+    .carCard:not(.fullCard) .content .rent_details {
+        flex-direction: column;
+        align-items: start;
+        margin: 1rem 0 0;
+    }
+
+    .carCard.fullCard .content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .carCard.fullCard .content .rent_details {
+        order: 2;
+    }
+
+    .carCard.fullCard .content .other_details {
+        order: 3;
+    }
+
+    .carCard.fullCard .content .tags {
+        order: 1;
+        margin: 0.5rem 0 1rem;
+    }
+
+    .carCard.fullCard .content .tags span {
+        background: #D9D9D9;
+        color: #878787;
+        border: none;
+        border-radius: 5px;
+        font-size: 13px;
+        padding: 0.25rem 0.75rem;
+    }
+
+    .carCard.fullCard {
+        box-shadow: 0px -7px 80px 0px #0000002E;
+    }
+
+    .carCard .content h2 {
+        font-size: 1.5rem;
+    }
+
+    .secHeading {
+        text-align: left;
+        margin: 0;
+    }
+
+    .contentSec .contentImg {
+        display: none;
+    }
+
+    .gallerySec img {
+        width: 47%;
+        flex: 0 1 47%;
+        height: 250px;
+    }
+
+    .blogDetailSec .mainDetails h1 {
+        margin-top: 2rem;
+    }
+
+    .sliderBanner .swiper-slide {
+        height: 300px;
+    }
+
+    .carCard.fullCard.serviceCard .content .other_details .right_details_area {
+        display: block;
+    }
+
+    .carCard.fullCard.serviceCard .content .other_details .right_details_area p + p {
+        margin: 5px 0 0;
+    }
+
+    .carCard.fullCard.serviceCard .imgCont {
+        flex: 0 1 auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    html {
+        font-size: 13px;
+    }
+
+    .categoryCard .cardImg img {
+        width: 100%;
+    }
+
+    .categoryCard .cardImg {
+        height: 80px;
+    }
+
+    .categoryCard .cardContent h3 {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .bannerSec {
+        height: 300px;
+    }
+
+    .bannerSec .content h2 {
+        font-size: 1.5rem;
+        font-weight: 900;
+    }
+
+    .benefitSec .row {
+        gap: 1rem;
+    }
+
+    .benefitSec .secHeading {
+        margin: 0 auto 1rem;
+    }
+
+    .gallerySec img {
+        width: calc(100% - 10px);
+        flex: 0 1 calc(100% - 10px);
+        height: 250px;
+    }
+
+    .commentBox.reply {
+        width: 95%;
+    }
+
+    .addComment .btnCont {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .sliderBanner .swiper-slide .content p {
+        text-align: center;
+        font-size: 1.125rem;
+    }
+
+    .sliderBanner .swiper-slide .content h2 {
+        text-align: center;
+    }
+
+    .brandSwiper .swiper-slide > a .content p {
+        display: none;
+    }
+
+    .brandSwiper .swiper-slide > a .content h3 {
+        font-size: 0.9rem;
+    }
+
+    .categoryCard {
+        box-shadow: none;
+    }
+
+    .categoryCard .cardContent p {
+        color: var(--theme-color);
+    }
+
+    #category-container .themeBtn {
+        display: block;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .brandSwiper .swiper-slide > a img {
+        height: 70px;
+        width: 70px;
+    }
+
+    .descriptionCont > ul {
+        flex-direction: column;
+        gap: 0.5rem 0;
+    }
+
+    .descriptionCont > ul li {
+        width: 100%;
+        flex: 0 1 100%;
+    }
+
+    .descriptionCont .fespecbox {
+        gap: 0;
+    }
+
+    .descriptionCont .fespecbox li {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+
+    .descriptionCont .fespecbox li + li {
+        border-top: 2px solid #0002;
+    }
+
+    .descriptionCont .fespecbox li figure {
+        width: 30px;
+        height: 30px;
+        box-shadow: 0 0 15px #0005;
+    }
+
+    .descriptionCont .fespecbox li figure img {
+        width: 60%;
+        height: 60%;
+    }
+
+    .carCard {
+        width: 95%;
+        margin: 0 auto;
+        box-shadow: none;
+        border: 1px solid #0005;
+    }
+
+    .carCard.fullCard {
+        box-shadow: none;
+    }
+
+    .secHeading {
+        font-size: 1.75rem;
+    }
+
+    .carCard.fullCard.serviceCard {
+        width: 100%;
+    }
+
+    .inputCont.sort select {
+        margin: 0 0 0 auto;
+    }
+
+    .carCard.fullCard.serviceCard.cwdCard .content .other_details .right_details_area p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    html {
+        font-size: 11px;
+    }
+}

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Guns & Wildlife</title>
+    <script
+      type="text/JavaScript"
+      src="https://MomentJS.com/downloads/moment.js"
+    ></script>
+  </head>
+
+  <style>
+    * {
+      font-family: "system-ui";
+    }
+
+    form {
+      width: 100%;
+      max-width: 540px;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    form label {
+      margin-right: 10px;
+      min-width: max-content;
+      font-weight: 500;
+    }
+
+    .form_item,
+    .form_row {
+      position: relative;
+    }
+
+    .form_row {
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .form_item {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .form_item.flex_1 {
+      flex: 1;
+      display: flex;
+    }
+
+    .form_item.flex_1:last-child {
+      padding-right: 0;
+    }
+
+    .form_item.flex_1 input {
+      flex: 1;
+    }
+
+    .flex_between {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    form .form_row {
+      display: flex;
+    }
+
+    input,
+    textarea {
+      border: none;
+      flex-grow: 1;
+      border-bottom: solid 2px #000000;
+      min-width: 110px;
+      outline: none;
+      width: 110px;
+    }
+
+    .date_input {
+      position: absolute;
+      right: 0px;
+      top: 0;
+      min-width: 18px;
+      width: 18px;
+      border-bottom: unset;
+      cursor: pointer;
+    }
+
+    .disable {
+      pointer-events: none;
+    }
+
+    .nic_input {
+      border: solid 2px #000000;
+      min-width: unset;
+      width: 100%;
+      height: 20px;
+      border-right: none;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .nic_input:last-child {
+      border-right: solid 2px #000000;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .pl_10 {
+      padding-left: 10px;
+    }
+
+    .pb_0 {
+      padding-bottom: 0px;
+    }
+
+    .ml_10 {
+      margin-left: 10px;
+    }
+
+    .bordered-table {
+      width: 100%;
+      margin-top: 10px;
+      /* make the table full width */
+      border-collapse: collapse;
+    }
+
+    .bordered-table th.qty {
+      width: 60px;
+    }
+
+    .bordered-table .qty input {
+      text-align: center;
+    }
+
+    .bordered-table .amount input {
+      text-align: center;
+    }
+
+    .bordered-table .amount {
+      text-align: center;
+    }
+
+    .bordered-table th.amount {
+      width: 100px;
+    }
+
+    .bordered-table th,
+    .bordered-table td {
+      border: 2px solid #000000;
+      padding: 10px;
+    }
+
+    .bordered-table input {
+      width: 100%;
+    }
+
+    .bordered-table .br_none {
+      border-right: none;
+    }
+
+    .bordered-table .bl_none {
+      border-left: none;
+    }
+
+    .bordered-table .bt_none {
+      border-top: none;
+    }
+
+    .bordered-table .bb_none {
+      border-bottom: none;
+    }
+
+    .text_center {
+      text-align: center;
+    }
+
+    .bordered-table .tag_style {
+      position: relative;
+      top: 8px;
+      left: -5px;
+    }
+
+    .bordered-table .tag_style span:first-child {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      border: solid 1px #000000;
+      line-height: 1;
+      padding: 0 4px;
+    }
+
+    .signature {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .print_btn_wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 40px;
+      gap: 10px;
+    }
+
+    .print_btn_wrapper button {
+      background-color: #333333;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 30px;
+      color: #fff;
+      font-size: 14px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .print_btn_wrapper button:hover {
+      opacity: 0.9;
+    }
+
+    #cnicInputs {
+      flex-grow: 1;
+    }
+
+    @media print {
+      @page {
+        margin: 0;
+        size: A5;
+      }
+
+      .date_input {
+        display: none;
+      }
+
+      #printButton {
+        display: none;
+      }
+
+      .no_border {
+        border: none;
+      }
+
+      .p_bb_none {
+        border-bottom: none !important;
+        border-top: none !important;
+      }
+
+      .print_btn_wrapper {
+        display: none;
+      }
+    }
+  </style>
+
+  <body style="padding: 180px 0 0 0">
+    <form id="myForm">
+      <div class="flex_between">
+        <div class="form_item">
+          <label for="">S.No</label>
+          <input id="s_no" onkeyup="onSaveToLocal(this)" type="number" />
+        </div>
+        <div class="form_item">
+          <label for="">Date</label>
+          <input class="disable" id="date" type="text" name="" id="" />
+          <input
+            class="date_input"
+            onchange="handleDate(this, 'date')"
+            type="date"
+          />
+        </div>
+      </div>
+      <div class="form_row">
+        <label for="name">Name</label>
+        <input type="text" />
+      </div>
+      <div class="form_row">
+        <input type="text" />
+      </div>
+      <div class="form_row">
+        <label for="name">Address</label>
+        <input type="text" />
+      </div>
+      <div class="form_row">
+        <input type="text" />
+      </div>
+
+      <div class="form_row">
+        <div class="form_item flex_1">
+          <label for="">License No.</label> <input type="text" />
+        </div>
+        <div class="form_item flex_1">
+          <label for="">Issued by</label> <input type="text" />
+        </div>
+      </div>
+      <div class="form_row">
+        <div class="form_item flex_1">
+          <label for="">Dated</label>
+          <input class="disable" id="dated" type="text" name="" id="" />
+          <input
+            class="date_input"
+            onchange="handleDate(this, 'dated')"
+            type="date"
+          />
+        </div>
+        <div class="form_item flex_1">
+          <label for="">Valid upto</label>
+          <input class="disable" id="validUpto" type="text" name="" id="" />
+          <input
+            class="date_input"
+            onchange="handleDate(this, 'validUpto')"
+            type="date"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form_item flex_1">
+          <label for="">CNIC NO.</label>
+          <div class="form_item" id="cnicInputs">
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input disabled value="-" class="nic_input" type="text" />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+            <input disabled value="-" class="nic_input" type="text" />
+            <input
+              class="nic_input"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+            />
+          </div>
+        </div>
+      </div>
+
+      <table class="bordered-table">
+        <tr>
+          <th class="qty">Qty</th>
+          <th class="empty"></th>
+          <th class="amount">
+            <div>Amount</div>
+            <div style="font-size: 10px">Rs</div>
+          </th>
+        </tr>
+        <tr>
+          <td class="qty p_bb_none">
+            <input
+              class="no_border"
+              maxlength="4"
+              style="min-width: unset; max-width: 60px"
+              type="text"
+            />
+          </td>
+          <td class="empty p_bb_none">
+            <input class="no_border" type="text" />
+          </td>
+          <td class="amount p_bb_none">
+            <input
+              onkeyup="onAmountChange(this)"
+              name="amount_1"
+              class="no_border"
+              style="min-width: unset; max-width: 100px"
+              type="number"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="qty p_bb_none">
+            <input
+              class="no_border"
+              maxlength="4"
+              style="min-width: unset; max-width: 60px"
+              type="text"
+            />
+          </td>
+          <td class="empty p_bb_none">
+            <input class="no_border" type="text" />
+          </td>
+          <td class="amount p_bb_none">
+            <input
+              onkeyup="onAmountChange(this)"
+              name="amount_2"
+              class="no_border"
+              style="min-width: unset; max-width: 100px"
+              type="number"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="qty p_bb_none">
+            <input
+              class="no_border"
+              maxlength="4"
+              style="min-width: unset; max-width: 60px"
+              type="text"
+            />
+          </td>
+          <td class="empty p_bb_none">
+            <input class="no_border" type="text" />
+          </td>
+          <td class="amount p_bb_none">
+            <input
+              onkeyup="onAmountChange(this)"
+              name="amount_3"
+              class="no_border"
+              style="min-width: unset; max-width: 100px"
+              type="number"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="qty p_bb_none">
+            <input
+              class="no_border"
+              maxlength="4"
+              style="min-width: unset; max-width: 60px"
+              type="text"
+            />
+          </td>
+          <td class="empty p_bb_none">
+            <input class="no_border" type="text" />
+          </td>
+          <td class="amount p_bb_none">
+            <input
+              onkeyup="onAmountChange(this)"
+              name="amount_4"
+              class="no_border"
+              style="min-width: unset; max-width: 100px"
+              type="number"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="qty p_bb_none">
+            <input
+              class="no_border"
+              maxlength="4"
+              style="min-width: unset; max-width: 60px"
+              type="text"
+            />
+          </td>
+          <td class="empty p_bb_none">
+            <input class="no_border" type="text" />
+          </td>
+          <td class="amount p_bb_none">
+            <input
+              onkeyup="onAmountChange(this)"
+              name="amount_5"
+              class="no_border"
+              style="min-width: unset; max-width: 100px"
+              type="number"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="qty bt_none"></td>
+          <td class="empty bt_none">
+            <div class="flex_between tag_style">
+              <span>E.&.O.E</span>
+              <span><b>TOTAL</b></span>
+            </div>
+          </td>
+          <td id="amount" class="amount">0</td>
+        </tr>
+      </table>
+      <p style="margin: 0 0 10px 0">
+        Goods once sold will not be taken back or exchanged.
+      </p>
+      <!-- <div class="signature">
+            <div>
+                <div style="font-size: 1px; font-weight: bold;">GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE
+                    GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE GUNS&WILDLIFE
+                </div>
+                <div style="text-align: center;">Signature</div>
+            </div>
+        </div> -->
+
+      <div class="print_btn_wrapper">
+        <button id="printButton" onclick="printForm(event)">Print</button>
+        <button id="printButton ml_10" type="button" onclick="resetForm(event)">
+          Reset
+        </button>
+      </div>
+    </form>
+
+    <script>
+      function printForm(event) {
+        event.preventDefault();
+        window.print();
+      }
+
+      function resetForm(event) {
+        event.preventDefault();
+        window.location.reload();
+      }
+
+      const onSaveToLocal = (elem) => {
+        let val = elem.value;
+
+        localStorage.setItem("s_no", val);
+      };
+
+      window.addEventListener("load", function () {
+        console.log("window loaded");
+        // ... other code ...
+      });
+
+      window.onload = () => {
+        let s_no = localStorage.getItem("s_no");
+        console.log("s_no from local storage:", s_no);
+
+        if (s_no) {
+          document.getElementById("s_no").value = +s_no;
+        } else {
+          console.log("No value for s_no in local storage");
+        }
+      };
+
+      function resetForm(event) {
+        event.preventDefault();
+        console.log("Resetting...");
+        window.location.reload();
+      }
+
+      let amounts = {};
+
+      function onAmountChange(x) {
+        let field = x;
+        amounts[field.name] = field.value;
+        let total = Object.values(amounts).reduce(
+          (sum, currentValue) => sum + Number(currentValue),
+          0
+        );
+        document.getElementById("amount").innerHTML = total;
+      }
+
+      const inputs = Array.from(document.querySelectorAll(".nic_input")).filter(
+        (input) => !input.disabled
+      );
+
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", (e) => {
+          // only allow digit input
+          if (/\D/g.test(e.target.value)) {
+            e.target.value = e.target.value.replace(/\D/g, "");
+          }
+
+          // auto focus on next input when a digit is entered
+          if (e.target.value !== "" && index !== inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+
+        // backspace or delete should trigger focus on previous input if current input is empty
+        input.addEventListener("keydown", (e) => {
+          if (
+            (e.key === "Backspace" || e.key === "Delete") &&
+            index !== 0 &&
+            e.target.value === ""
+          ) {
+            inputs[index - 1].focus();
+          }
+
+          // ArrowRight should trigger focus on next input
+          if (e.key === "ArrowRight" && index !== inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+
+          // ArrowLeft should trigger focus on previous input
+          if (e.key === "ArrowLeft" && index !== 0) {
+            inputs[index - 1].focus();
+          }
+        });
+        // when an input gets focus, set cursor at the end of the text
+        input.addEventListener("focus", (e) => {
+          e.target.setSelectionRange(
+            e.target.value.length,
+            e.target.value.length
+          );
+        });
+      });
+
+      function handleDate(x, setTo) {
+        console.log(x.value);
+        let date = moment(x.value).format("DD-MM-YYYY");
+        document.getElementById(setTo).value = date;
+      }
+    </script>
+  </body>
+</html>

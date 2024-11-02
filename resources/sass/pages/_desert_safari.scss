@@ -1,0 +1,16 @@
+.desert_safari_wrapper {
+
+    .desert_safari_bg {
+        background-image: url("https://www.oneclickdrive.com/application/views/images/moredetails.jpg?ve=4.4");
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        background-color: $overlay;
+        background-blend-mode: overlay;
+
+        * {
+            color: $light;
+        }
+
+    }
+}
