@@ -206,7 +206,7 @@
 </div>
 
 <script type="text/javascript" src="{{asset('web-assets/js/plugins.js')}}"></script>
-<script type="text/javascript" src="{{asset('web-assets/js/index.js')}}"></script>
+<script type="text/javascript" src="{{asset('web-assets/js/index.js?version=1')}}"></script>
 @yield('script')
 
 <script type="text/javascript">
@@ -333,5 +333,110 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function(){
+     
+
+        $("#carmake").on('change', function () {
+            var brand = $("#carmake").val();
+            console.log(brand)
+            $("#showbut").css("display", "");
+            $.ajax({
+                url: '{{ route('get_car_models') }}',
+                type: 'GET',
+                data: {
+                    brand: brand
+                },
+                beforeSend: function () {
+    
+                    console.log("----------- beforeSend -------------");
+    
+    
+                    $('#carmodel2').html(`<option   value ="0">Loading....</option>`);
+    
+                },
+    
+                success: function (response) {
+                    if (response.status == 200) {
+                        $('#carmodel2').html('');
+                        $('#year2').html();
+    
+    
+                        if (response != '') {
+                            console.log("response " + response);
+    
+                            $('#carmodel2').append(
+                                `<option value ="0">Select Car Model</option>`
+                            );
+                            $.each(response.get_models, function (value, i) {
+    
+    
+                                $('#carmodel2').append(
+                                    `<option data-state="unselected"  value ="${i.model_name}">${i.model_name}</option>`
+                                );
+                                $('#year2').append(
+                                    `<option data-state="unselected" value ="${i.make_year}">${i.make_year}</option>`
+                                )
+                            });
+    
+    
+                            @if (isset($_GET['carmodel']) && !empty($_GET['carmodel']))
+    
+                            console.log("carmodel " + "<?php echo $_GET['carmodel']; ?>");
+                            $('#carmodel2').val("<?php echo $_GET['carmodel']; ?>");
+                            $("#carmodel2").change();
+                            @endif
+    
+                        } else {
+                            $('#carmodel2').append(
+                                `<option   value ="">Data Not Found</option>`
+                            );
+                        }
+                    }
+    
+                }
+            });
+        })
+        @if (!empty(request()->get('brand')))
+            $("#carmake").change();
+        @endif
+    
+        $("#carmodel2").on('change', function () {
+            var model_name = $(this).val();
+    
+            $.ajax({
+                url: '{{ route('get_make_years') }}',
+                type: 'GET',
+                data: {
+                    model_name: model_name
+                },
+                beforeSend: function () {
+    
+                    console.log("----------- beforeSend -------------");
+    
+    
+                    $('#year2').html(`<option   value ="0">Loading....</option>`);
+    
+                },
+                success: function (response) {
+                    if (response.status == 200) {
+                        $('#year2').html('');
+                        if (response != '') {
+                            $.each(response.make_year, function (value, i) {
+                                $('#year2').append(
+                                    `<option data-state="unselected"  value ="${i.make_year}">${i.make_year}</option>`
+                                )
+                            });
+                        }
+                    } else {
+                        $('#year2').append(
+                            `<option   value ="">Data Not Found</option>`
+                        );
+                    }
+                }
+            });
+        })
+    })
+    </script>
 </body>
 </html>
