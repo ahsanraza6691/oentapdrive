@@ -115,6 +115,13 @@ class VendorController extends Controller
         return view('vendor_dashboard.users.index',get_defined_vars());
     }
 
+    public function buyRefereshes(Request $request){
+        // $users = Auth::user();
+        $shopTimings = ShopTiming::where('user_id', Auth::id())->get()->keyBy('day_of_week');
+
+        return view('vendor_dashboard.buyRefereshes.index',get_defined_vars());
+    }
+
     public function login(Request $request){
         return view('frontend.vender-login');
     }

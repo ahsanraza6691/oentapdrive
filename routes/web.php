@@ -460,6 +460,7 @@ Route::middleware(['preventBackHistory','usermiddleware'])->group(function () {
     Route::post('update-account',[VendorController::class,'updateAccount'])->name('update-account');
     Route::get('vendor-dashboard',[VendorController::class,'vendorHome'])->name('vendor-dashboard');
     Route::get('vendor-profile',[VendorController::class,'vendorProfile'])->name('vendor-profile');
+    Route::get('buy-refereshes',[VendorController::class,'buyRefereshes'])->name('buy-refereshes');
     Route::get('trade-license',[VendorController::class,'tradeLicense'])->name('trade-license');
     Route::post('upload-license',[VendorController::class,'uploadLicense'])->name('upload-license');
     Route::post('update-vendorProfile',[VendorController::class,'updateVendorProfile'])->name('update-vendorProfile');

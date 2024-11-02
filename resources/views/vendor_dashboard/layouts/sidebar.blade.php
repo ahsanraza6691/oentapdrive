@@ -390,8 +390,12 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                         </a>
                     </li>
                     {{-- end --}}
-
-
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
+                        {{ Route::currentRouteName() == 'buy-refereshes' ? 'active' : '' }}"
+                        href="{{ route('buy-refereshes') }}"> <span class="lan-3"><i class="fa fa-money fa-lg" aria-hidden="false"></i> Buy Refereshes </span>
+                        </a>
+                    </li>
                      {{-- Review Management --}}
                      {{-- <li class="sidebar-list">
                         <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
