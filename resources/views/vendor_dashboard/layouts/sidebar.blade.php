@@ -392,8 +392,15 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                     {{-- end --}}
                     <li class="sidebar-list">
                         <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
-                        {{ Route::currentRouteName() == 'buy-refereshes' ? 'active' : '' }}"
-                        href="{{ route('buy-refereshes') }}"> <span class="lan-3"><i class="fa fa-money fa-lg" aria-hidden="false"></i> Buy Refereshes </span>
+                        {{ Route::currentRouteName() == 'buy-refreshes' ? 'active' : '' }}"
+                        href="{{ route('buy-refreshes') }}"> <span class="lan-3"><i class="fa fa-money fa-lg" aria-hidden="false"></i> Buy Refreshes </span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
+                        {{ Route::currentRouteName() == 'order-history' ? 'active' : '' }}"
+                        href="{{ route('order-history') }}"> <span class="lan-3"><i class="fa fa-history fa-lg" aria-hidden="false"></i> Order History </span>
                         </a>
                     </li>
                      {{-- Review Management --}}
