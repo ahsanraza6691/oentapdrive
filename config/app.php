@@ -54,9 +54,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://onetapdrive.com/'),
+    'url' => env('APP_URL'),
 
-    'asset_url' => env('ASSET_URL', 'https://onetapdrive.com'),
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------

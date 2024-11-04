@@ -1,8 +1,7 @@
 $(function () {
     showDropdown()
     allSlider()
-    menuToggler()
-    showHideUpdateBtn()
+    menuToggler() 
     Fancybox.bind("[data-fancybox]", {
         buttons: [
             "slideShow",
@@ -289,26 +288,38 @@ function onOpenCollapse(id) {
     }
 }
 
-function showHideUpdateBtn() {
-    let inputBoxes = document.querySelectorAll('.custom_collapse')
-
-    inputBoxes.forEach((box) => {
-        let checkboxInputBox = box.querySelectorAll(".collapse_content:has(.checkboxInput)");
-        let inputBoxes = box.querySelectorAll(".collapse_content:not(:has(.checkboxInput))");
-        checkboxInputBox.forEach((innerBox) => {
-            let input = innerBox.querySelector("input")
-            let btn = innerBox.querySelector(".updateBtn")
-            input.addEventListener('change', () => {
-                btn.style.display = input.checked ? 'block' : 'none';
-            })
-        })
-        inputBoxes.forEach((innerBox) => {
-            let input = innerBox.querySelector("input,select")
-            console.log(input)
-            let btn = innerBox.querySelector(".updateBtn")
-            input.addEventListener('change', () => {
-                btn.style.display = input.checked ? 'block' : 'none';
-            })
-        })
+$('.collapse_content').find('input[type="checkbox"]').on('change', function() {
+    let showUpdateBtn = false;
+    $(this).closest('.collapse_content').find('input[type="checkbox"]').each(function(){
+        if(
+            ($(this).data('state') == "checked" && !$(this).prop("checked"))
+            || ($(this).data('state') == "unchecked" && $(this).prop("checked"))
+        ) {
+            showUpdateBtn = true
+        }
     })
-}
+
+    $(this).closest('.collapse_content').find('.updateBtn').toggle(showUpdateBtn);
+});
+
+
+$('.collapse_content').find('select').on('change', function () {
+    let showUpdateBtn = false;
+    console.log($(this).find("option:selected").data('state') == "unselected", $(this).find("option:selected").prop("selected"))
+    if(
+        $(this).find("option:selected").data('state') == "selected" && !$(this).find("option:selected").prop("selected")
+        || $(this).find("option:selected").data('state') == "unselected" && $(this).find("option:selected").prop("selected")
+    ) {
+        showUpdateBtn = true;
+    }
+    console.log(showUpdateBtn)
+    let parentElement = $(this).closest('.custom_collapse');
+    var newWidth = parentElement.outerHeight() + 40;
+
+    if (!(parentElement.hasClass("extendedHeight"))) {
+        parentElement.addClass("extendedHeight").css({"height":newWidth});
+    }
+
+    let eleCSS = showUpdateBtn ? {display:'block'} : {display:'none'}
+    $(this).closest('.collapse_content').find('.updateBtn').toggle(showUpdateBtn).css(eleCSS);
+})
