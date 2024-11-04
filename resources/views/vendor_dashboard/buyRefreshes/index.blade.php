@@ -73,7 +73,7 @@
             background-color: #222;
         }
         .modal-header {
-            background-color: #ffba00;
+            background-color: #343a40;
             color: white;
         }
 
@@ -96,6 +96,19 @@
 
         .file-upload-label:hover {
             background-color: #d55c1b;
+        }
+        
+        .modal-body p {
+        font-size: 15px;
+        display: flex;
+        gap: 10px;
+        }
+        .modal-body p span {
+        color: #ffba00;
+        font-weight: 600;
+        }
+        .btn-close{
+            filter:brightness(0) invert(1);
         }
 </style>
     <div class="container-fluid">
@@ -169,7 +182,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
                 <button type="button" class="btn btn-primary">Submit Payment</button>
             </div>
         </div>

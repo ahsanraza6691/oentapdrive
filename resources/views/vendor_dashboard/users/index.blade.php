@@ -27,6 +27,7 @@
             object-fit: cover;
             -o-object-position: center;
             object-position: center;
+            position: absolute;
         }
 
         .pic-holder .upload-file-block,

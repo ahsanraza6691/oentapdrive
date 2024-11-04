@@ -12,6 +12,23 @@
                 display: none;
             }
         }
+        .loader_otp {
+            border: 2px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 2px solid var(--theme-color);
+            width: 16px;
+            height: 16px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
     </style>
     @if (isset($details))
         <meta property="og:title"
@@ -93,12 +110,6 @@
                         </div>
                         <div class="col-md-7">
                             <div class="btnCont">
-                                {{--                                <a href="#" class="themeBtn facebookBtn">--}}
-                                {{--                                    <i class="fab fa-facebook-f"></i>--}}
-                                {{--                                    <span>--}}
-                                {{--                                        Sign in with Facebook--}}
-                                {{--                                    </span>--}}
-                                {{--                                </a>--}}
                                 <a href="{{ Route('login.google-redirect') }}" class="themeBtn google">
                                     <i class="fab fa-google"></i>
                                     <span>
@@ -126,9 +137,13 @@
                                     </label>
                                 </div>
                                 <div class="inputCont">
-                                    <button class="themeBtn">Send OTP</button>
+                                    <button class="themeBtn" type="submit">
+                                        Send OTP
+                                        <span class="loader_otp" style="display: none;"></span> <!-- loader_otp -->
+                                    </button>
                                 </div>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -282,35 +297,48 @@
         setupOtpInputListeners(otpInputs);
 
         otpInputs[0].focus(); // Set focus on the first OTP input field
-         $('#emailOtp').on('submit', function (e) {
-            e.preventDefault();
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var form = $("#emailOtp");
-            var email = $("#email").val();
-            $.ajax({
-                type: "POST",
-                url: '{{ route('email-otp') }}',
-                data: form.serialize(),
-                success: function (response) {
-                    console.log("response=> ", response);
-                    $('#otpemail').val('');
-                    if (response.status == 200) {
-                        $('#otp').modal('show');
-                        $('#login').modal('hide');
-                        $('#otpemail').text(email);
-                      	$('#verifyEmail').val(email);
-                        toastr.success('OTP sent on email!');
-                    } else {
-                        toastr.error('Failed to send OTP. Please try again!');
-                    }
-                },
-                error: function (xhr, status, error, response) {
-                    console.log("xhr=> ", xhr);
-                    console.error("Error=>", error);
-                    toastr.error('An error occurred! Please try again later.');
-                }
-            });
-        });
+        $('#emailOtp').on('submit', function (e) {
+    e.preventDefault();
+    
+    // Show loader_otp on button
+    var submitButton = $(".themeBtn");
+    submitButton.prop('disabled', true);  // Disable button
+    submitButton.find('.loader_otp').show();  // Show loader_otp
+
+    var form = $("#emailOtp");
+    var email = $("#email").val();
+
+    $.ajax({
+        type: "POST",
+        url: '{{ route('email-otp') }}',
+        data: form.serialize(),
+        success: function (response) {
+            // Clear input fields
+            $("#email").val('');
+            $("#agree").prop('checked', false);
+
+            if (response.status == 200) {
+                $('#otp').modal('show');
+                $('#login').modal('hide');
+                $('#otpemail').text(email);
+                $('#verifyEmail').val(email);
+                toastr.success('OTP sent on email!');
+            } else {
+                toastr.error('Failed to send OTP. Please try again!');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error=>", error);
+            toastr.error('An error occurred! Please try again later.');
+        },
+        complete: function () {
+            // Hide loader_otp and re-enable button
+            submitButton.prop('disabled', false);
+            submitButton.find('.loader_otp').hide();
+        }
+    });
+});
+
 
         $('#verifyOtp').on('submit', function (e) {
             e.preventDefault();
