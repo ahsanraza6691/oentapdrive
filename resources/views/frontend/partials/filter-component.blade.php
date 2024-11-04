@@ -2,7 +2,13 @@
 <div class="row">
     <div class="col-lg-3">
         <div class="filterCont">
-            <form method="GET" action="{{ route(Route::currentRouteName(), ['brand' => request('brand', 'default-brand')]) }}">
+            @php
+                $params = [ "brand" => request()->route('brand', 'default-brand')];
+                if (!empty(request()->route('type'))) {
+                    $params = [ "type" => request()->route('type', 'default-category')];
+                }
+            @endphp
+            <form method="GET" action="{{ route(Route::currentRouteName(), $params) }}">
                 <div id="filters" class="filters">
                     <h2>
                         Filters
@@ -39,18 +45,7 @@
                                         @endif
 
                                         @foreach ($uniqueCities as $city)
-                                            @php
-                                                $CitySelected = '';
-                                            @endphp
-                                            @if (isset($_GET['city']) && $_GET['city'] == $city)
-                                                @php
-                                                    $CitySelected = 'selected';
-
-                                                @endphp
-                                            @endif
-
-                                            <option value="{{ $city }}" {{ $CitySelected }}>{{ $city }}
-                                            </option>
+                                            <option value="{{ $city }}" {{!empty(request()->get("city")) && request()->get("city") == $city ? "data-state=selected" : "data-state=unselected"}} {{!empty(request()->get("city")) && request()->get("city") == $city ? "selected" : ""}}>{{ $city }}</option>
                                         @endforeach
 
                                     </select>
@@ -65,7 +60,7 @@
                                     <span> Car Brand / Model </span>
                                     <i id="carBrand-arrow" class="fa fa-angle-down"></i>
                                 </button>
-                                <form method="GET" action="{{ route(Route::currentRouteName(), ['brand' => request()->get('brand', 'default-brand')]) }}">
+                                <form method="GET" action="{{ route(Route::currentRouteName(), $params) }}">
                                     <div id="carBrand-content" class="collapse_content">
                                         <div>
                                             <input type="hidden" id="language" value="english">
@@ -520,11 +515,11 @@
                                                 </label>
                                                 @if ($color_count == 0)
                                                     <button class="updateBtn">update</button>
+                                                    @php
+                                                        $color_count++;
+                                                    @endphp
                                                 @endif
                                             </div>
-                                            @php
-                                                $color_count++;
-                                            @endphp
                                         @endforeach
                                     @endif
 
@@ -601,7 +596,7 @@
                                 $queryParams = request()->except($filterName);
                         
                                 // Ensure the required 'brand' parameter is included in the route
-                                $urlWithoutFilter = route(request()->route()->getName(), array_merge(['brand' => request('brand', 'default-brand')], $queryParams));
+                                $urlWithoutFilter = route(request()->route()->getName(), array_merge($params, $queryParams));
                             @endphp
                         
                             <a href="{{ $urlWithoutFilter }}">
@@ -615,7 +610,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <form id="filterForm" method="GET" action="{{ route(Route::currentRouteName(), ['brand' => request('brand', 'default-brand')]) }}">
+                        <form id="filterForm" method="GET" action="{{ route(Route::currentRouteName(), $params) }}">
                         <div class="inputCont sort">
                             <select autocomplete="off" name="sort" id="sortSelect">
                                 <option selected="selected" value="featured">
