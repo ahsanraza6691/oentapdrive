@@ -229,6 +229,8 @@ Route::group(['middleware' =>  ['preventBackHistory','adminmiddleware'],'prefix'
     //  Product Routes
 
     Route::get('car-listing',[ProductController::class,'carListing'])->name('car-listing');
+    Route::get('packages-orders',[AdminController::class,'packagesOrders'])->name('packages-orders');
+    Route::post('update-order-status',[AdminController::class,'updateVendorOrder'])->name('update-order-status');
     Route::get('car-with-driver-listing',[ProductController::class,'carWithDriverListing'])->name('car-with-driver-listing');
     Route::get('car-with-driver-listing-details/{id}',[ProductController::class,'carWithDriverListingDetails'])->name('car-with-driver-listing-details');
     Route::get('delete-car/{id}',[ProductController::class,'deleteCar'])->name('delete-car');
@@ -460,6 +462,13 @@ Route::middleware(['preventBackHistory','usermiddleware'])->group(function () {
     Route::post('update-account',[VendorController::class,'updateAccount'])->name('update-account');
     Route::get('vendor-dashboard',[VendorController::class,'vendorHome'])->name('vendor-dashboard');
     Route::get('vendor-profile',[VendorController::class,'vendorProfile'])->name('vendor-profile');
+
+    Route::get('buy-refreshes',[VendorController::class,'buyRefreshes'])->name('buy-refreshes');
+    Route::get('/package-details/{id}', [VendorController::class, 'getPackageDetails'])->name('package.details');
+    Route::post('store-order-history',[VendorController::class,'storeOrderHistory'])->name('store-order-history');
+
+
+    Route::get('order-history',[VendorController::class,'orderHistory'])->name('order-history');
     Route::get('trade-license',[VendorController::class,'tradeLicense'])->name('trade-license');
     Route::post('upload-license',[VendorController::class,'uploadLicense'])->name('upload-license');
     Route::post('update-vendorProfile',[VendorController::class,'updateVendorProfile'])->name('update-vendorProfile');

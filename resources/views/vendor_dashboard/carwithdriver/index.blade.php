@@ -35,9 +35,9 @@
             color: #fff;
         }
 
-        .bg_orange {
+        /* .bg_orange {
             background-color: #ffba00 !important;
-        }
+        } */
 
         .reload_icon {
             padding: 1px 3px;

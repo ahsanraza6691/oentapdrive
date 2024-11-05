@@ -77,7 +77,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label>No of Refreshes.*</label>
-                                            <input class="form-control" type="number" placeholder="Enter No of refereshes"
+                                            <input class="form-control" type="number" placeholder="Enter No of refreshes"
                                                 data-bs-original-title="" title="" name="no_of_refreshes"
                                                 value="{{ $edit->refresh_cars  }}">
                                         </div>
