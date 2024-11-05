@@ -142,7 +142,7 @@
                                         @foreach ($services as $service_type)
                                             <li>
                                                 <a class="dropdown-item"
-                                                   href="{{ route('car-with-driver', ['service_type' => $service_type]) }}">
+                                                   href="{{ route('car-with-driver', ['service_type' => str_replace(" ", "-",strtolower($service_type))]) }}">
                                                     {{ $service_type }} <strong class="float-end">»</strong>
                                                 </a>
                                             </li>
@@ -487,7 +487,7 @@
                 <ul>
                     @foreach ($services as $service_type)
                         <li>
-                            <a href="{{route('car-with-driver',['service_type' => $service_type])}}">
+                            <a href="{{route('car-with-driver',['service_type' => str_replace(" ", "-",strtolower($service_type))])}}">
                                 <span>{{$service_type}}</span>
                             </a>
                         </li>

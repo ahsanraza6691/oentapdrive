@@ -493,22 +493,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li class="nav-item dropdown fleet_li">
                         <a class="nav-link dropdown-toggle text-light" href="#"
                            data-bs-toggle="dropdown">
-                            <!--<i class="fa-solid fa-id-card text-light"></i> -->
                             Car with Driver
                         </a>
                         <ul class="submenu-wrapper dropdown-menu">
                             @foreach ($services as $service_type)
-
-
                                 <li>
-                                    <a class="dropdown-item" href="{{route('car-with-driver',['service_type' => $service_type])}}">
+                                    <a class="dropdown-item" href="{{route('car-with-driver',['service_type' => str_replace(" ", "-",strtolower($service_type))])}}">
                                         {{$service_type}} <strong class="float-end">»</strong></a>
-                                    {{-- <ul class="submenu dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Hourly-Basis</a></li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Airport Transfer </a>
-                                        </li>
-                                    </ul> --}}
                                 </li>
                             @endforeach
 

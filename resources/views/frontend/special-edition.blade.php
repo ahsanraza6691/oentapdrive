@@ -11,8 +11,8 @@
                             <li><a href="{{route('home')}}" class="fa fa-home"></a></li>
                             <!-- Dynamic location -->
                             <li><a href="{{route('home')}}">Home</a></li>
-                            <li><a href="javascipt:void(0)">{{ request()->query('city') ?? 'Dubai' }}</a></li>
-                            <li class="javascipt:void(0)"><span>Rent Special Edition Car Dubai</span></li>
+                            <li><a href="javascript:void(0)">{{ request()->query('city') ?? 'Dubai' }}</a></li>
+                            <li class="javascript:void(0)"><span>Rent Special Edition Car Dubai</span></li>
                         </ul>
                         <div class="filter_action">
                             <button class="styled_button rounded_sm filter_action" id="filterBtn" type="button">

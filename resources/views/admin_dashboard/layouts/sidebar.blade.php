@@ -186,7 +186,7 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                                 class="lan-3"><i class="fa fa-car fa-lg" aria-hidden="true"></i> Car Listing </span>
                         </a>
 
-                     </li>
+                    </li>
                     
                      <li class="sidebar-list">
                         <label class="badge badge-success"></label><a class="sidebar-link sidebar-title

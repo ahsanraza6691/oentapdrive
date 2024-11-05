@@ -14,9 +14,9 @@
             padding: 10px;
         }
 
-        .power_icon {
+        .power_icon_green {
             padding: 5px 10px 5px 12px;
-            background: #343A40;
+            background: green;
             color: #fff;
             border-radius: 5px;
             font-size: 16px;
@@ -31,7 +31,7 @@
         }
 
         a.power_icon_red:hover,
-        a.power_icon:hover {
+        a.power_icon_green:hover {
             color: #fff;
         }
 
@@ -141,7 +141,7 @@
 
                                                     @if ($value->status == 1)
                                                         <a href="{{ route('product-status', $value->id) }}"
-                                                            class="power_icon">
+                                                            class="power_icon_green">
                                                             <i class="fa fa-power-off" aria-hidden="true"></i>
                                                         </a>
                                                     @else
@@ -150,20 +150,10 @@
                                                             <i class="fa fa-power-off" aria-hidden="true"></i>
                                                         </a>
                                                     @endif
-
-
-                                                    @php
-                                                        $remainingRefreshes = \App\Helpers\Helper::availableRefreshes() - \App\Helpers\Helper::usedRefreshes();
-                                                    @endphp
-
-                                                    <a href="{{ $remainingRefreshes > 0 && $value->status == 1 ? route('refresh-car', $value->id) : '#' }}" 
-                                                    class="reload_icon {{ $remainingRefreshes > 0 && $value->status == 1 ? '' : 'disabled' }}">
-                                                        <i class="fa fa-refresh p-2 rounded bg_orange text-light" aria-hidden="true"></i>
+                                                    <a href="{{ route('refresh-car', $value->id) }}" class="reload_icon">
+                                                        <i class="fa fa-refresh p-2 rounded bg_orange text-light"
+                                                            aria-hidden="true"></i>
                                                     </a>
-
-                                                
-
-
                                                     {{-- </td>
                                                 <td class="editDelete"> --}}
                                                     <form action="{{ route('rent-car.destroy', $value->id) }}"
