@@ -230,6 +230,8 @@ Route::group(['middleware' =>  ['preventBackHistory','adminmiddleware'],'prefix'
     //  Product Routes
 
     Route::get('car-listing',[ProductController::class,'carListing'])->name('car-listing');
+    Route::get('packages-orders',[AdminController::class,'packagesOrders'])->name('packages-orders');
+    Route::post('update-order-status',[AdminController::class,'updateVendorOrder'])->name('update-order-status');
     Route::get('car-with-driver-listing',[ProductController::class,'carWithDriverListing'])->name('car-with-driver-listing');
     Route::get('car-with-driver-listing-details/{id}',[ProductController::class,'carWithDriverListingDetails'])->name('car-with-driver-listing-details');
     Route::get('delete-car/{id}',[ProductController::class,'deleteCar'])->name('delete-car');
@@ -376,6 +378,7 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('blog-details',[FrontendController::class,'blogDetails'])->name('blog-details');
     Route::get('allBrands', [FrontendController::class, 'Brands'])->name('brands');
     Route::get('faq',[FrontendController::class,'faqs'])->name('faq');
+    Route::get('car-with-driver/{service_type?}',[FrontendController::class,'carwithDriver'])->name('car-with-driver');
     Route::get('country-driving-license',[FrontendController::class,'drivingLicense'])->name('country-driving-license');
     Route::get('desert-safari',[FrontendController::class,'desertSafari'])->name('desert-safari');
     Route::get('rent-a-car-dubai/{slug?}',[FrontendController::class,'ourServices'])->name('rent-a-car-dubai');
@@ -461,6 +464,13 @@ Route::middleware(['preventBackHistory','usermiddleware'])->group(function () {
     Route::post('update-account',[VendorController::class,'updateAccount'])->name('update-account');
     Route::get('vendor-dashboard',[VendorController::class,'vendorHome'])->name('vendor-dashboard');
     Route::get('vendor-profile',[VendorController::class,'vendorProfile'])->name('vendor-profile');
+
+    Route::get('buy-refreshes',[VendorController::class,'buyRefreshes'])->name('buy-refreshes');
+    Route::get('/package-details/{id}', [VendorController::class, 'getPackageDetails'])->name('package.details');
+    Route::post('store-order-history',[VendorController::class,'storeOrderHistory'])->name('store-order-history');
+
+
+    Route::get('order-history',[VendorController::class,'orderHistory'])->name('order-history');
     Route::get('trade-license',[VendorController::class,'tradeLicense'])->name('trade-license');
     Route::post('upload-license',[VendorController::class,'uploadLicense'])->name('upload-license');
     Route::post('update-vendorProfile',[VendorController::class,'updateVendorProfile'])->name('update-vendorProfile');

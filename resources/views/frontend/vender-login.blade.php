@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vendor Login</title>
+    <link style="width: 100%" rel="icon" href="{{asset('web-assets/images/fav.webp')}}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <link rel="stylesheet" href="{{asset("web-assets/css/plugins.css")}}">
     <link rel="stylesheet" href="{{asset("web-assets/css/custom.css")}}">

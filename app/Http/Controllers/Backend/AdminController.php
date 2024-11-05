@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserConsumePackageItem;
+use App\Models\UserOrderHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+
 class AdminController extends Controller
 {
 
@@ -41,5 +44,33 @@ class AdminController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('admin-login');
+    } 
+
+    public function packagesOrders()
+    {
+        $userOrderHistories = UserOrderHistory::with(['packageItem.package', 'user'])
+        ->orderBy('id', 'desc')
+        ->get();
+        return view('admin_dashboard.packagesOrders.index', compact('userOrderHistories'));
     }
+
+    public function updateVendorOrder(Request $request)
+    {
+        $order = UserOrderHistory::with(['packageItem.package', 'user'])->find($request->order_id);
+
+        if ($order && $order->status === 'pending') {
+            $consume = new UserConsumePackageItem();
+            $consume->user_id = $order->user_id;
+            $consume->package_item_id = $order->package_items_id;
+            $consume->qty = $order->packageItem->qty;
+            $consume->save();
+            $order->status = 'complete';
+            $order->save();
+            return redirect()->back()->with('success', 'Order status updated to complete.');
+        }
+
+        return redirect()->back()->with('error', 'Order status is not pending.');
+    }
+
+
 }
