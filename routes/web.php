@@ -229,6 +229,7 @@ Route::group(['middleware' =>  ['preventBackHistory','adminmiddleware'],'prefix'
     //  Product Routes
 
     Route::get('car-listing',[ProductController::class,'carListing'])->name('car-listing');
+    Route::get('packages-orders',[ProductController::class,'packagesOrders'])->name('packages-orders');
     Route::get('car-with-driver-listing',[ProductController::class,'carWithDriverListing'])->name('car-with-driver-listing');
     Route::get('car-with-driver-listing-details/{id}',[ProductController::class,'carWithDriverListingDetails'])->name('car-with-driver-listing-details');
     Route::get('delete-car/{id}',[ProductController::class,'deleteCar'])->name('delete-car');

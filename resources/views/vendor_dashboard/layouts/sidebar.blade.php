@@ -40,7 +40,7 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                     <li>
                         <p class="text-light fw-bold">REFRESH STATUS</p>
                         <div class="d-flex justify-content-between">
-                            <p class="text-light">Refereshed</p>
+                            <p class="text-light">Refreshed</p>
                             <div>
                                 <span class="badge bg_orange">{{Auth::user()->used_refreshes ?? '0'}}/{{Auth::user()->refresh_cars ?? '0'}}</span>
                             </div>
