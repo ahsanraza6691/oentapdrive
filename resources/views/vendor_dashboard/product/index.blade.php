@@ -150,10 +150,19 @@
                                                             <i class="fa fa-power-off" aria-hidden="true"></i>
                                                         </a>
                                                     @endif
-                                                    <a href="{{ route('refresh-car', $value->id) }}" class="reload_icon">
-                                                        <i class="fa fa-refresh p-2 rounded bg_orange text-light"
-                                                            aria-hidden="true"></i>
+
+
+                                                    @php
+                                                        $remainingRefreshes = \App\Helpers\Helper::availableRefreshes() - \App\Helpers\Helper::usedRefreshes();
+                                                    @endphp
+                                                
+                                                    <a href="{{ $remainingRefreshes > 0 ? route('refresh-car', $value->id) : '#' }}" 
+                                                    class="reload_icon {{ $remainingRefreshes > 0 ? '' : 'disabled' }}">
+                                                        <i class="fa fa-refresh p-2 rounded bg_orange text-light" aria-hidden="true"></i>
                                                     </a>
+                                                
+
+
                                                     {{-- </td>
                                                 <td class="editDelete"> --}}
                                                     <form action="{{ route('rent-car.destroy', $value->id) }}"

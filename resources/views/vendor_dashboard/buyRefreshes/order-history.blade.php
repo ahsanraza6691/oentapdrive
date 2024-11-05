@@ -91,44 +91,44 @@
                                     </thead>
                                     <tbody>
                                             @forelse($userOrderHistory as $history)
-                                            <tr role="row" class="odd">
-                                                <td>
-                                                    {{$history->id}}
-                                                </td>
-                                                <td>
-                                                    {{$history->packageItem->package->name}}
-                                                </td>
-                                                <td>
-                                                    {{$history->packageItem->currency}} {{$history->packageItem->price}}
-                                                </td>
-                                                <td>
-                                                    {{$history->packageItem->item}}
-                                                </td>
-                                                <td>
-                                                    {{$history->packageItem->qty}}
-                                                </td>
-                                               
-                                                <td>
-                                                    {{$history->company_account_no}}
-                                                </td>
-                                                <td>
-                                                    <img src="{{ asset('storage/' . $history->receipt) }}" alt="Receipt Image">
-                                                </td>
-                                                <td>
-                                                    {{$history->status}}
-                                                </td>
-                                                <td>
-                                                    {{ $history->created_at->format('d M Y') }}
-                                                </td>
+                                                <tr role="row" class="odd">
+                                                    <td>
+                                                        {{$history->id}}
+                                                    </td>
+                                                    <td>
+                                                        {{$history->packageItem->package->name}}
+                                                    </td>
+                                                    <td>
+                                                        {{$history->packageItem->currency}} {{$history->packageItem->price}}
+                                                    </td>
+                                                    <td>
+                                                        {{$history->packageItem->item}}
+                                                    </td>
+                                                    <td>
+                                                        {{$history->packageItem->qty}}
+                                                    </td>
+                                                
+                                                    <td>
+                                                        {{$history->company_account_no}}
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ asset('storage/' . $history->receipt) }}" alt="Receipt Image">
+                                                    </td>
+                                                    <td>
+                                                        {{$history->status}}
+                                                    </td>
+                                                    <td>
+                                                        {{ $history->created_at->format('d M Y') }}
+                                                    </td>
 
-                                            </tr>
+                                                </tr>
                                             @empty
-                                            <tr role="row" class="odd">
-                                                <td>
-                                                    No Order History
-                                                </td>
-                                               
-                                            </tr>
+                                                <tr role="row" class="odd">
+                                                    <td>
+                                                        No Order History
+                                                    </td>
+                                                
+                                                </tr>
                                             @endforelse
 
                                     </tbody>

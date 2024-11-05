@@ -29,6 +29,9 @@
         a.power_icon:hover{
             color: #fff;
         }
+        .btn-green{
+            background-color: var(--bs-success)!important;
+        }
 </style>
 
 
@@ -50,52 +53,76 @@
                                     <thead>
                                         <tr role="row">
                                             <th class="sorting_asc">S.NO</th>
-                                            <th class="sorting">headind 1</th>
-                                            <th class="sorting">heading 2</th>
-                                            <th class="sorting">heading 3</th>
-                                            <th class="sorting">heading 4</th>
-                                            <th class="sorting"> heading 5 </th>
-                                            <th class="sorting"> heading 6</th>
-                                            <th class="sorting" style="width: 120.016px;">heading 7</th>
+                                            <th class="sorting">User</th>
+                                            <th class="sorting">Package</th>
+                                            <th class="sorting">Price</th>
+                                            <th class="sorting">Item</th>
+                                            <th class="sorting">Quantity</th>
+                                            <th class="sorting">To Account</th>
+                                            <th class="sorting">Receipt</th>
+                                            <th class="sorting">Status</th>
+                                            <th class="sorting">Purchase Date</th>
+                                            <th class="sorting" style="width: 120.016px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        @forelse($userOrderHistories as $history)  
                                             <tr role="row" class="odd">
                                                 <td>
-                                                    01
+                                                    {{$history->id}}
                                                  </td>
                                                 <td>
-                                                   data 1
+                                                    {{$history->user->name}}
                                                 </td>
                                                 <td>
-                                                    data 2
+                                                    {{ $history->packageItem->package->name }}
                                                 </td>
                                                 <td>
-                                                    data 3
+                                                    {{ $history->packageItem->currency ?? '' }} {{ $history->packageItem->price ?? 'N/A' }} 
                                                 </td>
                                                 <td>
-                                                    data 4
+                                                    {{$history->packageItem->item}}
                                                 </td>
                                                 <td>
-                                                    data 5
+                                                    {{$history->packageItem->qty}}
                                                 </td>
 
                                                 <td>
-                                                    data 6
+                                                    {{$history->company_account_no}}
                                                 </td>
-
+                                                <td>
+                                                    <img src="{{ asset('storage/' . $history->receipt) }}" alt="Receipt Image">
+                                                </td>
+                                                <td>
+                                                    {{$history->status}}
+                                                </td>
+                                                <td>
+                                                    {{ $history->created_at->format('d M Y') }}
+                                                </td>
+                                              
                                                 <td  class="power_icon_data editDelete">
-
-                                                   <button class="btn btn-success btn-xs" type="button">
-                                                        Approve
-                                                    </button>
-
-                                                    <button class="btn btn-danger btn-xs" type="button">
-                                                        Decline
-                                                    </button>
+                                                    <form action="{{ route('update-order-status') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="order_id" value="{{ $history->id }}">
+                                                        
+                                                        <button 
+                                                            class="btn btn-xs {{ $history->status == 'pending' ? 'btn-green' : 'btn-secondary' }}" 
+                                                            type="submit" 
+                                                            {{ $history->status != 'pending' ? 'disabled' : '' }}
+                                                        >
+                                                            Approve
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
+                                        @empty
+                                            <tr role="row" class="odd">
+                                                <td>
+                                                    No Order History
+                                                </td>
+                                            
+                                            </tr>
+                                        @endforelse    
 
                                     </tbody>
                                 </table>

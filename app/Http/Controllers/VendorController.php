@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserConsumePackageItem;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -86,25 +87,9 @@ class VendorController extends Controller
             return back()->with($notification);
     }
 
-    public function refreshCars(Request $request,$id){
-        $check_refreshes = User::where('id',Auth::id())->first();
-        if($check_refreshes->refresh_cars >  $check_refreshes->used_refreshes){
-            $refresh_cars = Product::find($id);
-            $refresh_cars->updated_at  = now();
-            $refreshes =  $check_refreshes->used_refreshes;
-            $today_refreshes =  $refreshes +  1;
-            // return $today_refreshes;
-            $check_refreshes->used_refreshes =  $today_refreshes;
-            $check_refreshes->save();
-            $refresh_cars->save();
-            $notification = array('message' => 'Car Listing updated successfully !', 'alert-type' => 'success');
-            return redirect()->back()->with($notification);
-        }else {
-            $notification = array('message' => 'Your refresh limit for day has been ended !', 'alert-type' => 'error');
-            return redirect()->back()->with($notification);
-        }
+    
 
-    }
+
     public function vendorHome(){
         $count_products  = Product::where('user_id',Auth::id())->count();
         $car_with_drivers = CarWithDriver::where('user_id',Auth::id())->count();
@@ -440,10 +425,6 @@ class VendorController extends Controller
         $userOrder->status = 'pending';
 
         if ($userOrder->save()) {
-            // return response()->json([
-            //     'success' => true,
-            //     'message' => 'Payment submitted successfully.',
-            // ]);
             return redirect()->route('order-history');
         }
 
@@ -454,12 +435,41 @@ class VendorController extends Controller
     }
 
     public function orderHistory(Request $request){
-
         $userOrderHistory = UserOrderHistory::with(['packageItem.package'])
                         ->where('user_id', auth()->id())
-                        ->get();
-        //dd($userOrderHistory);                
+                        ->orderBy('id','desc')
+                        ->get();               
         return view('vendor_dashboard.buyRefreshes.order-history', compact('userOrderHistory'));
+    }
+
+    public function refreshCars(Request $request,$id){
+
+        $userConsumeItem = UserConsumePackageItem::where('user_id', auth()->id() )->first();                
+        
+        $availableRefresh = $userConsumeItem->qty;
+        $packageId = $userConsumeItem->package_item_id;
+        $usedRefresh = $userConsumeItem->used;
+
+        if($availableRefresh >  $usedRefresh){
+
+            $refresh_cars = Product::find($id);
+            $refresh_cars->updated_at  = now();
+            
+            $refreshes =  $usedRefresh;
+            $today_refreshes =  $refreshes +  1;
+            $userConsumeItem->used =  $today_refreshes;
+            $userConsumeItem->package_item_id =  $packageId;
+            
+            $userConsumeItem->save();
+            $refresh_cars->save();
+            
+            $notification = array('message' => 'Car Listing updated successfully !', 'alert-type' => 'success');
+            return redirect()->back()->with($notification);
+        }else {
+            $notification = array('message' => 'Your refresh limit for day has been ended !', 'alert-type' => 'error');
+            return redirect()->back()->with($notification);
+        }
+
     }
 
 
