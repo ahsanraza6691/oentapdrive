@@ -124,30 +124,21 @@
                     <div class="card-body">
                         <div class="row">
                             <!-- Package Cards -->
-                            <div class="col-lg-4">
-                                <div class="package-box">
-                                    <h2 class="package-title">Basic Package</h2>
-                                    <div class="package-price">AED 49</div>
-                                    <h2 class="package-title">20 Refreshes</h2>
-                                    <button class="btn-buy btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#packageModal" onclick="openModal('Basic Package', 'AED 49' , '20 Refreshes')">Buy Now</button>
+                            @foreach($packages as $package)
+                                <div class="col-lg-4">
+                                    <div class="package-box">
+                                        <h2 class="package-title">{{ $package->name }}</h2>
+                                        <div class="package-price">AED {{ $package->packageItems[0]->price }}</div>
+                                        <h2 class="package-title">{{ $package->packageItems[0]->qty }} {{ $package->packageItems[0]->item }}</h2>
+                                        <button class="btn-buy btn btn-primary mt-3"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#packageModal"
+                                                onclick="fetchPackageDetails({{ $package->id }})">Buy Now
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="package-box">
-                                    <h2 class="package-title">Standard Package</h2>
-                                    <div class="package-price">AED 99</div>
-                                    <h2 class="package-title">50 Refreshes</h2>
-                                    <button class="btn-buy btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#packageModal" onclick="openModal('Standard Package', 'AED 99', '50 Refreshes')">Buy Now</button>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="package-box">
-                                    <h2 class="package-title">Premium Package</h2>
-                                    <div class="package-price">AED 149</div>
-                                    <h2 class="package-title">80 Refreshes</h2>
-                                    <button class="btn-buy btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#packageModal" onclick="openModal('Premium Package', 'AED 149', '80 Refreshes')">Buy Now</button>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
 
@@ -159,44 +150,68 @@
     </div>
     </div>
     <!-- Package Details Modal -->
-<div class="modal fade" id="packageModal" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="packageModalLabel">Package Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5 id="modalPackageName"></h5>
-                <p class="mb-1"><strong>Price:</strong> <span id="modalPackagePrice"></span></p>
-                <p class="mb-1"><strong>Refreshes:</strong> <span id="modaltotalRefreshes"></span></p>
-                <p><strong>Account Number:</strong> 1234567890</p>
-                
-                <!-- File Upload -->
-                <p class="mt-3">Please upload the payment receipt for verification.</p>
-                <div>
-                    <input id="receiptUpload" name="file-upload"
-                      type="file" class="receiptUpload" data-default-file=""
-                      data-allowed-file-extensions="pdf png jpg jpeg webp gif bmp tiff doc docx xls xlsx ppt pptx heic"
-                      required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
-                <button type="button" class="btn btn-primary">Submit Payment</button>
+    <div class="modal fade" id="packageModal" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="paymentForm" method="POST" action="{{ route('store-order-history') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="packageModalLabel">Package Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 id="modalPackageName"></h5>
+                        <p class="mb-1"><strong>Price:</strong> <span id="modalPackagePrice"></span></p>
+                        <p class="mb-1"><strong>Refreshes:</strong> <span id="modaltotalRefreshes"></span></p>
+                        <p><strong>Account Number:</strong> <span id="modalAccountNumber">1234567890</span></p>
+
+                        <!-- Hidden Fields -->
+                        <input type="hidden" id="modalPackageItemsId" name="package_items_id">
+                        <input type="hidden" id="modalCompanyAccountNo" name="company_account_no" value="1234567890">
+
+                        <!-- File Upload -->
+                        <p class="mt-3">Please upload the payment receipt for verification.</p>
+                        <div>
+                            <input id="receiptUpload" name="receipt" type="file" class="receiptUpload" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit Payment</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     
 <script>
     // Function to open modal and populate details
-    function openModal(packageName, packagePrice, totalRefreshes) {
+    function openModal(packageName, packagePrice, totalRefreshes, id) {
         document.getElementById("modalPackageName").innerText = packageName;
         document.getElementById("modalPackagePrice").innerText = packagePrice;
         document.getElementById("modaltotalRefreshes").innerText = totalRefreshes;
+        document.getElementById("modalPackageId").innerText = id;
+    }
+
+    function fetchPackageDetails(packageItemsId) {
+        const url = `{{ route('package.details', ':id') }}`.replace(':id', packageItemsId);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.package) {
+                    // Populate modal with package details
+                    document.getElementById('modalPackageName').textContent = data.package.name;
+                    document.getElementById('modalPackagePrice').textContent = 'AED ' + data.package.package_items[0].price;
+                    document.getElementById('modaltotalRefreshes').textContent = data.package.package_items[0].qty + ' ' + data.package.package_items[0].item;
+                    document.getElementById('modalPackageItemsId').value = data.package.package_items[0].id;
+                } else {
+                    alert('Package details not found');
+                }
+            })
+            .catch(error => console.error('Error fetching package details:', error));
     }
 
     

@@ -72,29 +72,64 @@
                                                 colspan="1" aria-sort="ascending">
                                                 S.NO</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
-                                                aria-label="Details: activate to sort column ascending">Package Name</th>
+                                                aria-label="Details: activate to sort column ascending">Package</th>
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+                                                aria-label="Details: activate to sort column ascending">Price</th>
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+                                                aria-label="Details: activate to sort column ascending">Item</th>
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+                                                aria-label="Details: activate to sort column ascending">Quantity</th>
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+                                                aria-label="Details: activate to sort column ascending">To Account</th>            
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+                                                aria-label="Details: activate to sort column ascending">Receipt</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
                                                 aria-label="Details: activate to sort column ascending">Status</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
-                                                aria-label="Details: activate to sort column ascending"> Date</th>
+                                                aria-label="Details: activate to sort column ascending">Purchase Date</th>    
                                         </tr>
                                     </thead>
                                     <tbody>
+                                            @forelse($userOrderHistory as $history)
                                             <tr role="row" class="odd">
                                                 <td>
-                                                    1
+                                                    {{$history->id}}
                                                 </td>
                                                 <td>
-                                                    Standard Package
+                                                    {{$history->packageItem->package->name}}
                                                 </td>
                                                 <td>
-                                                    Pending
+                                                    {{$history->packageItem->currency}} {{$history->packageItem->price}}
                                                 </td>
                                                 <td>
-                                                    03/11/2024
+                                                    {{$history->packageItem->item}}
+                                                </td>
+                                                <td>
+                                                    {{$history->packageItem->qty}}
+                                                </td>
+                                               
+                                                <td>
+                                                    {{$history->company_account_no}}
+                                                </td>
+                                                <td>
+                                                    <img src="{{ asset('storage/' . $history->receipt) }}" alt="Receipt Image">
+                                                </td>
+                                                <td>
+                                                    {{$history->status}}
+                                                </td>
+                                                <td>
+                                                    {{ $history->created_at->format('d M Y') }}
                                                 </td>
 
                                             </tr>
+                                            @empty
+                                            <tr role="row" class="odd">
+                                                <td>
+                                                    No Order History
+                                                </td>
+                                               
+                                            </tr>
+                                            @endforelse
 
                                     </tbody>
                                 </table>

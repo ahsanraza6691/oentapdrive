@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CarWithDriver;
 use App\Models\CarBooking;
+use App\Models\Package;
+use App\Models\PackageItem;
+use App\Models\UserOrderHistory;
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -115,12 +119,7 @@ class VendorController extends Controller
         return view('vendor_dashboard.users.index',get_defined_vars());
     }
 
-    public function buyRefreshes(Request $request){
-        return view('vendor_dashboard.buyRefreshes.index',get_defined_vars());
-    }
-    public function orderHistory(Request $request){
-        return view('vendor_dashboard.buyRefreshes.order-history',get_defined_vars());
-    }
+
 
     public function login(Request $request){
         return view('frontend.vender-login');
@@ -392,5 +391,76 @@ class VendorController extends Controller
         $detail = CarBooking::where('id',$id)->with('get_product')->first();
         return view('vendor_dashboard.enquiries.detail',get_defined_vars());
     }
+
+
+
+
+
+    // Code written by Ubaid 
+
+    public function buyRefreshes(Request $request)
+    {
+        $packages = Package::with('packageItems')->get();
+        return view('vendor_dashboard.buyRefreshes.index', compact('packages'));
+    }
+
+    public function getPackageDetails($id)
+    {
+        $package = Package::with('packageItems')->find($id);
+        if (!$package) {
+            return response()->json(['error' => 'Package not found'], 404);
+        }
+        return response()->json(['package' => $package]);
+    }
+
+    public function storeOrderHistory(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'package_items_id' => 'required|exists:package_items,id',
+            'company_account_no' => 'required|string|max:255',
+            'receipt' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first(),
+            ], 400);
+        }
+        if ($request->hasFile('receipt')) {
+            $file = $request->file('receipt');
+            $path = $file->store('receipts', 'public');
+        }
+
+        $userOrder = new UserOrderHistory();
+        $userOrder->user_id = auth()->id();
+        $userOrder->package_items_id = $request->input('package_items_id');
+        $userOrder->company_account_no = $request->input('company_account_no');
+        $userOrder->receipt = $path ?? null;
+        $userOrder->status = 'pending';
+
+        if ($userOrder->save()) {
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Payment submitted successfully.',
+            // ]);
+            return redirect()->route('order-history');
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to submit payment.',
+        ], 500);
+    }
+
+    public function orderHistory(Request $request){
+
+        $userOrderHistory = UserOrderHistory::with(['packageItem.package'])
+                        ->where('user_id', auth()->id())
+                        ->get();
+        //dd($userOrderHistory);                
+        return view('vendor_dashboard.buyRefreshes.order-history', compact('userOrderHistory'));
+    }
+
 
 }
