@@ -216,7 +216,7 @@
 
                               <div class="register text-center mt-3">
 
-                                  <p>Don't have an account? <a href="#">Sign Up</a></p>
+                                  <p>Don't have an account? <a href="{{route('list-your-rental-cars')}}">Sign Up</a></p>
 
                               </div>
 
