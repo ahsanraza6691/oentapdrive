@@ -553,17 +553,21 @@ class FrontendController extends Controller
         $filters_data = Product::with('get_brand_name', 'get_user')->get();
     
         
-            return view('frontend.economy', compact('cars', 'filters_data', 'appliedFilters'));
+        return view('frontend.economy', compact('cars', 'filters_data', 'appliedFilters'));
         
         
     }
+    
   public function luxuryDubai(Request $request){
 
         $minBooking = $request->min_days_booking;
+        $sortOption = $request->sort;
         $appliedFilters = [];
         $path = $request->path();
         $query = Product::query();
-              // Default query modifications based on path
+        dd($sortOption);
+        
+        // Default query modifications based on path
         if ($path === 'luxury-car-rental-dubai') {
             $appliedFilters['category'] = 'Luxury';
             $query->where('category', 'Luxury')->where('city', 'Dubai');

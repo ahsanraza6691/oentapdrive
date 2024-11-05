@@ -1,7 +1,9 @@
 @extends('frontend.layouts.new_header')
 @section('title', 'Car with Driver | OneTapDrive')
 @section('content')
-
+    @php
+        $params = [ "service_type" => request()->route('service_type')];
+    @endphp
     <section class="linkingSec">
         <div class="container-lg">
             <div class="row">
@@ -10,14 +12,11 @@
                         <ul class="linkingCont">
                             <li><a href="/" class="fa fa-home"></a></li>
                             <li><a href="#0">Dubai</a></li>
-                            <li><a href="#0">car brand</a></li>
-                            <li class="current"><span>By brand / by Vehicle type</span></li>
+                            <li><a href="#0">Car with Driver </a></li>
+                            <li class="current"><span>{{str_replace("-", " ",strtolower(request()->route('service_type')))}}</span></li>
                         </ul>
                         <div class="filter_action">
                             <button class="styled_button rounded_sm filter_action" id="filterBtn" type="button">
-                                {{-- <div></div>
-                                <div></div>
-                                <div></div> --}}
                                 <i class="fas fa-filter"></i>
                             </button>
                         </div>
@@ -64,7 +63,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="filterCont">
-                        <form method="GET" action="{{ route('car-with-driver') }}">
+                        <form method="GET" action="{{ route('car-with-driver', ['service_type' => request()->route('service_type')]) }}">
                             <div id="filters" class="filters">
                                 <h2 class="flex_between font_semi_bold">
                                     Filters
@@ -139,7 +138,7 @@
                                                 @foreach ($passengers as $passenger_key => $passenger)
                                                     <div class="form-check">
                                                         <div class="checkboxInput">
-                                                            <input type="checkbox" name="passengers[]" value="{{$passenger_key}}" {{!empty(request()->get("passengers")) && request()->get("passengers") == $passenger_key ? "data-state=checked" : "data-state=unchecked"}} {{!empty(request()->get("passengers")) && request()->get("passengers") == $passenger_key ? "checked" : ""}}>
+                                                            <input type="checkbox" name="passengers[]" value="{{$passenger_key}}" {{!empty(request()->get("passengers")) && in_array($passenger_key, request()->get("passengers")) ? "data-state=checked" : "data-state=unchecked"}} {{!empty(request()->get("passengers")) && in_array($passenger_key, request()->get("passengers"))  ? "checked" : ""}}>
                                                             <i class="fas fa-check"></i>
                                                         </div>
                                                         <label for="">{{$passenger}}</label>
@@ -447,46 +446,50 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="filterTags">
-                                        <button class="filterTag all">
-                                            Clear all filters
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                        <button class="filterTag">
-                                            Sedan
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                        <button class="filterTag">
-                                            4 - 5 Seaters
-                                            <i class="fas fa-times"></i>
-                                        </button>
+                                        @if(!empty($appliedFilters))
+                                            <a href="{{route('rent-a-car-dubai')}}">
+                                                <button class="filterTag all">
+                                                    Clear all filters
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </a>
+                                        @endif
+                                        @foreach($appliedFilters as $filterName => $filterValue)
+                                            @php
+                                                if ( $filterValue == null) {
+                                                    continue;
+                                                } 
+                                                // Get the current query parameters except the current filter
+                                                $queryParams = request()->except($filterName);
+                                        
+                                                // Ensure the required 'brand' parameter is included in the route
+                                                $urlWithoutFilter = route(request()->route()->getName(), array_merge($params, $queryParams));
+                                            @endphp
+                                        
+                                            <a href="{{ $urlWithoutFilter }}">
+                                                <button class="filterTag">
+                                                    {{ is_array($filterValue) ? implode(', ', array_map(fn($value) => \Illuminate\Support\Str::ucfirst($value), $filterValue)) : \Illuminate\Support\Str::ucfirst($filterValue) }}
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </a>
+                                        @endforeach
+                                    
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-3">
+                                    <form id="filterForm" method="GET" action="{{ route(Route::currentRouteName(), $params) }}">
                                     <div class="inputCont sort">
-                                        <select autocomplete="off">
-                                            <option selected="selected" value="">
-                                                Sort: Featured
-                                            </option>
-                                            <option value="">
-                                                Daily (low to high)
-                                            </option>
-                                            <option value="">
-                                                Daily (high to low)
-                                            </option>
-                                            <option value="">
-                                                Weekly (low to high)
-                                            </option>
-                                            <option value="">
-                                                Monthly (low to high)
-                                            </option>
-                                            <option value="">
-                                                Passengers (low to high)
-                                            </option>
-                                            <option value="">
-                                                Passengers (high to low)
-                                            </option>
+                                        <select autocomplete="off" name="sort" id="sortSelect">
+                                            <option {{ request()->get('sort') == "featured" ? "selected" : "" }}value="featured">Sort: Featured</option>
+                                            <option {{ request()->get('sort') == "daily_low_to_high" ? "selected" : "" }} value="daily_low_to_high">Daily (low to high)</option>
+                                            <option {{ request()->get('sort') == "daily_high_to_low" ? "selected" : "" }} value="daily_high_to_low">Daily (high to low)</option>
+                                            <option {{ request()->get('sort') == "weekly_low_to_high" ? "selected" : "" }} value="weekly_low_to_high">Weekly (low to high)</option>
+                                            <option {{ request()->get('sort') == "monthly_low_to_high" ? "selected" : "" }} value="monthly_low_to_high">Monthly (low to high)</option>
+                                            <option {{ request()->get('sort') == "passengers_low_to_high" ? "selected" : "" }} value="passengers_low_to_high">Passengers (low to high)</option>
+                                            <option {{ request()->get('sort') == "passengers_high_to_low" ? "selected" : "" }} value="passengers_high_to_low">Passengers (high to low)</option>
                                         </select>
                                     </div>
+                                    </form>
                                 </div>
                                 @if (count($cars) > 0)
                                     @foreach ($cars as $key => $value)
@@ -1188,6 +1191,18 @@
                     myWpElement1.style.width = "47px";
                 });
             });
+        });
+    </script>
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterForm = document.getElementById('filterForm');
+
+            filterForm.addEventListener('change', function() {
+                filterForm.submit();
+            });
+
         });
     </script>
 @endsection

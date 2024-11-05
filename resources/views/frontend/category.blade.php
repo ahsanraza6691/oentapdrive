@@ -16,7 +16,7 @@
                     <ul class="linkingCont">
                         <li><a href="{{route('home')}}" class="fa fa-home"></a></li>
                         <li><a href="{{ route('home') }}">Home</a></li> <!-- Modify as per your dynamic URL logic -->
-                        <li><a href="javascipt:void(0);">Dubai</a></li>
+                        <li><a href="javascript:void(0);">Dubai</a></li>
                         
                         <li class="current"><span>{{ $category }}</span></li> <!-- Dynamically display category -->
                     </ul>
