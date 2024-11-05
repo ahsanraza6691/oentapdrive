@@ -155,11 +155,12 @@
                                                     @php
                                                         $remainingRefreshes = \App\Helpers\Helper::availableRefreshes() - \App\Helpers\Helper::usedRefreshes();
                                                     @endphp
-                                                
-                                                    <a href="{{ $remainingRefreshes > 0 ? route('refresh-car', $value->id) : '#' }}" 
-                                                    class="reload_icon {{ $remainingRefreshes > 0 ? '' : 'disabled' }}">
+
+                                                    <a href="{{ $remainingRefreshes > 0 && $value->status == 1 ? route('refresh-car', $value->id) : '#' }}" 
+                                                    class="reload_icon {{ $remainingRefreshes > 0 && $value->status == 1 ? '' : 'disabled' }}">
                                                         <i class="fa fa-refresh p-2 rounded bg_orange text-light" aria-hidden="true"></i>
                                                     </a>
+
                                                 
 
 
