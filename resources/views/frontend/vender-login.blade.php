@@ -165,6 +165,18 @@
     a:hover{
     	color: var(--secondary-color);
     }
+
+    @media only screen and (max-width: 767px){
+        .login-card .login-main {
+            padding: 30px;
+            min-width: 400px;
+        }
+        .mobile_hide {
+            display: none;
+        }
+
+    }
+
   </style>
   
   <div class="container-fluid p-0">
@@ -172,13 +184,13 @@
         <div class="login-main">
           <h1 class="pageHeading">Login</h1>
         <div class="row m-0">
-          <div class="col-6">
+          <div class="col-md-6 mobile_hide">
           	<img class="popupImg img-fluid" src="{{asset('assets/images/login-img.webp')}}" alt="">
             <h6 class="text-center mt-2">
             	Expand your reach with OneTapDrive and get a steady stream of leads to grow your business like never before.
             </h6>
           </div>
-            <div class="col-6">
+            <div class="col-md-6">
               
                     <div>
                          
@@ -205,7 +217,7 @@
 
                               <div class="register text-center mt-3">
 
-                                  <p>Don't have an account? <a href="#">Sign Up</a></p>
+                                  <p>Don't have an account? <a href="{{route('list-your-rental-cars')}}">Sign Up</a></p>
 
                               </div>
 

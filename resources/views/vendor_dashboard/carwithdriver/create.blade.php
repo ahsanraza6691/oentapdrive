@@ -206,9 +206,9 @@ input[type=number] {
                                                 <select id="service_type" for="exampleFormControlInput10"
                                                     class="form-control btn-square type w-100" name="service_type">
                                                     <option value="">Select Service</option>
-                                                        <option value="Chauffeur Service">Chauffeur Service</option>
-                                                        <option value="Airport Transport">Airport Transport</option>
-                                                        <option value="Point to Point Transfer">Point to Point Transfer</option>
+                                                        <option value="chauffeur-service">Chauffeur Service</option>
+                                                        <option value="airport-transport">Airport Transport</option>
+                                                        <option value="point-to-point-transfer">Point to Point Transfer</option>
                                                 </select>
                                             </div>
                                         </div>

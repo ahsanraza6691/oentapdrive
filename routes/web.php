@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CarController;
 use App\Http\Controllers\VendorController;
 use Carbon\Carbon;
 use App\Models\BillingInfo;
@@ -388,10 +389,6 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('terms-of-use',[FrontendController::class,'termsOfuse'])->name('terms-of-use');
     Route::get('about-us',[FrontendController::class,'aboutUs'])->name('about-us');
     Route::get('pricing',[FrontendController::class,'ourPricing'])->name('pricing');
-    Route::get('car-details/{slug}',[FrontendController::class,'carDetails'])->name('car-details');
-    Route::get('chauffeur-service/{slug}',[FrontendController::Class,'chauffeurDetails'])->name('chauffeur-service');
-    Route::get('dubai-car-with-driver/{slug}',[FrontendController::class,'carWithDriverDetails'])->name('dubai-car-with-driver');
-    Route::get('rent/{slug}/dubai',[FrontendController::class,'rentCars'])->name('rent');
     Route::post('email-otp',[FrontendController::class,'emailOtp'])->name('email-otp');
     Route::post('email-verify',[FrontendController::class,'emailVerify'])->name('email-verify');
 
@@ -412,16 +409,21 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('companies',[FrontendController::class,'allCompanies'])->name('companies');
     Route::get('company-details/{slug}',[FrontendController::class,'companyDetails'])->name('company-details');
     Route::get('details-new',[FrontendController::Class,'detailsNew'])->name('details-new');
-  	Route::get('rent-cheap-economy-cars-dubai',[FrontendController::class,'economyDubai'])->name('rent-cheap-economy-cars-dubai');
-    Route::get('luxury-car-rental-dubai',[FrontendController::class,'luxuryDubai'])->name('luxury-car-rental-dubai');
-    Route::get('rent-sports-cars-in-dubai',[FrontendController::class,'sportsDubai'])->name('rent-sports-cars-in-dubai');
-    Route::get('rent-special-edition-car-dubai',[FrontendController::class,'specialEditionDubai'])->name('rent-special-edition-car-dubai');
-    Route::get('rent-muscles-cars-in-dubai',[FrontendController::class,'muscleCars'])->name('rent-muscles-cars-in-dubai');
-    Route::get('rent-hybrid-electrical-cars-dubai',[FrontendController::class,'electricCarsDubai'])->name('rent-hybrid-electrical-cars-dubai');
-    // Route::get('/car-rentals/{type}', [FrontendController::class, 'show'])->name('car-rentals');
-    Route::get('{type}-car-rentals', [FrontendController::class, 'show'])->name('car-rentals');
-    // Route::get('{type}-car-rental', [FrontendController::class, 'carBrands'])->name('car-brands');
-    Route::get('/brands/{brand?}-car-rental', [FrontendController::class, 'showBrand'])->where('brand', '[A-Za-z0-9\-]+')->name('brand-car-rental');
+
+  	Route::get('rent-cheap-economy-cars-dubai',[CarController::class,'economyDubai'])->name('rent-cheap-economy-cars-dubai');
+    Route::get('luxury-car-rental-dubai',[CarController::class,'luxuryDubai'])->name('luxury-car-rental-dubai');
+    Route::get('rent-sports-cars-in-dubai',[CarController::class,'sportsDubai'])->name('rent-sports-cars-in-dubai');
+    Route::get('rent-special-edition-car-dubai',[CarController::class,'specialEditionDubai'])->name('rent-special-edition-car-dubai');
+    Route::get('rent-muscles-cars-in-dubai',[CarController::class,'muscleCars'])->name('rent-muscles-cars-in-dubai');
+    Route::get('rent-hybrid-electrical-cars-dubai',[CarController::class,'electricCarsDubai'])->name('rent-hybrid-electrical-cars-dubai');
+    Route::get('{type}-car-rentals', [CarController::class, 'show'])->name('car-rentals');
+    Route::get('/brands/{brand?}-car-rental', [CarController::class, 'showBrand'])->where('brand', '[A-Za-z0-9\-]+')->name('brand-car-rental');
+
+    Route::get('car-details/{slug}',[CarController::class,'carDetails'])->name('car-details');
+    Route::get('chauffeur-service/{slug}',[CarController::Class,'chauffeurDetails'])->name('chauffeur-service');
+    Route::get('car-with-driver/{service_type?}',[CarController::class,'carwithDriver'])->name('car-with-driver');
+    Route::get('dubai-car-with-driver/{slug}',[CarController::class,'carWithDriverDetails'])->name('dubai-car-with-driver');
+    Route::get('rent/{slug}/dubai',[CarController::class,'rentCars'])->name('rent');
     // vendor routes
 
 

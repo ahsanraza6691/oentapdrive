@@ -138,7 +138,7 @@
                                         <input type="text" placeholder="Enter City">
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-12 col-sm-6">
+                                <!-- <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Password</label>
                                         <input type="text" placeholder="Enter Password">
@@ -149,7 +149,7 @@
                                         <label for="">Confirm Password</label>
                                         <input type="text" placeholder="Enter Confirm Password">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Company Logo</label>

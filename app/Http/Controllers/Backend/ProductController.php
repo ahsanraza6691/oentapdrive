@@ -55,7 +55,6 @@ class ProductController extends Controller
         $products = Product::with('get_brand_name','get_user')->orderBy('id', 'desc')->get();
         return view('admin_dashboard.product.index', get_defined_vars());
     }
-
     
     public function carWithDriverListing(Request $request){
         $products = CarWithDriver::get();

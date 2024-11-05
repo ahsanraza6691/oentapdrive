@@ -583,29 +583,29 @@
                     <div class="col-9">
                         <div class="filterTags">
                             @if(!empty($appliedFilters))
-                            <a href="{{route('rent-a-car-dubai')}}">
-                            <button class="filterTag all">
-                                Clear all filters
-                                <i class="fas fa-times"></i>
-                            </button>
-                            </a>
+                                <a href="{{route('rent-a-car-dubai')}}">
+                                    <button class="filterTag all">
+                                        Clear all filters
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </a>
                             @endif
                             @foreach($appliedFilters as $filterName => $filterValue)
-                            @php
-                                // Get the current query parameters except the current filter
-                                $queryParams = request()->except($filterName);
-                        
-                                // Ensure the required 'brand' parameter is included in the route
-                                $urlWithoutFilter = route(request()->route()->getName(), array_merge($params, $queryParams));
-                            @endphp
-                        
-                            <a href="{{ $urlWithoutFilter }}">
-                                <button class="filterTag">
-                                    {{ is_array($filterValue) ? implode(', ', array_map(fn($value) => \Illuminate\Support\Str::ucfirst($value), $filterValue)) : \Illuminate\Support\Str::ucfirst($filterValue) }}
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </a>
-                        @endforeach
+                                @php
+                                    // Get the current query parameters except the current filter
+                                    $queryParams = request()->except($filterName);
+                            
+                                    // Ensure the required 'brand' parameter is included in the route
+                                    $urlWithoutFilter = route(request()->route()->getName(), array_merge($params, $queryParams));
+                                @endphp
+                            
+                                <a href="{{ $urlWithoutFilter }}">
+                                    <button class="filterTag">
+                                        {{ is_array($filterValue) ? implode(', ', array_map(fn($value) => \Illuminate\Support\Str::ucfirst($value), $filterValue)) : \Illuminate\Support\Str::ucfirst($filterValue) }}
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </a>
+                            @endforeach
                         
                         </div>
                     </div>
@@ -613,27 +613,13 @@
                         <form id="filterForm" method="GET" action="{{ route(Route::currentRouteName(), $params) }}">
                         <div class="inputCont sort">
                             <select autocomplete="off" name="sort" id="sortSelect">
-                                <option selected="selected" value="featured">
-                                    Sort: Featured
-                                </option>
-                                <option value="daily_high_to_low">
-                                    Daily (low to high)
-                                </option>
-                                <option value="daily_low_to_high">
-                                    Daily (high to low)
-                                </option>
-                                <option value="weekly_low_to_high">
-                                    Weekly (low to high)
-                                </option>
-                                <option value="monthly_low_to_high">
-                                    Monthly (low to high)
-                                </option>
-                                <option value="passengers_low_to_high">
-                                    Passengers (low to high)
-                                </option>
-                                <option value="passengers_high_to_low">
-                                    Passengers (high to low)
-                                </option>
+                                <option {{ request()->get('sort') == "featured" ? "selected" : "" }}value="featured">Sort: Featured</option>
+                                <option {{ request()->get('sort') == "daily_low_to_high" ? "selected" : "" }} value="daily_low_to_high">Daily (low to high)</option>
+                                <option {{ request()->get('sort') == "daily_high_to_low" ? "selected" : "" }} value="daily_high_to_low">Daily (high to low)</option>
+                                <option {{ request()->get('sort') == "weekly_low_to_high" ? "selected" : "" }} value="weekly_low_to_high">Weekly (low to high)</option>
+                                <option {{ request()->get('sort') == "monthly_low_to_high" ? "selected" : "" }} value="monthly_low_to_high">Monthly (low to high)</option>
+                                <option {{ request()->get('sort') == "passengers_low_to_high" ? "selected" : "" }} value="passengers_low_to_high">Passengers (low to high)</option>
+                                <option {{ request()->get('sort') == "passengers_high_to_low" ? "selected" : "" }} value="passengers_high_to_low">Passengers (high to low)</option>
                             </select>
                         </div>
                         </form>
