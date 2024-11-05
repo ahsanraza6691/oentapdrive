@@ -221,7 +221,7 @@
 </div>
 
 <script type="text/javascript" src="{{asset('web-assets/js/plugins.js')}}"></script>
-<script type="text/javascript" src="{{asset('web-assets/js/index.js')}}"></script>
+<script type="text/javascript" src="{{asset('web-assets/js/index.js?version=1')}}"></script>
 @yield('script')
 
 <script type="text/javascript">

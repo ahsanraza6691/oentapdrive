@@ -841,7 +841,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 {{-- @include('notify::components.notify')
   @notifyJs --}}
-<script src="{{ asset('js/index.js') }}"></script>
+<script src="{{ asset('js/index.js') }}?time={{time()}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
