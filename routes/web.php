@@ -424,6 +424,8 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('car-with-driver/{service_type?}',[CarController::class,'carwithDriver'])->name('car-with-driver');
     Route::get('dubai-car-with-driver/{slug}',[CarController::class,'carWithDriverDetails'])->name('dubai-car-with-driver');
     Route::get('rent/{slug}/dubai',[CarController::class,'rentCars'])->name('rent');
+    Route::get('/search-suggestions', [CarController::class, 'searchSuggestions'])->name('search.suggestions');
+
     // vendor routes
 
 

@@ -7,6 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+
+            /* Style the suggestions list */
+    .suggestions-list {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+    }
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
         @media (max-width: 991.98px) {
             .desktopMenu, .heroSec, .searchBar.desktop, .testiSec, .docSec {
                 display: none;
@@ -225,6 +242,43 @@
 @yield('script')
 
 <script type="text/javascript">
+
+    document.getElementById('searchField').addEventListener('keyup', function () {
+        let query = this.value;
+
+        if (query.length > 2) { // Start searching after 3 characters
+            fetch(`{{ route('search.suggestions') }}?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    let suggestions = document.getElementById('suggestions');
+                    suggestions.innerHTML = ''; // Clear previous suggestions
+
+                    if (data.length > 0) {
+                        data.forEach(item => {
+                            let div = document.createElement('div');
+                            div.classList.add('suggestion-item');
+                            div.textContent = item.match;
+
+                            div.addEventListener('click', () => {
+                                document.getElementById('searchField').value = item.match;
+                                suggestions.innerHTML = ''; // Clear suggestions
+                            });
+                            suggestions.appendChild(div);
+                        });
+                    } else {
+                        suggestions.innerHTML = '<div class="suggestion-item">No results found</div>';
+                    }
+                })
+                .catch(error => console.error('Error fetching suggestions:', error));
+        } else {
+            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions if query is short
+        }
+    });
+
+
+
+
+
 </script>
 <script type="text/javascript">
     @if ($errors->any())

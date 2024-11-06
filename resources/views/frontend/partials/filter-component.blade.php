@@ -570,14 +570,14 @@
                 <div class="row carRow">
                     <div class="col-12">
 
-                        @if (!empty($get_brand))
-                            <h2 class="secHeading">RENT A {{ strtoupper($get_brand->brand_name) }} IN DUBAI,
-                                UAE</h2>
-                        @else
-                            <h2 class="secHeading">RENT A CAR IN DUBAI ON DAY, WEEK, MONTH-BASIS</h2>
-                        @endif
+                     
+                            <h2 class="secHeading">{{ strtoupper(\App\Helpers\Helper::getCategoryTitleBySlug()) }}</h2>
+                      
+
+                       
                         <p>
-                            Hire cars directly from local car rental companies at the best rate
+                            
+                            {{ \App\Helpers\Helper::getCategoryDescriptionBySlug()}}
                         </p>
                     </div>
                     <div class="col-9">

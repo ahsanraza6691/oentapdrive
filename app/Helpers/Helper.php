@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\UserConsumePackageItem;
+use Illuminate\Support\Facades\DB;
 
 class Helper
 {
@@ -15,5 +16,19 @@ class Helper
     {
         return UserConsumePackageItem::where('user_id', auth()->id())
                     ->sum('used');
+    }
+
+    public static function getCategoryTitleBySlug()
+    {
+        $slug = request()->segment(count(request()->segments()));
+        $category = DB::table('categories')->where('slug', $slug)->first();
+        return $category ? $category->title : null;
+    }
+
+    public static function getCategoryDescriptionBySlug()
+    {
+        $slug = request()->segment(count(request()->segments()));
+        $category = DB::table('categories')->where('slug', $slug)->first();
+        return $category ? $category->description : null;
     }
 }

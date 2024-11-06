@@ -48,6 +48,9 @@
 
 
     <style>
+
+
+
         .otp-input,
         .email-otp-input {
             width: 40px;
