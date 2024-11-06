@@ -264,14 +264,15 @@ function menuToggler() {
             menu.classList.remove('active')
         })
     })
-
-    filterBtn.addEventListener('click', () => {
-        if (document.querySelector('.filterCont').classList.contains('active')) {
-            document.querySelector('.filterCont').classList.remove('active')
-        } else {
-            document.querySelector('.filterCont').classList.add('active')
-        }
-    })
+    if (filterBtn) {
+        filterBtn.addEventListener('click', () => {
+            if (document.querySelector('.filterCont').classList.contains('active')) {
+                document.querySelector('.filterCont').classList.remove('active')
+            } else {
+                document.querySelector('.filterCont').classList.add('active')
+            }
+        })
+    }
 }
 
 function onOpenCollapse(id) {

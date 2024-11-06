@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserConsumePackageItem;
+use App\Services\EncryptionService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -111,7 +112,16 @@ class VendorController extends Controller
     }
 
     public function setupPassword(Request $request){
-        return view('frontend.setup-password');
+        $token = $request->query('token');
+        if (empty($token)) {
+            abort(404);
+        }
+        $user = json_decode(EncryptionService::decrypt($token), true);
+        $userDetails = User::where(['email' => $user['user_email']])->first();
+        if ($userDetails->status) {
+            abort(403);
+        }
+        return view('frontend.setup-password', ['user_details' => $userDetails]);
     }
 
     public function vendorLogin(Request $request)

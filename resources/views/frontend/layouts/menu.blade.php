@@ -468,17 +468,19 @@
                 <button class="subMenuCloseBtn">
                     <i class="fas fa-times"></i>
                 </button>
-                <ul>
-                   @foreach ($brands as $brand)
-                        <li>
-                            <a href="{{ route('brand-car-rental', ['brand' => urlencode($brand->slug)]) }}">
-                                <img src="{{ asset('brands/' . $brand->brand_image) }}"
-                                     alt="">
-                                <span>{{ $brand->brand_name }}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                @if (!empty($brands))
+                    <ul>
+                    @foreach ($brands as $brand)
+                            <li>
+                                <a href="{{ route('brand-car-rental', ['brand' => urlencode($brand->slug)]) }}">
+                                    <img src="{{ asset('brands/' . $brand->brand_image) }}"
+                                        alt="">
+                                    <span>{{ $brand->brand_name }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
             <div class="subMenu" id="cwd">
                 <button class="subMenuCloseBtn">

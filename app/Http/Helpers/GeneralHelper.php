@@ -2,12 +2,15 @@
 
 namespace App\Http\Helpers;
 
+use App\Jobs\SendEmail;
+use Carbon\Carbon;
 
 class GeneralHelper
 {
-    public static function bindAppliedFilter(&$appliedFilters) {
+    public static function bindAppliedFilter(&$appliedFilters)
+    {
         $appliedFilters['category'] = 'Luxury';
-        switch(request()->path()) {
+        switch (request()->path()) {
             case 'luxury-car-rental-dubai':
                 $appliedFilters['category'] = 'Luxury';
                 break;
@@ -35,7 +38,8 @@ class GeneralHelper
         }
     }
 
-    public static function sortOption(&$query) {
+    public static function sortOption(&$query)
+    {
         $sortOption = request()->get('sort');
         switch ($sortOption) {
             case 'daily_high_to_low':
@@ -61,5 +65,49 @@ class GeneralHelper
                 $query->orderBy('updated_at', 'desc');
                 break;
         }
+    }
+    public static function sendEmail(array $user, string $template, string $subject, $password = null, $otp = null)
+    {
+        $extra = [];
+        $extra['userDetails'] = $user;
+        $extra['send_to'] = $extra['userDetails']['email'];
+        if ($password) {
+            $extra['userDetails']['email_password'] = $password;
+        }
+        if ($otp) {
+            $extra['userDetails']['otp_code'] = $otp;
+        }
+
+        $emailJob = (
+            new SendEmail(
+                env('MAIL_FROM_ADDRESS'),
+                env('MAIL_FROM_NAME'),
+                $subject,
+                $template,
+                'registration',
+                $extra
+            ));
+        dispatch($emailJob);
+    }
+    
+    public static function sendAdminEmail(array $user, string $template, string $subject, $password = null)
+    {
+        $extra = [];
+        $extra['userDetails'] = $user;
+        $extra['send_to'] = $extra['userDetails']['email'];
+        if ($password) {
+            $extra['userDetails']['email_password'] = $password;
+        }
+
+        $emailJob = (
+            new SendEmail(
+                env('MAIL_FROM_ADDRESS'),
+                env('MAIL_FROM_NAME'),
+                $subject,
+                $template,
+                'registration',
+                $extra
+            ))->delay(Carbon::now()->addSeconds(1));
+        dispatch($emailJob);
     }
 }

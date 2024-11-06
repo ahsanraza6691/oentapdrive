@@ -188,7 +188,7 @@
                 <form>
                     <div class="inputCont">
                         <h6>Email</h6>
-                        <input type="email" name="email" id="email" value="ahsan.ghazitech@gmail.com" disabled>
+                        <input type="email" name="email" id="email" value="{{$user_details['email']}}" disabled>
                     </div>
 
                     <div class="inputCont">
