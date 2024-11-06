@@ -453,6 +453,7 @@ Route::controller(GoogleController::class)->group(function(){
 Route::get('login',[VendorController::class,'login'])->name('login');
 Route::post('vendor-login',[VendorController::class,'vendorLogin'])->name('vendor-login');
 Route::get('setup-password',[VendorController::class,'setupPassword'])->name('setup-password');
+Route::post('setup-password',[VendorController::class,'postSetupPassword'])->name('post-setup-password');
 Route::post('add-password',[FrontendController::class,'addPassword'])->name('add-password');
 
 Route::get('set-password',[FrontendController::class,'setPassword'])->name('set-password');

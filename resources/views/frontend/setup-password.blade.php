@@ -185,19 +185,27 @@
           <h1 class="pageHeading">Setup Your Password</h1>
         <div class="row">
             <div class="col-md-12">
-                <form>
+                <form method="POST" action="{{route('post-setup-password')}}">
+                    @csrf()
                     <div class="inputCont">
                         <h6>Email</h6>
                         <input type="email" name="email" id="email" value="{{$user_details['email']}}" disabled>
+                        <input type="hidden" name="token" value="{{EncryptionService::encrypt(json_encode(["user_email" => $user_details->email]))}}">
                     </div>
 
                     <div class="inputCont">
                         <h6>Password</h6>
                         <input type="password" name="password" id="password" required>
+                        @error('password')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="inputCont">
                         <h6>Confirm Password</h6>
-                        <input type="password" name="confirm_password" id="confirm_password" required>
+                        <input type="password" name="password_confirmation" id="password_confirmation" required>
+                        @error('password_confirmation')
+                                <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="inputCont text-center mt-3">
                         <button class="themeBtn">
