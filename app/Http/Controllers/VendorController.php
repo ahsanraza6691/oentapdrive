@@ -110,6 +110,10 @@ class VendorController extends Controller
         return view('frontend.vender-login');
     }
 
+    public function setupPassword(Request $request){
+        return view('frontend.setup-password');
+    }
+
     public function vendorLogin(Request $request)
     {
         $this->validate($request, [
