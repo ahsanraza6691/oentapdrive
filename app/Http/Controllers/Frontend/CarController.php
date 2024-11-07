@@ -1337,15 +1337,15 @@ class CarController extends Controller
             if (stripos($product->model_name, $query) !== false) {
                 $match = $product->product_full_name;
                 $type = 'model';
-                $slug = $product->slug; // Assuming you can get the model slug or ID here
+                $slug = $product->slug;
             } elseif ($product->user && stripos($product->user->name, $query) !== false) {
                 $match = $product->user->name;
                 $type = 'user';
-                $slug = $product->user->slug; // Assuming user ID is the slug for company profile
+                $slug = $product->user->slug;
             } elseif ($product->brand && stripos($product->brand->brand_name, $query) !== false) {
                 $match = $product->brand->brand_name . ' ' . $product->model_name;
                 $type = 'brand';
-                $slug = $product->brand->slug; // Assuming brand ID is the slug for brand profile
+                $slug = $product->brand->slug;
             }
     
             if ($match && !in_array($match, $uniqueSuggestions)) {
