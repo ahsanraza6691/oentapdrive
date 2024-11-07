@@ -48,6 +48,9 @@
 
 
     <style>
+
+
+
         .otp-input,
         .email-otp-input {
             width: 40px;
@@ -493,22 +496,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li class="nav-item dropdown fleet_li">
                         <a class="nav-link dropdown-toggle text-light" href="#"
                            data-bs-toggle="dropdown">
-                            <!--<i class="fa-solid fa-id-card text-light"></i> -->
                             Car with Driver
                         </a>
                         <ul class="submenu-wrapper dropdown-menu">
                             @foreach ($services as $service_type)
-
-
                                 <li>
-                                    <a class="dropdown-item" href="{{route('car-with-driver',['service_type' => $service_type])}}">
+                                    <a class="dropdown-item" href="{{route('car-with-driver',['service_type' => str_replace(" ", "-",strtolower($service_type))])}}">
                                         {{$service_type}} <strong class="float-end">»</strong></a>
-                                    {{-- <ul class="submenu dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Hourly-Basis</a></li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Airport Transfer </a>
-                                        </li>
-                                    </ul> --}}
                                 </li>
                             @endforeach
 
@@ -850,7 +844,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 {{-- @include('notify::components.notify')
   @notifyJs --}}
-<script src="{{ asset('js/index.js') }}"></script>
+<script src="{{ asset('js/index.js') }}?time={{time()}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

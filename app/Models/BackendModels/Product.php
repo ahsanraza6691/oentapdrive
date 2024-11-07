@@ -20,6 +20,7 @@ class Product extends Model
 {
     // use HasSku;
     use HasFactory;
+    protected $appends = ['product_full_name'];
 
     public function skuOptions() : SkuOptions
     {
@@ -111,9 +112,18 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
     
-     public function user()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id'); // Adjust the foreign key if necessary
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function getProductFullNameAttribute(){
+        return ($this->brand->brand_name ?? '').' '.$this->model_name.' '.$this->make_year;
     }
 
 

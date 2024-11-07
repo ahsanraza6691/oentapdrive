@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Http\Helpers\GeneralHelper;
 use App\Http\Requests\User as RequestsUser;
 use App\Http\Requests\EditUser as RequestsEditUserr;
 use App\Http\Controllers\Controller;
@@ -78,7 +79,6 @@ class UserController extends Controller
         $user->save();
         $notification = array('message' => 'User Created Successfully! ', 'alert-type' => 'success');
         return redirect()->route('vendor-index')->with($notification);
-
     }
     public function edit($id){
         $users = User::find($id);
@@ -122,20 +122,9 @@ class UserController extends Controller
             $user_status->status = 0;
         }
         $user_status->save();
-        // if($user_status->status == 1){
-        //     $data = [
-        //         'email' => $user_status->email,
-        //         'name' => $user_status->name,
-        //         'company_name' => $user_status->company_name,
-        //     ];
-        //     $emailuser = $user_status->email;
-        //     Mail::send('emails.vendor_confirmation', ['data' => $data],
-        //     function ($message) use ($emailuser)
-        //     {
-        //         $message
-        //         ->to($emailuser, 'Vendor')->subject('Credentials');
-        //       });
-        // }
+        if($user_status->status == 1){
+            GeneralHelper::sendEmail($user_status->toArray(), 'account-verified','Account Verified - Welcome to One Tap Drive!');
+        }
         $notification = array('message' => 'User Status Updated Successfully! ', 'alert-type' => 'success');
         return redirect()->route('vendor-index')->with($notification);
     }
