@@ -1313,11 +1313,11 @@ class CarController extends Controller
     public function searchSuggestions(Request $request)
     {
         $query = $request->input('query');
-
+    
         $products = Product::with(['user' => function ($query) {
-            $query->select('id', 'name')->where('role', 2);
+            $query->select('id', 'name', 'slug')->where('role', 2);
         }, 'brand' => function ($query) {
-            $query->select('id', 'brand_name');
+            $query->select('id', 'brand_name', 'slug');
         }])
         ->where('model_name', 'LIKE', "%{$query}%")
         ->orWhereHas('user', function ($q) use ($query) {
@@ -1326,29 +1326,43 @@ class CarController extends Controller
         ->orWhereHas('brand', function ($q) use ($query) {
             $q->where('brand_name', 'LIKE', "%{$query}%");
         })
-        ->get(['id', 'model_name', 'user_id', 'brand_id']);
-
-        // Collect unique suggestions
+        ->get(['id', 'model_name', 'user_id', 'brand_id', 'slug']);
+    
         $uniqueSuggestions = [];
         $suggestions = $products->map(function ($product) use ($query, &$uniqueSuggestions) {
             $match = null;
-
+            $type = null;
+            $slug = null;
+    
             if (stripos($product->model_name, $query) !== false) {
-                $match = $product->model_name;
+                $match = $product->product_full_name;
+                $type = 'model';
+                $slug = $product->slug; // Assuming you can get the model slug or ID here
             } elseif ($product->user && stripos($product->user->name, $query) !== false) {
                 $match = $product->user->name;
+                $type = 'user';
+                $slug = $product->user->slug; // Assuming user ID is the slug for company profile
             } elseif ($product->brand && stripos($product->brand->brand_name, $query) !== false) {
-                $match = $product->brand->brand_name;
+                $match = $product->brand->brand_name . ' ' . $product->model_name;
+                $type = 'brand';
+                $slug = $product->brand->slug; // Assuming brand ID is the slug for brand profile
             }
+    
             if ($match && !in_array($match, $uniqueSuggestions)) {
                 $uniqueSuggestions[] = $match;
-                return ['match' => $match];
+                return [
+                    'match' => $match,
+                    'type' => $type,
+                    'slug' => $slug,
+                ];
             }
             
             return null;
         })->filter();
-        return response()->json($suggestions);
+    
+        return response()->json(array_values($suggestions->toArray()));
     }
+    
 
 
 

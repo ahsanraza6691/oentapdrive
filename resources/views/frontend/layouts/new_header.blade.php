@@ -243,15 +243,21 @@
 
 <script type="text/javascript">
 
-    document.getElementById('searchField').addEventListener('keyup', function () {
+    const routes = {
+        brand: "{{ route('brand-car-rental', ['brand' => ':slug']) }}",
+        model: "{{ route('car-details', ['slug' => ':slug']) }}",
+        user: "{{ route('company-profile', ['slug' => ':slug']) }}"
+    };
+
+    document.getElementById('searchField').addEventListener('input', function () {
         let query = this.value;
 
-        if (query.length > 2) { // Start searching after 3 characters
+        if (query.length > 2) {
             fetch(`{{ route('search.suggestions') }}?query=${query}`)
                 .then(response => response.json())
                 .then(data => {
                     let suggestions = document.getElementById('suggestions');
-                    suggestions.innerHTML = ''; // Clear previous suggestions
+                    suggestions.innerHTML = '';
 
                     if (data.length > 0) {
                         data.forEach(item => {
@@ -260,9 +266,20 @@
                             div.textContent = item.match;
 
                             div.addEventListener('click', () => {
-                                document.getElementById('searchField').value = item.match;
-                                suggestions.innerHTML = ''; // Clear suggestions
+                                let url;
+
+                                if (item.type === 'brand') {
+                                    url = routes.brand.replace(':slug', item.slug);
+                                } else if (item.type === 'model') {
+                                    url = routes.model.replace(':slug', item.slug);
+                                } else if (item.type === 'user') {
+                                    url = routes.user.replace(':slug', item.slug);
+                                }
+                                if (url) {
+                                    window.location.href = url;
+                                }
                             });
+
                             suggestions.appendChild(div);
                         });
                     } else {
@@ -271,9 +288,10 @@
                 })
                 .catch(error => console.error('Error fetching suggestions:', error));
         } else {
-            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions if query is short
+            document.getElementById('suggestions').innerHTML = '';
         }
     });
+
 
 
 
