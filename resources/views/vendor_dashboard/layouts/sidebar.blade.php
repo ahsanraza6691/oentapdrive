@@ -42,12 +42,12 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                         <div class="d-flex justify-content-between">
                             <p class="text-light">Refreshed</p>
                             <div>
-                                <span class="badge bg_orange">{{ \App\Helpers\Helper::usedRefreshes()}}/{{ \App\Helpers\Helper::availableRefreshes() }}</span>
+                                <span class="badge bg_orange">{{ Helper::usedRefreshes()}}/{{ Helper::availableRefreshes() }}</span>
                             </div>
                         </div>
                         @if(!empty(Auth::user()->refresh_cars))
                             @php
-                                $percentage  = \App\Helpers\Helper::usedRefreshes() / \App\Helpers\Helper::availableRefreshes() * 100;
+                                $percentage  = (Helper::usedRefreshes() ?? 1 / Helper::availableRefreshes()) * 100;
                             @endphp
                          <div class="progress" style="height: 5px;">
                             <div class="progress-bar bg_orange" role="progressbar" style="width: {{$percentage ?? '0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>

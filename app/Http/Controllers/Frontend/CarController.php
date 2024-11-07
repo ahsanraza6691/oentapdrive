@@ -843,7 +843,7 @@ class CarController extends Controller
             ->paginate(20);
 
         $filters_data = Product::with('get_brand_name', 'get_user')->get();
-        return view('frontend.electric-cars', get_defined_vars());
+        return view('frontend.electric-cars', $this->getData(get_defined_vars()));
     }
 
     public function show(Request $request, $type)

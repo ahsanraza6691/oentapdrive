@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserConsumePackageItem;
+use App\Services\EncryptionService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -111,7 +112,50 @@ class VendorController extends Controller
     }
 
     public function setupPassword(Request $request){
-        return view('frontend.setup-password');
+        $token = $request->query('token');
+        if (empty($token)) {
+            abort(404);
+        }
+        $user = json_decode(EncryptionService::decrypt($token), true);
+        $userDetails = User::where(['email' => $user['user_email']])->first();
+        if (!empty($userDetails->password)) {
+            abort(403);
+        }
+        return view('frontend.setup-password', ['user_details' => $userDetails]);
+    }
+    public function postSetupPassword(Request $request){
+        // Validate the form data
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $token = $request->get('token');
+        if (empty($token)) {
+            abort(404);
+        }
+        $user = json_decode(EncryptionService::decrypt($token), true);
+        $userDetails = User::where(['email' => $user['user_email']])->first();
+        if (!empty($userDetails->password)) {
+            abort(403);
+        }
+        $userDetails->password = bcrypt($validated['password']);
+        $userDetails->save();
+        $userDetails->refresh();
+
+        if (Auth::check() && Auth::user()->role == 1) {
+            $notification = array('message' => 'You are Logged in as Admin please logout First !', 'alert-type' => 'error');
+            return back()->with($notification);
+        }
+        Auth::login($userDetails);
+
+        if (Auth::check() && Auth::user()->role == 2) {
+            $notification = array('message' => 'Login Successfully !', 'alert-type' => 'success');
+            return redirect('vendor-dashboard')->with($notification);
+        } else {
+            Auth::logout();
+            $notification = array('message' => 'You are not allowed to login here !', 'alert-type' => 'error');
+            return  redirect()->back()->withInput()->with($notification);
+        }
     }
 
     public function vendorLogin(Request $request)
