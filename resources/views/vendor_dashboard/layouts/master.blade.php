@@ -59,6 +59,7 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Favicon")->first();
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/owlcarousel.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/rating.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- {{-- toastr --}} -->
@@ -160,6 +161,13 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
             @include('vendor_dashboard.layouts.footer')
             <!-- {{-- cuba css --}} -->
             @include('vendor_dashboard.layouts.script')
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+            <script>
+                $(document).ready(function(){
+                    // Initialize Dropify for file uploads
+                    $('.receiptUpload').dropify();
+                });
+            </script>
             <script>
         document.addEventListener("DOMContentLoaded", function() {
             var loader = document.getElementById('preloaderSmall');

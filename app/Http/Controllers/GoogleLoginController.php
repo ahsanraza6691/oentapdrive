@@ -33,8 +33,6 @@ class GoogleLoginController extends Controller
 
             $user = Socialite::driver('google')->user();
 
-            // echo $user->id;exit;
-
             $finduser = User::where('google_id', $user->id)->first();
 
             if ($finduser) {
@@ -52,17 +50,10 @@ class GoogleLoginController extends Controller
                 return redirect()->intended('/');
 
             } else {
-                // $newUser = User::create([
-                //     'name' => $user->name,
-                //     'email' => $user->email,
-                //     'google_id'=> $user->id,
-                //     'role'=> '3',
-                //     // 'password' => 'dummypass'// you can change auto generate password here and send it via email but you need to add checking that the user need to change the password for security reasons
-                // ]);
 
                 $UserDetails = new User();
                 $UserDetails->name = $user->name;
-                $UserDetails->email = $user->name;
+                $UserDetails->email = $user->email;
                 $UserDetails->google_id = $user->id;
                 $UserDetails->role = 3;
                 $UserDetails->save();

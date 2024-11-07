@@ -40,14 +40,14 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                     <li>
                         <p class="text-light fw-bold">REFRESH STATUS</p>
                         <div class="d-flex justify-content-between">
-                            <p class="text-light">Refereshed</p>
+                            <p class="text-light">Refreshed</p>
                             <div>
-                                <span class="badge bg_orange">{{Auth::user()->used_refreshes ?? '0'}}/{{Auth::user()->refresh_cars ?? '0'}}</span>
+                                <span class="badge bg_orange">{{ Helper::usedRefreshes()}}/{{ Helper::availableRefreshes() }}</span>
                             </div>
                         </div>
                         @if(!empty(Auth::user()->refresh_cars))
                             @php
-                                $percentage  = Auth::user()->used_refreshes / Auth::user()->refresh_cars * 100;
+                                $percentage  = (Helper::usedRefreshes() ?? 1 / Helper::availableRefreshes()) * 100;
                             @endphp
                          <div class="progress" style="height: 5px;">
                             <div class="progress-bar bg_orange" role="progressbar" style="width: {{$percentage ?? '0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -390,8 +390,19 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                         </a>
                     </li>
                     {{-- end --}}
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
+                        {{ Route::currentRouteName() == 'buy-refreshes' ? 'active' : '' }}"
+                        href="{{ route('buy-refreshes') }}"> <span class="lan-3"><i class="fa fa-money fa-lg" aria-hidden="false"></i> Buy Refreshes </span>
+                        </a>
+                    </li>
 
-
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
+                        {{ Route::currentRouteName() == 'order-history' ? 'active' : '' }}"
+                        href="{{ route('order-history') }}"> <span class="lan-3"><i class="fa fa-history fa-lg" aria-hidden="false"></i> Order History </span>
+                        </a>
+                    </li>
                      {{-- Review Management --}}
                      {{-- <li class="sidebar-list">
                         <label class="badge badge-success"></label><a class="sidebar-link sidebar-title

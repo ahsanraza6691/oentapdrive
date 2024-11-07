@@ -217,9 +217,9 @@ input[type=number] {
                                                 <select id="service_type" for="exampleFormControlInput10"
                                                     class="form-control btn-square type w-100" name="service_type">
                                                     <option value="">Select Service</option>
-                                                        <option value="Chauffeur Service" <?php if ($edit->service_type == 'Chauffeur Service') echo 'selected'; ?>>Chauffeur Service</option>
-                                                        <option value="Airport Transport" <?php if ($edit->service_type == 'Airport Transport') echo 'selected'; ?>>Airport Transport</option>
-                                                        <option value="Point to Point Transfer" <?php if ($edit->service_type == 'Point to Point Transfer') echo 'selected'; ?>>Point to Point Transfer</option>
+                                                        <option value="chauffeur-service" <?php if ($edit->service_type == 'chauffeur-service') echo 'selected'; ?>>Chauffeur Service</option>
+                                                        <option value="airport-transport" <?php if ($edit->service_type == 'airport-transport') echo 'selected'; ?>>Airport Transport</option>
+                                                        <option value="point-to-point-transfer" <?php if ($edit->service_type == 'point-to-point-transfer') echo 'selected'; ?>>Point to Point Transfer</option>
                                                 </select>
                                             </div>
                                         </div>
