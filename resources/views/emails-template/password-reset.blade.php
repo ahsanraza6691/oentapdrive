@@ -1,6 +1,5 @@
 @extends('email_template.layout.master')
 @section('content')
-
 <center>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0"
 			style="margin: 0; padding: 0; width: 100%; height: 100%;" bgcolor="#f4ecfa" class="gwfw">
@@ -55,7 +54,7 @@
 																							<tbody>
 																								<tr>
 																									<td class="img-center p-30 px-15"
-																										style="font-size:0pt; line-height:0pt; text-align:center; padding: 30px; padding-left: 15px; padding-right: 15px;">
+																										style="font-size:0pt;line-height:0pt;text-align:center;padding: 30px;padding-left: 15px;padding-right: 15px;">
 																										<a href="#"
 																											target="_blank"><img
 																												src="{{asset("email-template-assets/images/logo.webp")}}"
@@ -95,59 +94,54 @@
 																															<tbody>
 																																<tr>
 																																	<td class="fluid-img img-center pb-50"
-																																		style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 0px; padding-top: 0px; margin-top: 20px;">
-																																		<img src="{{asset("email-template-assets/images/new-account.png")}}"
-																																			width="300"
-																																			height="300"
+																																		style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 30px; padding-top: 30px; margin-top: 20px;">
+																																		<img src="{{asset("email-template-assets/images/Forgot password.png")}}"
+																																			width="250"
+																																			height="250"
 																																			border="0"
 																																			alt="">
 																																	</td>
 																																</tr>
 																																<tr>
 																																	<td class="title-36 a-center pb-15"
-																																		style="font-size:36px; line-height:45px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px; padding-top: 0px; ">
-																																		<strong>Welcome
-																																			to
-																																			<span
-																																				style="color: #ffba00;">One
-																																				Tap
-																																				Drive
-																																			</span>
+																																		style="font-size:36px; line-height:40px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px;">
+																																		<strong>Please
+																																			Reset
 																																			Your
-																																			Vendor
-																																			Account
-																																			is
-																																			Ready!</strong>
+																																			Password</strong>
 																																	</td>
 																																</tr>
 																																<tr>
 																																	<td class="text-16 lh-26 a-center pb-25"
-																																		style="font-size:18px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 15px; padding-top: 15px;">
-																																		Welcome
+																																		style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 15px;">
+																																		We
+																																		have
+																																		sent
+																																		you
+																																		this
+																																		email
+																																		in
+																																		response
 																																		to
+																																		your
+																																		request
+																																		to
+																																		reset
+																																		your
+																																		password
+																																		on
 																																		One
 																																		Tap
-																																		Drive!
-																																		Your
-																																		vendor
-																																		account
-																																		has
-																																		been
-																																		successfully
-																																		created,
-																																		and
-																																		you're
-																																		all
-																																		set
-																																		to
-																																		list
-																																		and
-																																		manage
+																																		Drive.
+																																		To
+																																		reset
 																																		your
-																																		vehicles
-																																		on
-																																		our
-																																		platform.
+																																		password,
+																																		please
+																																		follow
+																																		the
+																																		link
+																																		below:
 																																	</td>
 																																</tr>
 																																<tr>
@@ -171,10 +165,9 @@
 																																							style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
 																																							<span
 																																								class="link c-white"
-																																								style="text-decoration:none; color:#ffffff;">Click
-																																								Here
-																																								to
-																																								login</span>
+																																								style="text-decoration:none; color:#ffffff;">Reset
+																																								Your
+																																								Password</span>
 																																						</a>
 																																					</td>
 																																				</tr>
@@ -183,8 +176,6 @@
 																																		<!-- END Button -->
 																																	</td>
 																																</tr>
-
-
 																																<tr>
 																																	<td class="py-4"
 																																		style="padding-top: 10px;">
@@ -370,7 +361,7 @@
 																							style="text-decoration:none; color:#ffffff;"><span
 																								class="link c-white"
 																								style="text-decoration:none; color:#ffffff;">info@onetapdrive.com</span></a>
-																						- <a href="https://onetapdrive.com"
+																						- <a href="https://onetapdrive.com/"
 																							target="_blank"
 																							class="link c-white"
 																							style="text-decoration:none; color:#ffffff;"><span
@@ -463,5 +454,6 @@
 			</tbody>
 		</table>
 	</center>
+
 
 @endsection

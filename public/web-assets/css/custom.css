@@ -3803,3 +3803,14 @@ header.desktopMenu nav .headerSearchBar .userDropdown .dropdown > button::after 
             width: 100%;
             border-radius: 10px;
         }
+        .productsSec .carRow .secHeading {
+            margin: inherit;
+            font-weight: inherit;
+            font-size: 1.5rem;
+            text-transform: none;
+        }
+        
+        
+        .productsSec .carRow .secHeading + p {
+            text-align: left;
+        }

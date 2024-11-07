@@ -95,8 +95,8 @@
 																															<tbody>
 																																<tr>
 																																	<td class="fluid-img img-center pb-50"
-																																		style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 0px; padding-top: 0px; margin-top: 20px;">
-																																		<img src="{{asset("email-template-assets/images/new-account.png")}}"
+																																		style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 10px; padding-top: 10px; margin-top: 20px;">
+																																		<img src="{{asset("email-template-assets/images/chat.png")}}"
 																																			width="300"
 																																			height="300"
 																																			border="0"
@@ -111,80 +111,117 @@
 																																			<span
 																																				style="color: #ffba00;">One
 																																				Tap
-																																				Drive
-																																			</span>
-																																			Your
-																																			Vendor
-																																			Account
-																																			is
-																																			Ready!</strong>
+																																				Drive</span>
+																																			Live
+																																			Chat!
+																																		</strong>
 																																	</td>
 																																</tr>
 																																<tr>
 																																	<td class="text-16 lh-26 a-center pb-25"
 																																		style="font-size:18px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 15px; padding-top: 15px;">
-																																		Welcome
-																																		to
+																																		You’re
+																																		now
+																																		connected
+																																		with
 																																		One
 																																		Tap
 																																		Drive!
-																																		Your
-																																		vendor
-																																		account
-																																		has
-																																		been
-																																		successfully
-																																		created,
-																																		and
-																																		you're
-																																		all
-																																		set
+																																		Feel
+																																		free
 																																		to
-																																		list
+																																		ask
+																																		any
+																																		questions
+																																		about
+																																		the
+																																		car
+																																		you're
+																																		interested
+																																		in.
+																																		One
+																																		Tap
+																																		Drive
+																																		is
+																																		here
+																																		to
+																																		help
+																																		with
+																																		availability,
+																																		features,
+																																		pricing,
 																																		and
-																																		manage
-																																		your
-																																		vehicles
-																																		on
-																																		our
-																																		platform.
+																																		more.
+																																	</td>
+																																</tr>
+
+
+																																<tr>
+																																	<td class="text-16 lh-26 a-center pb-25"
+																																		style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:start; padding-bottom: 15px; padding-top: 15px;">
+																																		<strong>Example
+																																			questions
+																																			to
+																																			get
+																																			started:
+																																		</strong>
 																																	</td>
 																																</tr>
 																																<tr>
-																																	<td
-																																		align="center">
+																																	<td class="text-16 lh-26 a-center pb-25"
+																																		style="font-size:16px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:start; padding-bottom: 15px; padding-top: 0px;">
+																																		<ul
+																																			style="padding-left:15px">
+																																			<li>Is
+																																				this
+																																				car
+																																				available
+																																				for
+																																				my
+																																				preferred
+																																				dates?
+																																			</li>
+																																			<li>What
+																																				additional
+																																				features
+																																				does
+																																				this
+																																				vehicle
+																																				offer?
+																																			</li>
+																																			<li>Are
+																																				there
+																																				any
+																																				special
+																																				discounts
+																																				for
+																																				long-term
+																																				rentals?
+																																			</li>
 
-																																		<!-- Button -->
-																																		<table
-																																			border="0"
-																																			cellspacing="0"
-																																			cellpadding="0"
-																																			style="min-width: 200px; margin-top: 10px; margin-bottom: 10px;">
-																																			<tbody>
-																																				<tr>
-																																					<td class="btn-16 c-white l-white"
-																																						bgcolor="#ffba00"
-																																						style="font-size:16px; line-height:20px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
-																																						<a href="#"
-																																							target="_blank"
-																																							class="link c-white"
-																																							style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
-																																							<span
-																																								class="link c-white"
-																																								style="text-decoration:none; color:#ffffff;">Click
-																																								Here
-																																								to
-																																								login</span>
-																																						</a>
-																																					</td>
-																																				</tr>
-																																			</tbody>
-																																		</table>
-																																		<!-- END Button -->
+																																		</ul>
+
 																																	</td>
 																																</tr>
-
-
+																																<tr>
+																																	<td class="text-16 lh-26 a-center pb-25"
+																																		style="font-size:18px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:start; padding-bottom: 15px; padding-top: 0px;">
+																																		If
+																																		you
+																																		need
+																																		any
+																																		further
+																																		assistance,
+																																		our
+																																		support
+																																		team
+																																		is
+																																		just
+																																		a
+																																		message
+																																		away.
+																																	</td>
+																																</tr>
 																																<tr>
 																																	<td class="py-4"
 																																		style="padding-top: 10px;">
