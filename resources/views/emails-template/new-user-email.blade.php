@@ -58,7 +58,7 @@
 																										style="font-size:0pt; line-height:0pt; text-align:center; padding: 30px; padding-left: 15px; padding-right: 15px;">
 																										<a href="#"
 																											target="_blank">
-																											<img src="{{asset("email-template-assets/images/logo.webp")}}"
+																											<img src="{{asset("email-template-assets/images/logo.png")}}"
 																												width="300"
 																												height="50"
 																												border="0"
