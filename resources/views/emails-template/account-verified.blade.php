@@ -25,9 +25,7 @@
 																		<a href="#" target="_blank" class="link c-grey"
 																			style="text-decoration:none; color:#6e6e6e;"><span
 																				class="link c-grey"
-																				style="text-decoration:none; color:#6e6e6e;">View
-																				this
-																				email in your browser</span></a>
+																				style="text-decoration:none; color:#6e6e6e;">View this email in your browser</span></a>
 																	</td>
 																</tr>
 															</tbody>
@@ -56,13 +54,9 @@
 																								<tr>
 																									<td class="img-center p-30 px-15"
 																										style="font-size:0pt; line-height:0pt; text-align:center; padding: 30px; padding-left: 15px; padding-right: 15px;">
-																										<a href="#"
-																											target="_blank"><img
-																												src="{{asset("email-template-assets/images/logo.webp")}}"
-																												width="300"
-																												height="50"
-																												border="0"
-																												alt=""></a>
+																										<a href="#" target="_blank">
+																											<img src="{{asset("email-template-assets/images/logo.webp")}}" width="300" height="50" border="0" alt="">
+																										</a>
 																									</td>
 																								</tr>
 																							</tbody>
@@ -106,48 +100,14 @@
 																																<tr>
 																																	<td class="title-36 a-center pb-15"
 																																		style="font-size:36px; line-height:45px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px; padding-top: 0px; ">
-																																		<strong>Welcome
-																																			to
-																																			<span
-																																				style="color: #ffba00;">One
-																																				Tap
-																																				Drive
-																																			</span>
-																																			Your
-																																			Vendor
-																																			Account
-																																			is
-																																			Ready!</strong>
+																																		<strong>Welcome to
+																																			<span style="color: #ffba00;">One Tap Drive
+																																			</span> Your Vendor Account is Ready!</strong>
 																																	</td>
 																																</tr>
 																																<tr>
 																																	<td class="text-16 lh-26 a-center pb-25"
-																																		style="font-size:18px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 15px; padding-top: 15px;">
-																																		Welcome
-																																		to
-																																		One
-																																		Tap
-																																		Drive!
-																																		Your
-																																		vendor
-																																		account
-																																		has
-																																		been
-																																		successfully
-																																		created,
-																																		and
-																																		you're
-																																		all
-																																		set
-																																		to
-																																		list
-																																		and
-																																		manage
-																																		your
-																																		vehicles
-																																		on
-																																		our
-																																		platform.
+																																		style="font-size:18px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 15px; padding-top: 15px;"> Welcome to One Tap Drive! Your vendor account has been successfully created, and you're all set to list and manage your vehicles on our platform.
 																																	</td>
 																																</tr>
 																																<tr>
@@ -162,19 +122,9 @@
 																																			style="min-width: 200px; margin-top: 10px; margin-bottom: 10px;">
 																																			<tbody>
 																																				<tr>
-																																					<td class="btn-16 c-white l-white"
-																																						bgcolor="#ffba00"
-																																						style="font-size:16px; line-height:20px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
-																																						<a href="#"
-																																							target="_blank"
-																																							class="link c-white"
-																																							style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
-																																							<span
-																																								class="link c-white"
-																																								style="text-decoration:none; color:#ffffff;">Click
-																																								Here
-																																								to
-																																								login</span>
+																																					<td class="btn-16 c-white l-white" bgcolor="#ffba00" style="font-size:16px; line-height:20px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
+																																						<a href="{{route('setup-password')}}?token={{EncryptionService::encrypt(json_encode(["user_email" => $extra['userDetails']['email']]))}}" target="_blank" class="link c-white" style="display: block; padding: 15px 35px;  text-decoration:none; color:#ffffff;">
+																																							<span class="link c-white" style="text-decoration:none; color:#ffffff;">Click Here to login</span>
 																																						</a>
 																																					</td>
 																																				</tr>
@@ -197,18 +147,9 @@
 																																				<tr>
 																																					<td class="title-26 a-center pb-35"
 																																						style="font-size:18px; line-height:30px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 10px;">
-																																						<strong>Need
-																																							help?
-																																							Contact
-																																							One
-																																							Tap
-																																							Drive
-																																							support</strong>
+																																						<strong>Need help? Contact One Tap Drive support</strong>
 																																					</td>
 																																				</tr>
-
-
-
 																																			</tbody>
 																																		</table>
 																																	</td>
