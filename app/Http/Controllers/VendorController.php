@@ -141,13 +141,11 @@ class VendorController extends Controller
         $userDetails->password = bcrypt($validated['password']);
         $userDetails->save();
         $userDetails->refresh();
-
-        if (Auth::check() && Auth::user()->role == 1) {
-            $notification = array('message' => 'You are Logged in as Admin please logout First !', 'alert-type' => 'error');
-            return back()->with($notification);
-        }
         Auth::login($userDetails);
 
+        if (Auth::check() && Auth::user()->role == 1) {
+            Auth::logout();
+        }
         if (Auth::check() && Auth::user()->role == 2) {
             $notification = array('message' => 'Login Successfully !', 'alert-type' => 'success');
             return redirect('vendor-dashboard')->with($notification);
