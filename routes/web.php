@@ -528,3 +528,38 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     });
+
+    // email-template-routes
+
+    Route::get('/email-template', function () {
+        return view('email_template.new-user-signup');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.new-car-list');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.password-reset');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.chat');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.new-account');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.car-approved');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.signup');
+    })->name('');
+   
+
+    Route::get('/email-template', function () {
+        return view('email_template.welcome');
+    })->name('');
