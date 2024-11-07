@@ -466,121 +466,106 @@
 
 @section('script')
     <script>
-        $("#enquiryForm").validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                name: {
-                    required: true
-                },
-                company_name: {
-                    required: true
-                },
-                job_title: {
-                    required: true,
-                },
-                fleet_size: {
-                    required: true,
-                },
-                contact: {
-                    required: true,
-                },
-                country: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
-                company_logo: {
-                    required: true,
-                },
-                company_license: {
-                    required: true,
-                },
-
-            },
-            messages: {
-                name: {
-                    required: 'Your name is required.'
-                },
-                company_name: {
-                    required: 'Company name is required.'
-                },
-                email: {
-                    required: 'Email is required.'
-                },
-                job_title: {
-                    required: 'Job title is required.'
-                },
-                fleet_size: {
-                    required: 'Fleet size is required.'
-                },
-                contact: {
-                    required: 'Contact is required.'
-                },
-                country: {
-                    required: 'Country is required.'
-                },
-                city: {
-                    required: 'City is required.'
-                },
-                company_logo: {
-                    required: 'Company Logo  is required.'
-                },
-                company_license: {
-                    required: 'Company License  is required.'
-                },
-
-            },
-
-            submitHandler: function (form, e) {
-                e.preventDefault();
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                let formData = new FormData(document.getElementById('enquiryForm'));
-
-                const company_logo = document.getElementById('company_logo');
-                const company_license = document.getElementById('company_license');
-                formData.append('company_logo', company_logo.files[0]);
-                formData.append('company_license', company_license.files[0]);
-                formData.append('_token', "{{ csrf_token() }}");
-                $.ajax({
-                    url: "{{ route('vendorStore') }}",
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function () {
-                        $("#preloaderSmall").removeClass('loader-active');
+        $(document).ready(function(){
+            $("#enquiryForm").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
                     },
-                    success: function (response, data) {
-                        $("#preloaderSmall").addClass('loader-active');
-                        $.each(response.errors, function (prefix, val) {
-                            toastr.error(val[0]);
-                        });
-                        if (response.status == 503) {
-                            toastr.error(response.message)
-                            return false;
+                    name: {
+                        required: true
+                    },
+                    company_name: {
+                        required: true
+                    },
+                    job_title: {
+                        required: true,
+                    },
+                    fleet_size: {
+                        required: true,
+                    },
+                    contact: {
+                        required: true,
+                    },
+                    country: {
+                        required: true,
+                    },
+                    city: {
+                        required: true,
+                    },
+                    company_logo: {
+                        required: true,
+                    },
+                    company_license: {
+                        required: true,
+                    },
+    
+                },
+                messages: {
+                    name: {
+                        required: 'Your name is required.'
+                    },
+                    company_name: {
+                        required: 'Company name is required.'
+                    },
+                    email: {
+                        required: 'Email is required.'
+                    },
+                    job_title: {
+                        required: 'Job title is required.'
+                    },
+                    fleet_size: {
+                        required: 'Fleet size is required.'
+                    },
+                    contact: {
+                        required: 'Contact is required.'
+                    },
+                    country: {
+                        required: 'Country is required.'
+                    },
+                    city: {
+                        required: 'City is required.'
+                    },
+                    company_logo: {
+                        required: 'Company Logo  is required.'
+                    },
+                    company_license: {
+                        required: 'Company License  is required.'
+                    },
+    
+                },
+    
+                submitHandler: function (form, e) {
+                    e.preventDefault();
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    let formData = new FormData(document.getElementById('enquiryForm'));
+    
+                    const company_logo = document.getElementById('company_logo');
+                    const company_license = document.getElementById('company_license');
+                    formData.append('company_logo', company_logo.files[0]);
+                    formData.append('company_license', company_license.files[0]);
+                    formData.append('_token', "{{ csrf_token() }}");
+                    $.ajax({
+                        url: "{{ route('vendorStore') }}",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function () {
+                            $("#preloaderSmall").removeClass('loader-active');
+                        },
+                        success: function (response, data) {
+                            $("#preloaderSmall").addClass('loader-active');
+                            if (response.status) {
+                                toastr.success(response.message);
+                                $('#enquiryForm')[0].reset();
+                            }
                         }
-                        if (response.status == 502) {
-                            toastr.error('Invalid OTP !');
-                        }
-                        if (response.status == 200) {
-                            swal({
-                                title: "Company Registration!",
-                                text: response.message,
-                                type: "success",
-                                icon: "success",
-                            }).then(function () {
-                            });
-
-                            $('#enquiryForm')[0].reset();
-                        }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        })
     </script>
 @endsection
 @endsection
