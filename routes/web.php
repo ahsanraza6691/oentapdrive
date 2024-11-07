@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\CarController;
+use App\Http\Controllers\Frontend\FrontendVendorController;
 use App\Http\Controllers\VendorController;
 use Carbon\Carbon;
 use App\Models\BillingInfo;
@@ -382,7 +383,9 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('country-driving-license',[FrontendController::class,'drivingLicense'])->name('country-driving-license');
     Route::get('desert-safari',[FrontendController::class,'desertSafari'])->name('desert-safari');
     Route::get('rent-a-car-dubai/{slug?}',[FrontendController::class,'ourServices'])->name('rent-a-car-dubai');
-    Route::get('list-your-rental-cars',[FrontendController::class,'carRental'])->name('list-your-rental-cars');
+    Route::get('list-your-rental-cars',[FrontendVendorController::class,'carRental'])->name('list-your-rental-cars');
+    Route::post('vendorStore',[FrontendVendorController::class,'storeVendor'])->name('vendorStore');
+
     Route::get('our-locations',[FrontendController::class,'ourLocations'])->name('our-locations');
     Route::get('privacy-policy',[FrontendController::class,'privacyPolicy'])->name('privacy-policy');
     Route::get('terms-and-conditions',[FrontendController::class,'termsConditions'])->name('terms-and-conditions');
@@ -451,6 +454,8 @@ Route::controller(GoogleController::class)->group(function(){
 
 Route::get('login',[VendorController::class,'login'])->name('login');
 Route::post('vendor-login',[VendorController::class,'vendorLogin'])->name('vendor-login');
+Route::get('setup-password',[VendorController::class,'setupPassword'])->name('setup-password');
+Route::post('setup-password',[VendorController::class,'postSetupPassword'])->name('post-setup-password');
 Route::post('add-password',[FrontendController::class,'addPassword'])->name('add-password');
 
 Route::get('set-password',[FrontendController::class,'setPassword'])->name('set-password');

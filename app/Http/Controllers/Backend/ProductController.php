@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Helpers\GeneralHelper;
 use to;
 use Carbon\Carbon;
 use App\Models\BillingInfo;
@@ -103,7 +104,6 @@ class ProductController extends Controller
                 'images' => 'required',
 
             ]);
-
         $product = new Product();
         $brand = Brand::where('id',$request->brand_name)->first();
         $brandName = $brand->brand_name;
@@ -209,12 +209,9 @@ class ProductController extends Controller
             }
         }
 
+        GeneralHelper::sendAdminEmail('new-car-email','New Car Added to Inventory – Please Review!');
+
         return redirect()->route('rent-car.index')->with('listing','Your car listing is currently pending. Please wait for admin approval.!');
-        // $notification = array('message' => 'Your car listing is currently pending. Please wait for admin approval.! ', 'alert-type' => 'success');
-        // return redirect()->route('rent-car.index')->withInput()->with($notification);
-
-
-
     }
 
     /**
