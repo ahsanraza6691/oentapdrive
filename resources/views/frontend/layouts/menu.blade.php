@@ -158,10 +158,11 @@
             <div class="headerSearchBar">
                 <form action="">
                     <div class="inputCont">
-                        <input type="search" placeholder="Search">
-                        <button class="serachBtn">
+                        <input type="search" id="searchField" placeholder="Search" autocomplete="off">
+                        <button class="searchBtn">
                             <i class="fas fa-search"></i>
                         </button>
+                        <div id="suggestions" class="suggestions-list"></div> <!-- Div to display suggestions -->
                     </div>
                 </form>
                 @if (!Auth::check())

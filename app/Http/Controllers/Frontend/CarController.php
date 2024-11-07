@@ -844,7 +844,7 @@ class CarController extends Controller
 
         $filters_data = Product::with('get_brand_name', 'get_user')->get();
         return view('frontend.electric-cars', $this->getData(get_defined_vars()));
-    }
+    } 
 
     public function show(Request $request, $type)
     {
@@ -1306,4 +1306,64 @@ class CarController extends Controller
         $sub_categories_by_brands = SubCategory::whereIn('id', json_decode($request->sub_categories_ids))->where('status', 1)->with('filter_products')->has('filter_products', '!=', '')->get();
         return view('frontend.partials.get_filter_sub_categories', get_defined_vars())->render();
     }
+
+
+    // Code written by Ubaid
+
+    public function searchSuggestions(Request $request)
+    {
+        $query = $request->input('query');
+    
+        $products = Product::with(['user' => function ($query) {
+            $query->select('id', 'name', 'slug')->where('role', 2);
+        }, 'brand' => function ($query) {
+            $query->select('id', 'brand_name', 'slug');
+        }])
+        ->where('model_name', 'LIKE', "%{$query}%")
+        ->orWhereHas('user', function ($q) use ($query) {
+            $q->where('name', 'LIKE', "%{$query}%")->where('role', 2);
+        })
+        ->orWhereHas('brand', function ($q) use ($query) {
+            $q->where('brand_name', 'LIKE', "%{$query}%");
+        })
+        ->get(['id', 'model_name', 'user_id', 'brand_id', 'slug']);
+    
+        $uniqueSuggestions = [];
+        $suggestions = $products->map(function ($product) use ($query, &$uniqueSuggestions) {
+            $match = null;
+            $type = null;
+            $slug = null;
+    
+            if (stripos($product->model_name, $query) !== false) {
+                $match = $product->product_full_name;
+                $type = 'model';
+                $slug = $product->slug;
+            } elseif ($product->user && stripos($product->user->name, $query) !== false) {
+                $match = $product->user->name;
+                $type = 'user';
+                $slug = $product->user->slug;
+            } elseif ($product->brand && stripos($product->brand->brand_name, $query) !== false) {
+                $match = $product->brand->brand_name . ' ' . $product->model_name;
+                $type = 'brand';
+                $slug = $product->brand->slug;
+            }
+    
+            if ($match && !in_array($match, $uniqueSuggestions)) {
+                $uniqueSuggestions[] = $match;
+                return [
+                    'match' => $match,
+                    'type' => $type,
+                    'slug' => $slug,
+                ];
+            }
+            
+            return null;
+        })->filter();
+    
+        return response()->json(array_values($suggestions->toArray()));
+    }
+    
+
+
+
 }
