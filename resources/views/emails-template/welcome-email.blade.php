@@ -1,4 +1,4 @@
-@extends('email-template.layout.master')
+@extends('emails-template.layout.master')
 @section('content')
 
 <center>
