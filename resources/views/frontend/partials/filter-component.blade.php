@@ -569,14 +569,8 @@
             <div class="contentArea">
                 <div class="row carRow">
                     <div class="col-12">
-
-                     
-                            <h2 class="secHeading">{{ strtoupper(\App\Helpers\Helper::getCategoryTitleBySlug()) }}</h2>
-                      
-
-                       
+                            <h2 class="secHeading">{{ \App\Helpers\Helper::getCategoryTitleBySlug() }}</h2>                       
                         <p>
-                            
                             {{ \App\Helpers\Helper::getCategoryDescriptionBySlug()}}
                         </p>
                     </div>
