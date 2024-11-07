@@ -64,60 +64,62 @@
             @endphp
 
             @foreach ($categoriesWithCounts as $index => $category)
-                        <div class="col-lg-3 col-4 category-item"
-                             data-two="{{ $category->category }}"
-                             @if ($index >= $initialCount) style="display:none;" @endif>
-                            <a href="{{ route('car-rentals', ['type' => lcfirst($category->category)]) }}"
-                               class="categoryCard">
-                                <div class="cardImg">
-                                    @if ($category->category == 'Coupe') <img
-                                        src="{{ asset('category/Coupe.webp') }}" alt/>
-                                    @elseif($category->category == 'Sedan') <img
-                                        src="{{ asset('category/sedan-car2.webp') }}" alt/>
-                                    @elseif($category->category == 'Suv') <img loading="lazy" src="{{ asset('category/Suv.webp') }}"
-                                                                               alt/>
-                                    @elseif($category->category == '7 Seater') <img
-                                        src="{{ asset('category/7-Seater.webp') }}" alt/>
-                                    @elseif($category->category == 'Compact') <img
-                                        src="{{ asset('category/Compact.webp') }}" alt/>
-                                    @elseif($category->category == 'Crossover') <img
-                                        src="{{ asset('category/Crossover.webp') }}" alt/>
-                                    @elseif($category->category == 'Luxury') <img
-                                        src="{{ asset('category/luxury.webp') }}" alt/>
-                                    @elseif($category->category == 'ELECTRIC') <img
-                                        src="{{ asset('category/ELECTRIC.webp') }}" alt/>
-                                    @elseif($category->category == 'SPORT') <img
-                                        src="{{ asset('category/SPORT.webp') }}" alt/>
-                                    @elseif($category->category == 'MONTHLY') <img
-                                        src="{{ asset('category/MONTHLY.webp') }}" alt/>
-                                    @elseif($category->category == 'LOW PRICE') <img
-                                        src="{{ asset('category/LOW-PRICE.webp') }}" alt/>
-                                    @elseif($category->category == 'Hatchback') <img
-                                        src="{{ asset('category/Hatchback.webp') }}" alt/>
-                                    @elseif($category->category == 'SUPER CAR') <img
-                                        src="{{ asset('category/SUPER-CAR.webp') }}" alt/>
-                                   @elseif($category->category == 'Saloon') <img
-                                        src="{{ asset('category/saloon.webp') }}" alt/>
-                                    @elseif($category->category == 'CarWithDriver') <img
-                                        src="{{ asset('category/Car-With-Driver.webp') }}" alt/>
-                                    @elseif($category->category == 'CONVERTIBLE')
-                                        <img loading="lazy" src="{{ asset('category/Ferrari-FF-2023.webp') }}" alt/>
-                                    @else
-                                        <img loading="lazy" src="{{ asset('images/') }}/{{ $category->get_images[0]->images }}"
-                                             alt=""/>
-                                    @endif
-                                </div>
-                                <div class="cardContent">
-                                    <h3>{{ $category->category }}</h3>
-                                    <p>{{ $category->car_count }} Cars</p>
-                                    {{--                                    <a class="themeBtn"--}}
-                                    {{--                                       href="{{ route('services', ['category' => [$category->category]]) }}">--}}
-                                    {{--                                        View All Cars--}}
-                                    {{--                                    </a>--}}
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
+                @if (isset($category->category))
+                    <div class="col-lg-3 col-4 category-item"
+                        data-two="{{ $category->category }}"
+                        @if ($index >= $initialCount) style="display:none;" @endif>
+                        <a href="{{ route('car-rentals', ['type' => lcfirst($category->category)]) }}"
+                        class="categoryCard">
+                            <div class="cardImg">
+                                @if ($category->category == 'Coupe') <img
+                                    src="{{ asset('category/Coupe.webp') }}" alt/>
+                                @elseif($category->category == 'Sedan') <img
+                                    src="{{ asset('category/sedan-car2.webp') }}" alt/>
+                                @elseif($category->category == 'Suv') <img loading="lazy" src="{{ asset('category/Suv.webp') }}"
+                                                                        alt/>
+                                @elseif($category->category == '7 Seater') <img
+                                    src="{{ asset('category/7-Seater.webp') }}" alt/>
+                                @elseif($category->category == 'Compact') <img
+                                    src="{{ asset('category/Compact.webp') }}" alt/>
+                                @elseif($category->category == 'Crossover') <img
+                                    src="{{ asset('category/Crossover.webp') }}" alt/>
+                                @elseif($category->category == 'Luxury') <img
+                                    src="{{ asset('category/luxury.webp') }}" alt/>
+                                @elseif($category->category == 'ELECTRIC') <img
+                                    src="{{ asset('category/ELECTRIC.webp') }}" alt/>
+                                @elseif($category->category == 'SPORT') <img
+                                    src="{{ asset('category/SPORT.webp') }}" alt/>
+                                @elseif($category->category == 'MONTHLY') <img
+                                    src="{{ asset('category/MONTHLY.webp') }}" alt/>
+                                @elseif($category->category == 'LOW PRICE') <img
+                                    src="{{ asset('category/LOW-PRICE.webp') }}" alt/>
+                                @elseif($category->category == 'Hatchback') <img
+                                    src="{{ asset('category/Hatchback.webp') }}" alt/>
+                                @elseif($category->category == 'SUPER CAR') <img
+                                    src="{{ asset('category/SUPER-CAR.webp') }}" alt/>
+                            @elseif($category->category == 'Saloon') <img
+                                    src="{{ asset('category/saloon.webp') }}" alt/>
+                                @elseif($category->category == 'CarWithDriver') <img
+                                    src="{{ asset('category/Car-With-Driver.webp') }}" alt/>
+                                @elseif($category->category == 'CONVERTIBLE')
+                                    <img loading="lazy" src="{{ asset('category/Ferrari-FF-2023.webp') }}" alt/>
+                                @else
+                                    <img loading="lazy" src="{{ asset('images/') }}/{{ $category->get_images[0]->images }}"
+                                        alt=""/>
+                                @endif
+                            </div>
+                            <div class="cardContent">
+                                <h3>{{ $category->category }}</h3>
+                                <p>{{ $category->car_count }} Cars</p>
+                                {{--                                    <a class="themeBtn"--}}
+                                {{--                                       href="{{ route('services', ['category' => [$category->category]]) }}">--}}
+                                {{--                                        View All Cars--}}
+                                {{--                                    </a>--}}
+                            </div>
+                        </a>
+                    </div>
+                @endif
+            @endforeach
 
             <!-- Add Car With Driver Category -->
             <div class="col-lg-3 col-4" data-two="CarWithDriver">

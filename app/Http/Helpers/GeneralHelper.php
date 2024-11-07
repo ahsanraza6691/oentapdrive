@@ -90,11 +90,10 @@ class GeneralHelper
         dispatch($emailJob);
     }
     
-    public static function sendAdminEmail(array $user, string $template, string $subject, $password = null)
+    public static function sendAdminEmail(string $template, string $subject, $password = null)
     {
         $extra = [];
-        $extra['userDetails'] = $user;
-        $extra['send_to'] = $extra['userDetails']['email'];
+        $extra['send_to'] = env('NOTIFY_EMAIL_ADDRESS');
         if ($password) {
             $extra['userDetails']['email_password'] = $password;
         }

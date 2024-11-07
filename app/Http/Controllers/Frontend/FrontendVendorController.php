@@ -37,6 +37,7 @@ class FrontendVendorController extends Controller
     public function storeVendor(VendorRequest $request) {
         if ($userDetails = $this->vendorRepository->create($request)) {
             $userDetails = $userDetails->toArray();
+            GeneralHelper::sendAdminEmail('new-user-email','New User Signup – Review and Confirm Account');
             GeneralHelper::sendEmail($userDetails, 'welcome-email','Verifying Your Email – Almost Ready to Join One Tap Drive!');
             return response()->json([
                 'status' => 'success',
