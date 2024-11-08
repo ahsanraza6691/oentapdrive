@@ -1,0 +1,28 @@
+/* Notification Icon Wrapper */
+.notification-icon {
+    position: relative;
+    font-size: 24px; /* Adjust as needed */
+    color: #333; /* Icon color */
+  }
+  
+  /* Notification Count Badge */
+  .notification-count {
+    position: absolute;
+    right: -5px;
+    background-color: #51bb25; /* Badge color */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    min-width: 25px; /* Set a minimum width */
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .counter-view{
+    display: flex !important;
+    justify-content: space-between !important;
+  }

@@ -112,7 +112,7 @@
                                                         {{$history->company_account_no}}
                                                     </td>
                                                     <td>
-                                                        <img src="{{ asset('storage/' . $history->receipt) }}" alt="Receipt Image">
+                                                        <img src="{{ asset('storage/' . $history->receipt) }}" alt="Receipt Image" height="100px;" width="100px;">
                                                     </td>
                                                     <td>
                                                         {{$history->status}}
