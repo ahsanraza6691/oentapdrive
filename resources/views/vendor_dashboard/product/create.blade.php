@@ -414,7 +414,7 @@ input[type=number] {
 
                                         @foreach ($colors as $color)
                                             <li>
-                                                <input type="checkbox" class="btn-check" id="{{ $color }}"
+                                                <input type="radio" class="btn-check" id="{{ $color }}"
                                                     name="car_colors[]" autocomplete="off" value="{{ $color }}"
                                                     @if (is_array(old('car_colors')) && in_array($color, old('car_colors'))) checked @endif>
                                                 <label class="btn btn-outline-dark custom_btn"
@@ -911,7 +911,7 @@ input[type=number] {
 
                                     @foreach ($exteriror_colors as $ext_color => $ext_color_code)
                                     <li>
-                                        <input type="checkbox" class="btn-check"
+                                        <input type="radio" class="btn-check"
                                             id="exterior_color_{{ $ext_color }}" name="exterior_color[]"
                                             autocomplete="off" value="{{ $ext_color }}:{{ $ext_color_code }}"
                                             @if (is_array(old('exterior_color')) && in_array("$ext_color:$ext_color_code", old('exterior_color'))) checked @endif>
@@ -948,7 +948,7 @@ input[type=number] {
 
                                     @foreach ($interiror_colors as $int_color => $int_color_code)
                                         <li>
-                                            <input type="checkbox" class="btn-check "
+                                            <input type="radio" class="btn-check "
                                                 id="interiror_color_{{ $int_color }}" name="interior_color[]"
                                                 autocomplete="off" value="{{ $int_color }}:{{$int_color_code}}"
                                                 @if (is_array(old('interior_color')) &&in_array("$int_color:$int_color_code", old('interior_color'))) checked @endif>
