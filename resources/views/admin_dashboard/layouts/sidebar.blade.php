@@ -177,13 +177,17 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
                       {{-- Product Management --}}
 
                       <li class="sidebar-list">
-                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
+                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title counter-view
                         {{ Route::currentRouteName() == 'car-listing' ? 'active' : '' }} {{ Route::currentRouteName() == 'view-car-details' ? 'active' : '' }} {{ Route::currentRouteName() == 'product.create' ? 'active' : '' }}
                         {{ Route::currentRouteName() == 'edit.product' ? 'active' : '' }} {{ Route::currentRouteName() == 'add.product_variation' ? 'active' : '' }} {{ Route::currentRouteName() == 'edit.product_variation' ? 'active' : '' }}
                         {{Route::currentRouteName() == 'product-setting' ? 'active' : '' }}
                         {{Route::currentRouteName() == 'edit.product_attributes' ? 'active' : '' }}"
-                            href="{{ route('car-listing') }}"><span
-                                class="lan-3"><i class="fa fa-car fa-lg" aria-hidden="true"></i> Car Listing </span>
+                            href="{{ route('car-listing') }}">
+                                <span class="lan-3">
+                                <i class="fa fa-car fa-lg" aria-hidden="true"></i> Car Listing </span>
+                                <div class="notification-icon">
+                                    <span class="notification-count" >{{GeneralHelper::carCount()}}</span>
+                                </div>
                         </a>
 
                     </li>
@@ -382,12 +386,16 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Logo")->first();
 
                     {{-- User  Management --}}
                     <li class="sidebar-list">
-                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title
+                        <label class="badge badge-success"></label><a class="sidebar-link sidebar-title counter-view
                         {{ Route::currentRouteName() == 'vendor-index' ? 'active' : '' }}
                         {{ Route::currentRouteName() == 'vendor-create' ? 'active' : '' }}
                         {{ Route::currentRouteName() == 'vendor-edit' ? 'active' : '' }}
                         {{ Route::currentRouteName() == 'vendor-details' ? 'active' : '' }}"
-                        href="{{ route('vendor-index') }}"> <span class="lan-3"><i class="fa fa-users fa-lg" aria-hidden="false"></i> Vendor Management </span>
+                        href="{{ route('vendor-index') }}"> 
+                        <span class="lan-3"><i class="fa fa-users fa-lg" aria-hidden="false"></i> Vendor Management </span>
+                        <div class="notification-icon">
+                            <span class="notification-count" >{{GeneralHelper::vendorCount()}}</span>
+                        </div>
                         </a>
                     </li>
                     {{-- end --}}

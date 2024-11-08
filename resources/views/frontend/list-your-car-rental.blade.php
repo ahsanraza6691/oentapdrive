@@ -123,7 +123,7 @@
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Contact No.</label>
-                                        <input type="text" placeholder="Enter Contact No." name="contact">
+                                        <input type="text" placeholder="Enter Contact No." name="contact" class="contact">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
@@ -465,8 +465,16 @@
     </section>
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function(){
+            new Cleave('.contact', {
+                prefix: '+971',
+                delimiters: [' ', ' ', ' '],
+                blocks: [4, 3, 3, 4],
+                numericOnly: true
+            });
+
             $("#enquiryForm").validate({
                 rules: {
                     email: {

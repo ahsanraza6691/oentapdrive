@@ -40,6 +40,8 @@
                                                 aria-label="Details: activate to sort column ascending">Contact</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
                                                 aria-label="Details: activate to sort column ascending">Status</th>
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+                                                aria-label="Details: activate to sort column ascending">Joined</th>    
                                             <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1"
                                                 colspan="1" aria-label="Action: activate to sort column ascending"
                                                 style="width: 120.016px;">Action</th>
@@ -62,7 +64,7 @@
         serverSide: true,
         ajax: '{{ route('vendor-index') }}',
         columns: [
-            { data: 'iteration', name: 'iteration', searchable: false },
+            { data: 'iteration', name: 'iteration', searchable: false }, 
             { data: 'name', name: 'name' },
             { data: 'company_name', name: 'company_name' },
             { data: 'leads_count', name: 'leads_count' },
@@ -70,6 +72,16 @@
             { data: 'email', name: 'email' },
             { data: 'contact', name: 'contact' },
             { data: 'status', name: 'status', orderable: false, searchable: true },
+            {   data: 'created_at', 
+            name: 'created_at',
+            render: function (data) {
+                const date = new Date(data);
+                const day = date.getDate();
+                const month = date.toLocaleString('default', { month: 'short' }); // e.g., Jan, Feb, Mar
+                const year = date.getFullYear();
+                return `${day} ${month} ${year}`; // Format as 'd M Y'
+            } 
+            },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
     });

@@ -1,4 +1,4 @@
-@extends('email-template.layout.master')
+@extends('emails-template.layout.master')
 @section('content')
 
 <center>
@@ -25,9 +25,7 @@
 																		<a href="#" target="_blank" class="link c-grey"
 																			style="text-decoration:none; color:#6e6e6e;"><span
 																				class="link c-grey"
-																				style="text-decoration:none; color:#6e6e6e;">View
-																				this
-																				email in your browser</span></a>
+																				style="text-decoration:none; color:#6e6e6e;">View this email in your browser</span></a>
 																	</td>
 																</tr>
 															</tbody>
@@ -56,13 +54,9 @@
 																								<tr>
 																									<td class="img-center p-30 px-15"
 																										style="font-size:0pt; line-height:0pt; text-align:center; padding: 30px; padding-left: 15px; padding-right: 15px;">
-																										<a href="#"
-																											target="_blank"><img
-																												src="{{asset("email-template-assets/images/logo.webp")}}"
-																												width="300"
-																												height="50"
-																												border="0"
-																												alt=""></a>
+																										<a href="#" target="_blank">
+																											<img src="{{asset("email-template-assets/images/logo-2.png")}}" width="300" height="50" border="0" alt="">
+																										</a>
 																									</td>
 																								</tr>
 																							</tbody>
@@ -70,28 +64,18 @@
 																						<!-- Logo -->
 
 																						<!-- Main -->
-																						<table width="100%" border="0"
-																							cellspacing="0"
-																							cellpadding="0">
+																						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																							<tbody>
 																								<tr>
 																									<td class="px-50 mpx-15"
 																										style="padding-left: 50px; padding-right: 50px;">
 																										<!-- Section - Intro -->
-																										<table
-																											width="100%"
-																											border="0"
-																											cellspacing="0"
-																											cellpadding="0">
+																										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																											<tbody>
 																												<tr>
 																													<td class="pb-50"
 																														style="padding-bottom: 50px;">
-																														<table
-																															width="100%"
-																															border="0"
-																															cellspacing="0"
-																															cellpadding="0">
+																														<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																															<tbody>
 																																<tr>
 																																	<td class="fluid-img img-center pb-50"
@@ -122,59 +106,14 @@
 																																<tr>
 																																	<td class="text-16 lh-26 a-center pb-25"
 																																		style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 15px;">
-																																		Please
-																																		verify
-																																		your
-																																		email
-																																		to
-																																		unlock
-																																		what
-																																		One
-																																		Tap
-																																		Drive
-																																		has
-																																		to
-																																		offer.
+																																		Please verify your email to unlock what One Tap Drive has to offer.
 																																	</td>
 																																</tr>
 																																<tr>
 																																	<td align="center"
 																																		style="font-size:22px; color:#111111; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 10px; padding-top: 10px;">
-																																		Your
-																																		One
-																																		Time
-																																		Password
-																																		(OTP)
-																																		for
-																																		login:
-																																		<strong
-																																			style="color: #ffba00;">5
-																																			4
-																																			3
-																																			8</strong>
-																																		<!-- Button -->
-																																		<!-- <table
-																											border="0"
-																											cellspacing="0"
-																											cellpadding="0"
-																											style="min-width: 200px;">
-																											<tr>
-																												<td class="btn-16 c-white l-white"
-																													bgcolor="#f58220"
-																													style="font-size:16px; line-height:20px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
-																													<a href="#"
-																														target="_blank"
-																														class="link c-white"
-																														style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
-																														<span
-																															class="link c-white"
-																															style="text-decoration:none; color:#ffffff;">Verify
-																															Now</span>
-																													</a>
-																												</td>
-																											</tr>
-																										</table> -->
-																																		<!-- END Button -->
+																																		Your One Time Password (OTP) for login:
+																																		<strong style="color: #ffba00;">{{$extra['userDetails']['otp_code']}}</strong>
 																																	</td>
 																																</tr>
 																																<tr>
