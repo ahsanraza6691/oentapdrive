@@ -3,6 +3,8 @@
 namespace App\Http\Helpers;
 
 use App\Jobs\SendEmail;
+use App\Models\BackendModels\Product;
+use App\Models\User;
 use Carbon\Carbon;
 
 class GeneralHelper
@@ -108,5 +110,12 @@ class GeneralHelper
                 $extra
             ))->delay(Carbon::now()->addSeconds(1));
         dispatch($emailJob);
+    }
+
+    public static function carCount() {
+        return Product::whereNot('status', 1)->count() ?? 0;
+    }
+    public static function vendorCount() {
+        return User::where('role',2)->whereNot('status', 1)->count() ?? 0;
     }
 }
