@@ -26,6 +26,7 @@ class UserController extends Controller
                 'users.contact',
                 'users.company_name',
                 'users.status',
+                'users.created_at',
             ])
             ->where('role', 2)
             ->withCount('leads', 'carBookings')
