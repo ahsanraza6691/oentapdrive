@@ -226,40 +226,40 @@ input[type=number] {
                                             <label for="version">Categories</label>
                                         </div>
                                         <div class="col-md-8 col-12">
-                                            <input type="text" class="form-control" name="category" id="category_car">
-                                            <!--<div class="select-dropdown">-->
-                                            <!--    <select class="form-control" id="category_car" name="category">-->
-                                            <!--        <option value="Sedan">Sedan</option>-->
-                                            <!--        <option value="Coupe">Coupe</option>-->
-                                            <!--        <option value="Hatchback">Hatchback</option>-->
-                                            <!--        <option value="Convertible">Convertible</option>-->
-                                            <!--        <option value="Compact">Compact</option>-->
-                                            <!--        <option value="Subcompact">Subcompact</option>-->
-                                            <!--        <option value="SUV ">SUV</option>-->
-                                            <!--        <option value="Crossover">Crossover</option>-->
-                                            <!--        <option value="Pickup Truck">Pickup Truck</option>-->
-                                            <!--        <option value="Minivan">Minivan</option>-->
-                                            <!--        <option value="Van">Van</option>-->
-                                            <!--        <option value="Wagon">Wagon</option>-->
-                                            <!--        <option value="Sports Car">Sports Car </option>-->
-                                            <!--        <option value="Luxury Car">Luxury Car</option>-->
-                                            <!--        <option value="Super Car">Super Car</option>-->
-                                            <!--        <option value="Low Price">Low Price</option>-->
-                                            <!--        <option value="Monthly">Monthly</option>-->
-                                            <!--        <option value="Electric Vehicle (EV)">Electric Vehicle (EV)</option>-->
-                                            <!--        <option value="Hybrid Vehicle">Hybrid Vehicle</option>-->
-                                            <!--        <option value="Diesel Vehicle">Diesel Vehicle</option>-->
-                                            <!--        <option value="Full-Size Car">Full-Size Car</option>-->
-                                            <!--        <option value="Mid-Size Car">Mid-Size Car</option>-->
-                                            <!--        <option value="Microcar">Microcar</option>-->
-                                            <!--        <option value="Roadster">Roadster</option>-->
-                                            <!--        <option value="Off-Road Vehicle">Off-Road Vehicle</option>-->
-                                            <!--        <option value="Muscle Car">Muscle Car</option>-->
-                                            <!--    </select>-->
-                                            <!--</div>-->
+                                            <div class="select-dropdown">
+                                                <select name="category"  class="form-control" >
+                                                    <option value="Sedan">Sedan</option>
+                                                    <option value="Coupe">Coupe</option>
+                                                    <option value="Hatchback">Hatchback</option>
+                                                    <option value="Convertible">Convertible</option>
+                                                    <option value="Compact">Compact</option>
+                                                    <option value="Subcompact">Subcompact</option>
+                                                    <option value="SUV ">SUV</option>
+                                                    <option value="Crossover">Crossover</option>
+                                                    <option value="Pickup Truck">Pickup Truck</option>
+                                                    <option value="Minivan">Minivan</option>
+                                                    <option value="Van">Van</option>
+                                                    <option value="Wagon">Wagon</option>
+                                                    <option value="Sports Car">Sports Car </option>
+                                                    <option value="Luxury Car">Luxury Car</option>
+                                                    <option value="Super Car">Super Car</option>
+                                                    <option value="Low Price">Low Price</option>
+                                                    <option value="Monthly">Monthly</option>
+                                                    <option value="Electric Vehicle (EV)">Electric Vehicle (EV)</option>
+                                                    <option value="Hybrid Vehicle">Hybrid Vehicle</option>
+                                                    <option value="Diesel Vehicle">Diesel Vehicle</option>
+                                                    <option value="Full-Size Car">Full-Size Car</option>
+                                                    <option value="Mid-Size Car">Mid-Size Car</option>
+                                                    <option value="Microcar">Microcar</option>
+                                                    <option value="Roadster">Roadster</option>
+                                                    <option value="Off-Road Vehicle">Off-Road Vehicle</option>
+                                                    <option value="Muscle Car">Muscle Car</option>
+                                                </select>
+                                            </div>
+                                            
                                         </div>
 
-                                        <div class="col-md-4 col-12">
+                                        {{-- <div class="col-md-4 col-12">
                                             <label for="version">Version</label>
                                         </div>
                                         <div class="col-md-8 col-12 mt-2">
@@ -268,7 +268,7 @@ input[type=number] {
                                                     <option value="N/A">N/A</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-md-4 col-12">
                                             <label for="make_year">Make (Year)</label>
@@ -276,6 +276,24 @@ input[type=number] {
                                         <div class="col-md-8 col-12">
                                             <div class="select-dropdown">
                                                 <select class="form-control" id="car_make_year" name="make_year" required>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12 mt-3">
+                                            <label for="make_year">City</label>
+                                        </div>
+                                        <div class="col-md-8 col-12 mt-3">
+                                            <div class="select-dropdown">
+                                                <select class="form-control"  name="city">
+                                                <option value="Dubai"  >Dubai</option>
+                                                <option value="Abu Dhabi">Abu Dhabi</option>
+                                                <option value="Fujairah" >Fujairah</option>
+                                                <option value="Ajman" >Ajman</option>
+                                                <option value="Al Ain" >Al Ain</option>
+                                                <option value="Sharjah" >Sharjah</option>
+                                                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                                <option value="Umm Al Qwain">Umm Al Qwain</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -860,7 +878,7 @@ input[type=number] {
 
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3"> 
 
                             {{-- <form action="" method="" enctype="multipart/form-data" id="my-form">
                         </form> --}}
