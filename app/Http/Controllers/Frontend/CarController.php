@@ -81,27 +81,27 @@ class CarController extends Controller
     {
 
         $minBooking = $request->min_days_booking;
-        $sortOption = $request->sort;
+        $sortOptionAndCity = $request->sort;
         $path = $request->path();
         $query = Product::query();
 
         if ($path === 'rent-cheap-economy-cars-dubai') {
-            $query->where('category', 'Economy')->where('city', 'Dubai');
+            $query->where('category', 'Economy');
         } else {
             $query->where('status', 1);
         }
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -124,49 +124,49 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
-        if ($request->filled('carmodel')) {
-            $appliedFilters['carmodel'] = $request->carmodel;
+        if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+           $this->data['appliedFilters']['carmodel'] = $request->carmodel;
             $query->where('model_name', $request->carmodel);
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -175,7 +175,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -195,7 +195,7 @@ class CarController extends Controller
                 }
             });
         }
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
 
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
@@ -214,30 +214,29 @@ class CarController extends Controller
     {
 
         $minBooking = $request->min_days_booking;
-        $sortOption = $request->sort;
+        $sortOptionAndCity = $request->sort;
         $path = $request->path();
         $query = Product::query();
 
         // Default query modifications based on path
         if ($path === 'luxury-car-rental-dubai') {
-            $query->where('category', 'Luxury')->where('city', 'Dubai');
+            $query->where('category', 'Luxury');
         } else {
             $query->where('status', 1);
         }
 
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
-            $query->where('city', $request->city);
+           $this->data['appliedFilters']['city'] = $request->city;
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -251,7 +250,7 @@ class CarController extends Controller
 
             }
 
-            $appliedFilters['days'] = $minBooking;
+           $this->data['appliedFilters']['days'] = $minBooking;
         }
 
         if (!empty($carBrand) && $carBrand > 0) {
@@ -262,50 +261,50 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
-        if ($request->filled('carmodel')) {
-            $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+        if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+           $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
             $query->where('model_name', $request->carmodel);
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -314,7 +313,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -335,7 +334,7 @@ class CarController extends Controller
             });
         }
 
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
 
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
@@ -358,24 +357,24 @@ class CarController extends Controller
         $query = Product::query();
         // Default query modifications based on path
         if ($path === 'rent-sports-cars-in-dubai') {
-            $query->where('category', 'Sports Car')->where('city', 'Dubai');
+            $query->where('category', 'Sports Car');
         } else {
             $query->where('status', 1);
         }
 
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -388,52 +387,52 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
         if ($request->carmodel != 0) {
-            if ($request->filled('carmodel')) {
-                $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+            if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+               $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
                 $query->where('model_name', $request->carmodel);
             }
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -442,7 +441,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -462,7 +461,7 @@ class CarController extends Controller
                 }
             });
         }
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
 
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
@@ -482,24 +481,24 @@ class CarController extends Controller
         $query = Product::query();
         // Default query modifications based on path
         if ($path === 'rent-special-edition-car-dubai') {
-            $query->where('category', 'Special Edition')->where('city', 'Dubai');
+            $query->where('category', 'Special Edition');
         } else {
             $query->where('status', 1);
         }
 
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -512,52 +511,52 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
         if ($request->carmodel != 0) {
-            if ($request->filled('carmodel')) {
-                $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+            if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+               $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
                 $query->where('model_name', $request->carmodel);
             }
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -566,7 +565,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -586,7 +585,7 @@ class CarController extends Controller
                 }
             });
         }
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
             ->where('status', 1)
@@ -601,29 +600,29 @@ class CarController extends Controller
 
     public function muscleCars(Request $request)
     {
-        $appliedFilters = [];
+       $this->data['appliedFilters'] = [];
         $path = $request->path();
         $query = Product::query();
         // Default query modifications based on path
         if ($path === 'rent-muscles-cars-in-dubai') {
-            $query->where('category', 'Muscles Cars')->where('city', 'Dubai');
+            $query->where('category', 'Muscles Cars');
         } else {
             $query->where('status', 1);
         }
 
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -636,52 +635,52 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
         if ($request->carmodel != 0) {
-            if ($request->filled('carmodel')) {
-                $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+            if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+               $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
                 $query->where('model_name', $request->carmodel);
             }
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -690,7 +689,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -729,24 +728,24 @@ class CarController extends Controller
         $query = Product::query();
         // Default query modifications based on path
         if ($path === 'rent-hybrid-electrical-cars-dubai') {
-            $query->where('category', 'Electric')->where('city', 'Dubai');
+            $query->where('category', 'Electric');
         } else {
             $query->where('status', 1);
         }
 
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -759,52 +758,52 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
         if ($request->carmodel != 0) {
-            if ($request->filled('carmodel')) {
-                $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+            if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+               $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
                 $query->where('model_name', $request->carmodel);
             }
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -813,7 +812,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -834,7 +833,7 @@ class CarController extends Controller
             });
         }
 
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
             ->where('status', 1)
@@ -852,23 +851,23 @@ class CarController extends Controller
         $query = Product::query();
         // Default query modifications based on path
 
-        $query->where('category', $type)->where('city', 'Dubai');
+        $query->where('category', $type);
 
         $query->where('status', 1);
 
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
 
@@ -881,52 +880,52 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
         if ($request->carmodel != 0) {
-            if ($request->filled('carmodel')) {
-                $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+            if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+               $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
                 $query->where('model_name', $request->carmodel);
             }
         }
 
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -935,7 +934,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -956,7 +955,7 @@ class CarController extends Controller
             });
         }
 
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
 
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
@@ -982,17 +981,17 @@ class CarController extends Controller
         }
         // Additional filters based on request inputs
         if ($request->filled('city')) {
-            $appliedFilters['city'] = $request->city;
+           $this->data['appliedFilters']['city'] = $request->city;
             $query->where('city', $request->city);
         }
 
         if ($request->filled('category')) {
-            $appliedFilters['category'] = $request->category;
+           $this->data['appliedFilters']['category'] = $request->category;
             $query->whereIn('category', (array) $request->category);
         }
 
         if ($request->filled('body_type')) {
-            $appliedFilters['body_type'] = $request->body_type;
+           $this->data['appliedFilters']['body_type'] = $request->body_type;
             $query->whereIn('category', (array) $request->body_type);
         }
         if ($request->filled('brand')) {
@@ -1004,51 +1003,51 @@ class CarController extends Controller
 
             // Add to the applied filters array
             if ($brand) {
-                $appliedFilters['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
+               $this->data['appliedFilters']['brand'] = $brand->brand_name; // Assuming 'name' is the column for brand names
             }
 
         }
 
         if ($request->carmodel != 0) {
-            if ($request->filled('carmodel')) {
-                $appliedFilters['carmodel'] = 'Model: ' . $request->carmodel;
+            if ($request->filled('carmodel') && $request->get('carmodel') != 0) {
+               $this->data['appliedFilters']['carmodel'] = 'Model: ' . $request->carmodel;
                 $query->where('model_name', $request->carmodel);
             }
         }
         if ($request->filled('year')) {
-            $appliedFilters['year'] = 'Year: ' . $request->year;
+           $this->data['appliedFilters']['year'] = 'Year: ' . $request->year;
             $query->where('make_year', $request->year);
         }
 
         if ($request->filled('passengers')) {
             $passengers = implode(',', (array) $request->passengers);
-            $appliedFilters['passengers'] = 'Passengers: ' . $passengers;
+           $this->data['appliedFilters']['passengers'] = 'Passengers: ' . $passengers;
             $query->whereRaw("FIND_IN_SET(passengers, '$passengers')");
         }
 
         if ($request->filled('min_price')) {
-            $appliedFilters['min_price'] = 'Min Price: ' . $request->min_price;
+           $this->data['appliedFilters']['min_price'] = 'Min Price: ' . $request->min_price;
             $query->where('price_per_day', '>=', $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $appliedFilters['max_price'] = 'Max Price: ' . $request->max_price;
+           $this->data['appliedFilters']['max_price'] = 'Max Price: ' . $request->max_price;
             $query->where('price_per_day', '<=', $request->max_price);
         }
 
         if ($request->filled('fuel_type')) {
-            $appliedFilters['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
+           $this->data['appliedFilters']['fuel_type'] = 'Fuel: ' . implode(', ', (array) $request->fuel_type);
             $query->whereIn('fuel_type', (array) $request->fuel_type);
         }
 
         if ($request->filled('transmission')) {
             $transmission = implode(',', (array) $request->transmission);
-            $appliedFilters['transmission'] = 'Transmission: ' . $transmission;
+           $this->data['appliedFilters']['transmission'] = 'Transmission: ' . $transmission;
             $query->whereRaw("FIND_IN_SET(transmission, '$transmission')");
         }
 
         if ($request->filled('car_colors')) {
-            $appliedFilters['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
+           $this->data['appliedFilters']['car_colors'] = 'Colors: ' . implode(', ', (array) $request->car_colors);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_colors as $color) {
                     $query->orWhere('car_colors', 'LIKE', '%' . $color . '%');
@@ -1057,7 +1056,7 @@ class CarController extends Controller
         }
 
         if ($request->filled('car_features')) {
-            $appliedFilters['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
+           $this->data['appliedFilters']['car_features'] = 'Features: ' . implode(', ', (array) $request->car_features);
             $query->where(function ($query) use ($request) {
                 foreach ((array) $request->car_features as $feature) {
                     $query->orWhere('car_features', 'LIKE', '%' . $feature . '%');
@@ -1078,7 +1077,7 @@ class CarController extends Controller
             });
         }
         
-        GeneralHelper::sortOption($query);
+        GeneralHelper::sortOptionAndCity($query);
         // Execute the query and paginate results
         $cars = $query->with('get_user', 'get_images', 'get_mileage', 'get_brand_name')
             ->where('status', 1)

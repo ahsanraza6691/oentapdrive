@@ -40,7 +40,7 @@ class GeneralHelper
         }
     }
 
-    public static function sortOption(&$query)
+    public static function sortOptionAndCity(&$query)
     {
         $sortOption = request()->get('sort');
         switch ($sortOption) {
@@ -66,6 +66,10 @@ class GeneralHelper
             default:
                 $query->orderBy('updated_at', 'desc');
                 break;
+        }
+
+        if(request()->get('city')) {
+            $query->where('city', request()->get('city'));
         }
     }
     public static function sendEmail(array $user, string $template, string $subject, $password = null, $otp = null)
