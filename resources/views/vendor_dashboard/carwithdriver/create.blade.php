@@ -309,7 +309,7 @@ input[type=number] {
                                                     <option value="Muscle Car">Muscle Car</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> 
 
                                       
 
