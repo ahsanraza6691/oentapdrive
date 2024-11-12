@@ -125,6 +125,7 @@ class ProductController extends Controller
         $product->model_name = $request->car_model;
         $product->slug = Str::slug($brandName.' '.$request->car_model,'-');
         $product->make_year = $request->make_year;
+        $product->city = $request->city;
         $product->category = $request->category;
         $product->price_per_day = $request->price_per_day;
         $product->per_day_mileage = $request->per_day_kilometers;
@@ -283,6 +284,7 @@ class ProductController extends Controller
         $edit_product->model_name = $request->car_model;
         $edit_product->slug = Str::slug($brandName.' '.$request->car_model,'-');
         $edit_product->make_year = $request->make_year;
+        $edit_product->city = $request->city;
         $edit_product->category = $request->category;
         $edit_product->price_per_day = $request->price_per_day;
         $edit_product->per_day_mileage = $request->per_day_kilometers;
