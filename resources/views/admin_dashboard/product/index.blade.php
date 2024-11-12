@@ -104,7 +104,7 @@
                                                     @endif
                                                 </td>
 
-                                                <td  class="power_icon_data editDelete">
+                                                <td  class="power_icon_data editDelete"> 
 
                                                     @if ($value->is_admin_approve == 1)
                                                     <a href="{{ route('update-status', $value->id) }}" class="power_icon">

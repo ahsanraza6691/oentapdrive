@@ -283,19 +283,19 @@ input[type=number] {
                                         </div> --}}
 
                                         <div class="col-md-4 col-12 mt-3">
-                                            <label for="make_year">City</label>
+                                            <label for="make_year">City</label> 
                                         </div>
                                         <div class="col-md-8 col-12 mt-3">
                                             <div class="select-dropdown">
                                                 <select class="form-control"  name="city">
-                                                <option value="Dubai">Dubai</option>
-                                                <option value="Abu Dhabi">Abu Dhabi</option>
-                                                <option value="Fujairah" >Fujairah</option>
-                                                <option value="Ajman" >Ajman</option>
-                                                <option value="Al Ain" >Al Ain</option>
-                                                <option value="Sharjah" >Sharjah</option>
-                                                <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                                                <option value="Umm Al Qwain">Umm Al Qwain</option>
+                                                <option value="Dubai" @if($edit->city == 'Dubai') selected @endif>Dubai</option>
+                                                <option value="Abu Dhabi" @if($edit->city == 'Abu Dhabi') selected @endif>Abu Dhabi</option>
+                                                <option value="Fujairah" @if($edit->city == 'Fujairah') selected @endif>Fujairah</option>
+                                                <option value="Ajman" @if($edit->city == 'Ajman') selected @endif>Ajman</option>
+                                                <option value="Al Ain" @if($edit->city == 'Al Ain') selected @endif>Al Ain</option>
+                                                <option value="Sharjah" @if($edit->city == 'Sharjah') selected @endif>Sharjah</option>
+                                                <option value="Ras Al Khaimah" @if($edit->city == 'Ras Al Khaimah') selected @endif>Ras Al Khaimah</option>
+                                                <option value="Umm Al Qwain" @if($edit->city == 'Umm Al Qwain') selected @endif>Umm Al Qwain</option>
                                                 </select>
                                             </div>
                                         </div>
