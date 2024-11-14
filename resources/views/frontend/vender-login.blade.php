@@ -158,6 +158,18 @@
     border-bottom: 3px solid var(--theme-color);
     padding-bottom: 5px;
 }
+
+input#password {
+    position: relative;
+}
+
+span.toggle-password {
+    position: relative;
+    left: 300px;
+    bottom: 31px;
+}
+
+
     a{
     	color: var(--theme-color);
     }
@@ -204,6 +216,7 @@
                               <div class="inputCont">
                                   <h6>Password</h6>
                                   <input type="password" name="password" id="password" value="{{old('password')}}" required>
+                                  <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" onclick="togglePasswordVisibility()"></span>
                               </div>
                               <div class="inputCont forget">
                                 <a href="#">Forgot Password?</a>
@@ -286,6 +299,25 @@
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
+
+function togglePasswordVisibility() {
+    const passwordField = document.getElementById("password");
+    const toggleIcon = document.querySelector(".toggle-password");
+
+   
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+    }
+}
+
+
+
     @if (Session::has('message'))
     var type = "{{ Session::get('alert-type', 'info') }}"
     switch (type) {
