@@ -170,7 +170,8 @@
                             </div>
 
                             <!-- Vehicle Type -->
-                            <div id="vehicleType" class="custom_collapse"
+                            
+                            <!-- <div id="vehicleType" class="custom_collapse"
                                  @if (isset($_GET['category']) && !empty($_GET['category'])) style="height: 260px;" @endif>
                                 <button type="button" onclick="onOpenCollapse('vehicleType')">
                                     <span> Vehicle Type </span>
@@ -220,7 +221,7 @@
                                         @endforeach
                                     @endif
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Price Range -->
                             <div id="priceRange" class="custom_collapse"
