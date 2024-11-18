@@ -698,7 +698,7 @@ input[type=number] {
                             </div>
                            
                             <div class="col-12 mt-4">
-                                <button class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -723,6 +723,8 @@ input[type=number] {
             })
         </script>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
             integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -743,6 +745,12 @@ input[type=number] {
                 formSelector: '#my-form', // form selector
             });
         </script>
+
+
+
+
+
+
 
 <script>
     $("#price_per_day").keyup(function(e){
