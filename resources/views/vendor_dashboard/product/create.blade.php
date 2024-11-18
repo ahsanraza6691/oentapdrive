@@ -182,6 +182,17 @@ input[type=number] {
         .multiple-uploader input[type="file"] {
             display: none;
         }
+        #my-form .error{
+            display: block;
+            width: 100%;
+            margin: 0;
+            color: red;
+        }
+        .error-message-group {
+            margin-bottom: 20px;
+            color: red; 
+            font-size: 0.875rem;
+        }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -204,8 +215,8 @@ input[type=number] {
 
                                             <div class="select-dropdown">
                                                 <select id="brand_name" for="exampleFormControlInput10"
-                                                    class="form-control btn-square type" name="brand_name">
-                                                    <option value="Select Car Brand">Select Car Brand</option>
+                                                    class="form-control btn-square type" name="brand_name" required>
+                                                    <option value="">Select Car Brand</option>
                                                     @foreach ($brand as $key => $value)
                                                         <option {{ old('brand_name') == $value->id ? 'selected' : '' }}
                                                             value="{{ $value->id }}">{{ $value->brand_name }}
@@ -216,7 +227,7 @@ input[type=number] {
                                         </div>
                                         <div class="col-md-4 col-12">
                                             <div class="select-dropdown">
-                                                <select class="form-control" id="car_model" name="car_model">
+                                                <select class="form-control" id="car_model" name="car_model" required>
                                                     <option value="Select Car Model">Select Car Model</option>
                                                 </select>
                                             </div>
@@ -226,7 +237,7 @@ input[type=number] {
                                             <label for="version">Categories</label>
                                         </div>
                                         <div class="col-md-8 col-12">
-                                            <input type="text" class="form-control" name="category" id="category_car">
+                                            <input type="text" class="form-control" name="category" id="category_car" required>
                                             <!--<div class="select-dropdown">-->
                                             <!--    <select class="form-control" id="category_car" name="category">-->
                                             <!--        <option value="Sedan">Sedan</option>-->
@@ -264,8 +275,8 @@ input[type=number] {
                                         </div>
                                         <div class="col-md-8 col-12 mt-2">
                                             <div class="select-dropdown">
-                                                <select class="form-control" id="version" name="version">
-                                                    <option value="N/A">N/A</option>
+                                                <select class="form-control" id="version" name="version" required>
+                                                    <option value="">N/A</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -303,11 +314,11 @@ input[type=number] {
                                         <div class="col-md-4 car_pricing">
                                             <input class="form-control" id="price_per_day" type="number"
                                                 placeholder="AED Charges" name="price_per_day"
-                                                value="{{ old('price_per_day') }}">
+                                                value="{{ old('price_per_day') }}" required>
                                         </div>
                                         <div class="col-md-4 car_pricing">
                                             <input class="form-control" id="per_day_kilometers" type="number" placeholder="Kms"
-                                                name="per_day_kilometers" value="{{ old('per_day_kilometers') }}">
+                                                name="per_day_kilometers" value="{{ old('per_day_kilometers') }}" required>
                                         </div>
                                         <div class="col-md-4 car_pricing">
 
@@ -323,7 +334,7 @@ input[type=number] {
                                             </h6>
                                         </div>
                                         <div class="col-md-8 car_pricing" id="min_day_booking">
-                                            <select name="days" id="days" class="form-select">
+                                            <select name="days" id="days" class="form-select" required>
                                                 {{-- <option value="Select Days" selected disabled>Select Days</option> --}}
                                                 <option value="1" @if (old('days') == '1') selected @endif>1
                                                 </option>
@@ -349,12 +360,12 @@ input[type=number] {
                                         <div class="col-md-4 car_pricing">
                                             <input class="form-control" id="price_per_week" type="number"
                                                 placeholder="AED Charges" name="price_per_week"
-                                                value="{{ old('price_per_week') }}">
+                                                value="{{ old('price_per_week') }}" required>
                                         </div>
                                         <div class="col-md-4 car_pricing">
                                             <input class="form-control" id="weekly_mileage" type="number"
                                                 placeholder="Kms" name="weekly_mileage"
-                                                value="{{ old('weekly_mileage') }}">
+                                                value="{{ old('weekly_mileage') }}" required>
                                         </div>
                                         <div class="col-md-4 car_pricing">
 
@@ -377,7 +388,7 @@ input[type=number] {
                                         <div class="col-md-4 car_pricing">
                                             <input class="form-control" id="extra_mileage_cost" type="number"
                                                 placeholder="AED Charges" name="extra_mileage_cost"
-                                                value="{{ old('extra_mileage_cost') }}">
+                                                value="{{ old('extra_mileage_cost') }}" required>
                                         </div>
 
                                         <div class="col-md-4 car_pricing">
@@ -393,7 +404,7 @@ input[type=number] {
                                         <div class="col-md-4 car_pricing">
                                             <input class="form-control" id="" type="number" placeholder="Kms"
                                                 name="insurance_per_day" value=""
-                                                value="{{ old('insurance_per_day') }}">
+                                                value="{{ old('insurance_per_day') }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -405,24 +416,33 @@ input[type=number] {
                                         <h6>
                                             Car Colors:
                                         </h6>
-                                    </div>
-                                    <ul class="specs_list">
+                                </div>
+                                <ul class="specs_list" id="car-colors">
+                                    <?php
+                                    $colors = ['White', 'Black', 'Gray', 'Silver', 'Blue', 'Red', 'Brown', 'Green', 'Orange', 'Beige', 'Purple', 'Gold', 'Yellow'];
+                                    ?>
+                                    @foreach ($colors as $color)
+                                    <li>
+                                        <input 
+                                            type="radio" 
+                                            class="btn-check" 
+                                            id="{{ $color }}" 
+                                            name="car_colors" 
+                                            autocomplete="off" 
+                                            value="{{ $color }}" 
+                                            @if (is_array(old('car_colors')) && in_array($color, old('car_colors'))) 
+                                                checked 
+                                            @endif 
+                                            required
+                                        >
+                                        <label class="btn btn-outline-dark custom_btn" for="{{ $color }}">{{ $color }}</label>
+                                       
+                                    </li>
+                                    @endforeach
+                                </ul>
 
-                                        <?php
-                                        $colors = ['White', 'Black', 'Gray', 'Silver', 'Blue', 'Red', 'Brown', 'Green', 'Orange', 'Beige', 'Purple', 'Gold', 'Yellow'];
-                                        ?>
+                                <div class="error-message-group"></div>
 
-                                        @foreach ($colors as $color)
-                                            <li>
-                                                <input type="checkbox" class="btn-check" id="{{ $color }}"
-                                                    name="car_colors[]" autocomplete="off" value="{{ $color }}"
-                                                    @if (is_array(old('car_colors')) && in_array($color, old('car_colors'))) checked @endif>
-                                                <label class="btn btn-outline-dark custom_btn"
-                                                    for="{{ $color }}">{{ $color }}</label>
-                                            </li>
-                                        @endforeach
-
-                                    </ul>
                                     <div class="specs_heading">
                                         <h6>
                                             Car Features:
@@ -437,7 +457,7 @@ input[type=number] {
                                             <li>
                                                 <input type="checkbox" class="btn-check" id="{{ $feature }}"
                                                     name="car_features[]" autocomplete="off" value="{{ $feature }}"
-                                                    @if (is_array(old('car_features')) && in_array($feature, old('car_features'))) checked @endif>
+                                                    @if (is_array(old('car_features')) && in_array($feature, old('car_features'))) checked required @endif>
                                                 <label class="btn btn-outline-dark custom_btn"
                                                     for="{{ $feature }}">{{ $feature }}</label>
                                             </li>
@@ -453,16 +473,16 @@ input[type=number] {
                                     <ul class="specs_list">
 
                                         <li>
-                                            <input type="radio" class="btn-check" id="2doors" name="car_doors"
+                                            <input type="radio" class="btn-check" id="2doors" name="car_doors" required
                                                 autocomplete="off" value="2"
-                                                @if (old('car_doors') == '2') checked @endif>
+                                                @if (old('car_doors') == '2') @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="2doors">2
                                                 doors</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" id="4doors" name="car_doors"
+                                            <input type="radio" class="btn-check" id="4doors" name="car_doors" required
                                                 autocomplete="off" value="4"
-                                                @if (old('car_doors') == '4') checked @endif>
+                                                @if (old('car_doors') == '4') @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="4doors">4
                                                 doors</label>
                                         </li>
@@ -476,30 +496,30 @@ input[type=number] {
                                     <ul class="specs_list">
 
                                         <li>
-                                            <input type="radio" class="btn-check" id="2passengers" name="passengers"
-                                                autocomplete="off" value="2"
-                                                @if (old('passengers') == '2') checked @endif>
+                                            <input type="radio" class="btn-check" value="2" id="2passengers" name="passengers" required 
+                                                autocomplete="off" 
+                                                @if (old('passengers') == '2') @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="2passengers">2
                                                 Seats</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" value="4" id="4passengers"
+                                            <input type="radio" class="btn-check" value="4" id="4passengers" required 
                                                 name="passengers" autocomplete="off"
-                                                @if (old('passengers') == '4') checked @endif>
+                                                @if (old('passengers') == '4') @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="4passengers">4
                                                 Seats</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" value="5" id="5passengers"
+                                            <input type="radio" class="btn-check" value="5" id="5passengers" required 
                                                 name="passengers" autocomplete="off"
-                                                @if (old('passengers') == '5') checked @endif>
+                                                @if (old('passengers') == '5') @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="5passengers">5
                                                 Seats</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" value="7" id="7passengers"
+                                            <input type="radio" class="btn-check" value="7" id="7passengers" required 
                                                 name="passengers" autocomplete="off"
-                                                @if (old('passengers') == '7') checked @endif>
+                                                @if (old('passengers') == '7')  @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="7passengers">7
                                                 Seats</label>
                                         </li>
@@ -513,22 +533,22 @@ input[type=number] {
 
                                         <li>
                                             <input type="radio" class="btn-check" id="bag1" name="bags_fit"
-                                                autocomplete="off" value="1"
-                                                @if (old('bags_fit') == '1') checked @endif>
+                                                autocomplete="off" value="1" required
+                                                @if (old('bags_fit') == '1') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="bag1">1
                                                 bag</label>
                                         </li>
                                         <li>
                                             <input type="radio" class="btn-check" id="2bags" name="bags_fit"
-                                                autocomplete="off" value="2"
-                                                @if (old('bags_fit') == '2') checked @endif>
+                                                autocomplete="off" value="2" required
+                                                @if (old('bags_fit') == '2') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="2bags">2
                                                 bags</label>
                                         </li>
                                         <li>
                                             <input type="radio" class="btn-check" id="3bags" name="bags_fit"
-                                                autocomplete="off" value="3"
-                                                @if (old('bags_fit') == '3') checked @endif>
+                                                autocomplete="off" value="3" required
+                                                @if (old('bags_fit') == '3') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="3bags">3
                                                 bags</label>
                                         </li>
@@ -541,37 +561,37 @@ input[type=number] {
                                     <ul class="specs_list">
 
                                         <li>
-                                            <input type="radio" class="btn-check" id="American_Specs" name="specs"
+                                            <input type="radio" class="btn-check" id="American_Specs" name="specs" required
                                                 autocomplete="off" value="American Specs"
-                                                @if (old('specs') == 'American Specs') checked @endif>
+                                                @if (old('specs') == 'American Specs') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="American_Specs">American
                                                 Specs</label>
                                         </li>
                                         <li>
                                             <input type="radio" class="btn-check" id="Asia_Specs" name="specs"
                                                 autocomplete="off" value="Asia Specs"
-                                                @if (old('specs') == 'Asia Specs') checked @endif>
+                                                @if (old('specs') == 'Asia Specs') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="Asia_Specs">Asia
                                                 Specs</label>
                                         </li>
                                         <li>
                                             <input type="radio" class="btn-check" id="Euro_Specs" name="specs"
                                                 autocomplete="off" value="Euro Specs"
-                                                @if (old('specs') == 'Euro Specs') checked @endif>
+                                                @if (old('specs') == 'Euro Specs') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="Euro_Specs">Euro
                                                 Specs</label>
                                         </li>
                                         <li>
                                             <input type="radio" class="btn-check" id="GCC_Specs" name="specs"
                                                 autocomplete="off" value="GCC Specs"
-                                                @if (old('specs') == 'GCC Specs') checked @endif>
+                                                @if (old('specs') == 'GCC Specs') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="GCC_Specs">GCC
                                                 Specs</label>
                                         </li>
                                         <li>
                                             <input type="radio" class="btn-check" id="Other" name="specs"
                                                 autocomplete="off" value="Other"
-                                                @if (old('specs') == 'Other') checked @endif>
+                                                @if (old('specs') == 'Other') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="Other">Other</label>
                                         </li>
                                     </ul>
@@ -583,15 +603,15 @@ input[type=number] {
                                     <ul class="specs_list">
 
                                         <li>
-                                            <input type="radio" class="btn-check" id="manual" name="transmission"
+                                            <input type="radio" class="btn-check" id="manual" name="transmission"required
                                                 autocomplete="off" value="Manual"
-                                                @if (old('transmission') == 'Manual') checked @endif>
+                                                @if (old('transmission') == 'Manual') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="manual">Manual</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" id="Auto" name="transmission"
+                                            <input type="radio" class="btn-check" id="Auto" name="transmission"required 
                                                 autocomplete="off" value="Auto"
-                                                @if (old('transmission') == 'Auto') checked @endif>
+                                                @if (old('transmission') == 'Auto') required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="Auto">Auto</label>
                                         </li>
                                     </ul>
@@ -603,27 +623,27 @@ input[type=number] {
                                     <ul class="specs_list">
 
                                         <li>
-                                            <input type="radio" class="btn-check" id="petrol" name="fuel_type"
+                                            <input type="radio" class="btn-check" id="petrol" name="fuel_type"required
                                                 autocomplete="off" value="Petrol"
-                                                @if (old('fuel_type') == 'Petrol') checked @endif>
+                                                @if (old('fuel_type') == 'Petrol') checked required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="petrol">Petrol</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" id="diesel" name="fuel_type"
+                                            <input type="radio" class="btn-check" id="diesel" name="fuel_type" required
                                                 autocomplete="off" value="Diesel"
-                                                @if (old('fuel_type') == 'Diesel') checked @endif>
+                                                @if (old('fuel_type') == 'Diesel') checked required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="diesel">Diesel</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" id="Electric" name="fuel_type"
+                                            <input type="radio" class="btn-check" id="Electric" name="fuel_type" required
                                                 autocomplete="off" value="Electric"
-                                                @if (old('fuel_type') == 'Electric') checked @endif>
+                                                @if (old('fuel_type') == 'Electric') checked required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="Electric">Electric</label>
                                         </li>
                                         <li>
-                                            <input type="radio" class="btn-check" id="Hybrid" name="fuel_type"
+                                            <input type="radio" class="btn-check" id="Hybrid" name="fuel_type" required
                                                 autocomplete="off" value="Hybrid"
-                                                @if (old('fuel_type') == 'Hybrid') checked @endif>
+                                                @if (old('fuel_type') == 'Hybrid') checked required @endif>
                                             <label class="btn btn-outline-dark custom_btn" for="Hybrid">Hybrid</label>
                                         </li>
                                     </ul>
@@ -642,7 +662,7 @@ input[type=number] {
                                         <div class="col-md-8 car_pricing">
                                             <input class="form-control" id="security_deposit" type="number"
                                                 placeholder="AED Charges" name="security_deposit"
-                                                value="{{ old('security_deposit') }}">
+                                                value="{{ old('security_deposit') }}" required>
                                         </div>
                                         <div class="col-md-4 car_pricing">
                                             <h6>
@@ -650,7 +670,7 @@ input[type=number] {
                                             </h6>
                                         </div>
                                         <div class="col-md-4 car_pricing">
-                                            <select name="delivery_days" id="delivery_days" class="form-select mb-0">
+                                            <select name="delivery_days" id="delivery_days" class="form-select mb-0" required>
                                                 <option value="Select Delivery Charges" selected disabled>Select Delivery
                                                     Charges</option>
                                                 {{-- <option value="Charges apply">Charges apply</option> --}}
@@ -673,7 +693,7 @@ input[type=number] {
                                         <div class="col-md-4 car_pricing">
                                             <input type="text" name="delivery_charges" id="delivery_charges"
                                                 class="form-control" placeholder="AED"
-                                                value="{{ old('delivery_charges') }}">
+                                                value="{{ old('delivery_charges') }}" required>
                                         </div>
                                         <div class="col-md-4 car_pricing">
                                             <h6>
@@ -688,7 +708,7 @@ input[type=number] {
 
 
                                 <div class="col-12">
-                                    <input type="checkbox" name="is_monthly_available" id="is_monthly_available" value="1">
+                                    <input type="checkbox" name="is_monthly_available" id="is_monthly_available" value="1" required>
                                     <label for="is_monthly_available">Monthly Availability</label>
                                     
                                     <div class="table-responsive">
@@ -708,23 +728,23 @@ input[type=number] {
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[2000][one_month]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[2000][three_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[2000][six_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[2000][nine_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[2000][twelve_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -733,23 +753,23 @@ input[type=number] {
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[3000][one_month]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[3000][three_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[3000][six_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[3000][nine_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[3000][twelve_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -758,23 +778,23 @@ input[type=number] {
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4000][one_month]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4000][three_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4000][six_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4000][nine_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4000][twelve_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -783,23 +803,23 @@ input[type=number] {
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4500][one_month]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4500][three_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4500][six_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4500][nine_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                     <td>
                                                         <input type="number" name="mileage[4500][twelve_months]"
-                                                            id="" placeholder="AED" class="form-control">
+                                                            id="" placeholder="AED" class="form-control" >
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -872,14 +892,14 @@ input[type=number] {
                                     <span class="mup-msg">Only images,  are allowed for
                                         upload</span>
                                 </div>
-                                <input type="file" name="images[]" multiple accept="image/*">
+                                <input type="file" name="images[]" required multiple accept="image/*">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-12">
                                 <label for="reg_card" class="form-label">Upload Registration Card (Mulkiya)</label>
-                                <input type="file" name="registration_card" id="registration_card"
+                                <input type="file" name="registration_card" id="registration_card"required
                                     class="form-control" accept="image/*">
                             </div>
                             <div class="col-12 mt-5">
@@ -911,10 +931,10 @@ input[type=number] {
 
                                     @foreach ($exteriror_colors as $ext_color => $ext_color_code)
                                     <li>
-                                        <input type="checkbox" class="btn-check"
-                                            id="exterior_color_{{ $ext_color }}" name="exterior_color[]"
+                                        <input type="radio" class="btn-check"
+                                            id="exterior_color_{{ $ext_color }}" name="exterior_color[]" required 
                                             autocomplete="off" value="{{ $ext_color }}:{{ $ext_color_code }}"
-                                            @if (is_array(old('exterior_color')) && in_array("$ext_color:$ext_color_code", old('exterior_color'))) checked @endif>
+                                            @if (is_array(old('exterior_color')) && in_array("$ext_color:$ext_color_code", old('exterior_color'))) @endif>
                                         <label class="btn btn-outline-dark custom_btn"
                                             for="exterior_color_{{ $ext_color }}" >
                                             {{ $ext_color }}
@@ -948,8 +968,8 @@ input[type=number] {
 
                                     @foreach ($interiror_colors as $int_color => $int_color_code)
                                         <li>
-                                            <input type="checkbox" class="btn-check "
-                                                id="interiror_color_{{ $int_color }}" name="interior_color[]"
+                                            <input type="radio" class="btn-check "
+                                                id="interiror_color_{{ $int_color }}" name="interior_color[]"required
                                                 autocomplete="off" value="{{ $int_color }}:{{$int_color_code}}"
                                                 @if (is_array(old('interior_color')) &&in_array("$int_color:$int_color_code", old('interior_color'))) checked @endif>
                                             <label class="btn btn-outline-dark custom_btn"
@@ -964,7 +984,7 @@ input[type=number] {
                               <textarea class="form-control editor" id="description" name="description"></textarea>
                             </div>
                             <div class="col-12 mt-4">
-                                <button class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -1012,6 +1032,297 @@ input[type=number] {
                 formSelector: '#my-form', // form selector
             });
         </script>
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    console.log("working");
+    
+    
+    $("#my-form").validate({
+
+        rules: {
+            brand_name: {
+                required: true,
+            },
+            car_model: {
+                required: true,
+            },
+            category: {
+                required: true,
+                minlength: 2,
+            },
+            version: {
+                required: true,
+            },
+            make_year: {
+                required: true,
+            },
+            price_per_day: {
+                required: true,
+                number: true,
+                min: 1,
+            },
+            per_day_kilometers: {
+                required: true,
+                number: true,
+                min: 1,
+            },
+            days: {
+                required: true,
+            },
+            price_per_week: {
+                required: true,
+                number: true,
+                min: 1,
+            },
+            weekly_mileage: {
+                required: true,
+                number: true,
+                min: 1,
+            },
+            extra_mileage_cost: {
+                required: true,
+                number: true,
+                min: 0,
+            },
+            insurance_per_day: {
+                required: true,
+                number: true,
+                min: 0,
+            },
+            car_color: {
+                required: true
+            },
+            "car_features[]": {
+                required: true,
+                minlength: 1 
+            }
+
+            security_deposit: {
+                required: true,
+                number: true,
+                min: 0 
+            },
+            delivery_days: {
+                required: true,
+                notEqualTo: "Select Delivery Charges" 
+            },
+            delivery_charges: {
+                required: true,
+                number: true,
+                min: 0 
+            },
+            cutomer_note: {
+                maxlength: 200
+            },
+            is_monthly_available: {
+                required: true
+            },
+            
+            'mileage[2000][one_month]': {
+                number: true,
+                min: 0
+            },
+            'mileage[2000][three_months]': {
+                number: true,
+                min: 0
+            },
+            'mileage[2000][six_months]': {
+                number: true,
+                min: 0
+            },
+            'mileage[2000][nine_months]': {
+                number: true,
+                min: 0
+            },
+            'mileage[2000][twelve_months]': {
+                number: true,
+                min: 0
+            },
+            
+            'mileage[3000][one_month]': {
+                number: true,
+                min: 0
+            },
+            'mileage[3000][three_months]': {
+                number: true,
+                min: 0
+            },
+            'mileage[3000][six_months]': {
+                number: true,
+                min: 0
+            },
+            'mileage[3000][nine_months]': {
+                number: true,
+                min: 0
+            },
+            'mileage[3000][twelve_months]': {
+                number: true,
+                min: 0
+            },
+        },
+        messages: {
+            brand_name: {
+                required: "Please select a car brand.",
+            },
+            car_model: {
+                required: "Please select a car model.",
+            },
+            category: {
+                required: "Please enter a category.",
+                minlength: "Category must be at least 2 characters long.",
+            },
+            version: {
+                required: "Please select a version.",
+            },
+            make_year: {
+                required: "Please select a make year.",
+            },
+            price_per_day: {
+                required: "Please enter the price per day.",
+                number: "Please enter a valid number.",
+                min: "The price must be greater than zero.",
+            },
+            per_day_kilometers: {
+                required: "Please enter the kilometers allowed per day.",
+                number: "Please enter a valid number.",
+                min: "The value must be greater than zero.",
+            },
+            days: {
+                required: "Please select the minimum booking days.",
+            },
+            price_per_week: {
+                required: "Please enter the price per week.",
+                number: "Please enter a valid number.",
+                min: "The price must be greater than zero.",
+            },
+            weekly_mileage: {
+                required: "Please enter the weekly mileage.",
+                number: "Please enter a valid number.",
+                min: "The mileage must be greater than zero.",
+            },
+            extra_mileage_cost: {
+                required: "Please enter the extra mileage cost.",
+                number: "Please enter a valid number.",
+                min: "The cost must be zero or more.",
+            },
+            insurance_per_day: {
+                required: "Please enter the insurance cost per day.",
+                number: "Please enter a valid number.",
+                min: "The cost must be zero or more.",
+            },
+            car_color: {
+                required: "Please select a car color."
+            },
+            "car_features[]": {
+                required: "Please select at least one car feature.",
+                minlength: "You must select at least one feature."
+            },
+            security_deposit: {
+                required: "Please enter the security deposit.",
+                number: "Please enter a valid number.",
+                min: "Security deposit must be a positive number."
+            },
+            delivery_days: {
+                required: "Please select the delivery charges option."
+            },
+            delivery_charges: {
+                required: "Please enter the delivery charges.",
+                number: "Please enter a valid number.",
+                min: "Delivery charges must be a positive number."
+            },
+            cutomer_note: {
+                maxlength: "Special note cannot exceed 200 characters."
+            },
+            is_monthly_available: {
+                required: "Please indicate if monthly availability is offered."
+            },
+            'mileage[2000][one_month]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[2000][three_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[2000][six_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[2000][nine_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[2000][twelve_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[3000][one_month]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[3000][three_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[3000][six_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[3000][nine_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+            'mileage[3000][twelve_months]': {
+                number: "Please enter a valid number.",
+                min: "Mileage price must be a positive number."
+            },
+        },
+        
+            errorPlacement: function (error, element) {
+        if (element.closest("ul.specs_list").length) {
+            // If the element is part of a <ul> with class "specs_list"
+            const ul = element.closest("ul.specs_list");
+            
+            // Check for an existing error message container
+            if (ul.next(".error-message-group").length) {
+                ul.next(".error-message-group").html(error);
+            } else {
+                ul.after('<div class="error-message-group" style="color: red; font-size: 0.875rem;"></div>');
+                ul.next(".error-message-group").html(error);
+            }
+        } else if (element.is("select")) {
+            // If the element is a <select>, place the error after the select element
+            if (element.next(".error-message").length) {
+                element.next(".error-message").html(error);
+            } else {
+                element.after('<div class="error-message" style="color: red; font-size: 0.875rem;"></div>');
+                element.next(".error-message").html(error);
+            }
+        } else if (element.is("input")) {
+            // If the element is a direct <input>, place the error after the input
+            if (element.next(".error-message").length) {
+                element.next(".error-message").html(error);
+            } else {
+                element.after('<div class="error-message" style="color: red; font-size: 0.875rem;"></div>');
+                element.next(".error-message").html(error);
+            }
+        } else {
+            // Default placement for other elements
+            error.insertAfter(element);
+        }
+    },
+
+        submitHandler: function (form) {
+            alert("Form submitted successfully!");
+            form.submit(); // If validation passes, submit the form
+        }
+    });
+});
+</script>
+
 
 <script>
     $("#price_per_day").keyup(function(e){

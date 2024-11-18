@@ -874,7 +874,7 @@
                 </div>
             </div>
 
-            <nav aria-label="Page navigation">
+            <!-- <nav aria-label="Page navigation">
                 <ul class="pagination d-flex flex-wrap">
                     <li class="page-item">
                         <a class="page-link" href="#">Previous</a>
@@ -884,7 +884,7 @@
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
-            </nav>
+            </nav> -->
         </div>
         </div>
     </section>
