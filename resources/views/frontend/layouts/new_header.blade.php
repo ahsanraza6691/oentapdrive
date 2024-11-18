@@ -7,11 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+
+            /* Style the suggestions list */
+    .suggestions-list {
+        position: absolute;
+        background-color: #fff;
+        /* border: 1px solid #ddd; */
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+    }
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
         @media (max-width: 991.98px) {
             .desktopMenu, .heroSec, .searchBar.desktop, .testiSec, .docSec {
                 display: none;
             }
         }
+        .loader_otp {
+            border: 2px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 2px solid var(--theme-color);
+            width: 16px;
+            height: 16px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
     </style>
     @if (isset($details))
         <meta property="og:title"
@@ -25,6 +59,8 @@
     <link rel="stylesheet" href="{{asset("web-assets/css/plugins.css")}}">
     <link rel="stylesheet" href="{{asset("web-assets/css/custom.css")}}">
     <link rel="stylesheet" href="{{asset("web-assets/css/responsive.css")}}">
+
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
     @yield('style')
     <title>@yield('title')</title>
     <!-- Google Tag Manager -->
@@ -93,12 +129,6 @@
                         </div>
                         <div class="col-md-7">
                             <div class="btnCont">
-                                {{--                                <a href="#" class="themeBtn facebookBtn">--}}
-                                {{--                                    <i class="fab fa-facebook-f"></i>--}}
-                                {{--                                    <span>--}}
-                                {{--                                        Sign in with Facebook--}}
-                                {{--                                    </span>--}}
-                                {{--                                </a>--}}
                                 <a href="{{ Route('login.google-redirect') }}" class="themeBtn google">
                                     <i class="fab fa-google"></i>
                                     <span>
@@ -126,9 +156,13 @@
                                     </label>
                                 </div>
                                 <div class="inputCont">
-                                    <button class="themeBtn">Send OTP</button>
+                                    <button class="themeBtn" type="submit">
+                                        Send OTP
+                                        <span class="loader_otp" style="display: none;"></span> <!-- loader_otp -->
+                                    </button>
                                 </div>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -205,11 +239,69 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script type="text/javascript" src="{{asset('web-assets/js/plugins.js')}}"></script>
-<script type="text/javascript" src="{{asset('web-assets/js/index.js')}}"></script>
+<script type="text/javascript" src="{{asset('web-assets/js/index.js?version=1')}}"></script>
 @yield('script')
 
 <script type="text/javascript">
+
+    const routes = {
+        brand: "{{ route('brand-car-rental', ['brand' => ':slug']) }}",
+        model: "{{ route('car-details', ['slug' => ':slug']) }}",
+        user: "{{ route('company-profile', ['slug' => ':slug']) }}"
+    };
+
+    document.getElementById('searchField').addEventListener('input', function () {
+        let query = this.value;
+
+        if (query.length > 2) {
+            fetch(`{{ route('search.suggestions') }}?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    let suggestions = document.getElementById('suggestions');
+                    suggestions.innerHTML = '';
+
+                    if (data.length > 0) {
+                        data.forEach(item => {
+                            let div = document.createElement('div');
+                            div.classList.add('suggestion-item');
+                            div.textContent = item.match;
+
+                            div.addEventListener('click', () => {
+                                let url;
+
+                                if (item.type === 'brand') {
+                                    url = routes.brand.replace(':slug', item.slug);
+                                } else if (item.type === 'model') {
+                                    url = routes.model.replace(':slug', item.slug);
+                                } else if (item.type === 'user') {
+                                    url = routes.user.replace(':slug', item.slug);
+                                }
+                                if (url) {
+                                    window.location.href = url;
+                                }
+                            });
+
+                            suggestions.appendChild(div);
+                        });
+                    } else {
+                        suggestions.innerHTML = '<div class="suggestion-item">No results found</div>';
+                    }
+                })
+                .catch(error => console.error('Error fetching suggestions:', error));
+        } else {
+            document.getElementById('suggestions').innerHTML = '';
+        }
+    });
+
+
+
+
+
+
 </script>
 <script type="text/javascript">
     @if ($errors->any())
@@ -282,35 +374,48 @@
         setupOtpInputListeners(otpInputs);
 
         otpInputs[0].focus(); // Set focus on the first OTP input field
-         $('#emailOtp').on('submit', function (e) {
-            e.preventDefault();
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var form = $("#emailOtp");
-            var email = $("#email").val();
-            $.ajax({
-                type: "POST",
-                url: '{{ route('email-otp') }}',
-                data: form.serialize(),
-                success: function (response) {
-                    console.log("response=> ", response);
-                    $('#otpemail').val('');
-                    if (response.status == 200) {
-                        $('#otp').modal('show');
-                        $('#login').modal('hide');
-                        $('#otpemail').text(email);
-                      	$('#verifyEmail').val(email);
-                        toastr.success('OTP sent on email!');
-                    } else {
-                        toastr.error('Failed to send OTP. Please try again!');
-                    }
-                },
-                error: function (xhr, status, error, response) {
-                    console.log("xhr=> ", xhr);
-                    console.error("Error=>", error);
-                    toastr.error('An error occurred! Please try again later.');
-                }
-            });
-        });
+        $('#emailOtp').on('submit', function (e) {
+    e.preventDefault();
+    
+    // Show loader_otp on button
+    var submitButton = $(".themeBtn");
+    submitButton.prop('disabled', true);  // Disable button
+    submitButton.find('.loader_otp').show();  // Show loader_otp
+
+    var form = $("#emailOtp");
+    var email = $("#email").val();
+
+    $.ajax({
+        type: "POST",
+        url: '{{ route('email-otp') }}',
+        data: form.serialize(),
+        success: function (response) {
+            // Clear input fields
+            $("#email").val('');
+            $("#agree").prop('checked', false);
+
+            if (response.status == 200) {
+                $('#otp').modal('show');
+                $('#login').modal('hide');
+                $('#otpemail').text(email);
+                $('#verifyEmail').val(email);
+                toastr.success('OTP sent on email!');
+            } else {
+                toastr.error('Failed to send OTP. Please try again!');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error=>", error);
+            toastr.error('An error occurred! Please try again later.');
+        },
+        complete: function () {
+            // Hide loader_otp and re-enable button
+            submitButton.prop('disabled', false);
+            submitButton.find('.loader_otp').hide();
+        }
+    });
+});
+
 
         $('#verifyOtp').on('submit', function (e) {
             e.preventDefault();

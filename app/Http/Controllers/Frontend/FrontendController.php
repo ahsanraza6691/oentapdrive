@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Helpers\GeneralHelper;
 use stripe;
 use Carbon\Carbon;
 use App\Models\User;
@@ -2324,16 +2325,6 @@ class FrontendController extends Controller
         }
     }
 
-
-    // public function userlogout(Request $request)
-    // {
-
-    //     Session::flush();
-    //     Auth::logout();
-    //     return redirect()->route('/');
-    // }
-    // forget Password work
-
     public function emailOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -2349,83 +2340,22 @@ class FrontendController extends Controller
             $otp = new OtpVerification();
             $otp->email = $request->email;
             $otp->otp = $random;
-            $data = [
-                'email' => $request->email,
-                'otp' => $random,
-            ];
-            $emailuser = $request->email;
-             Mail::send(
-                'emails.otp_email',
-                 ['data' => $data],
-                 function ($message) use ($emailuser) {
-                     $message->to($emailuser, 'user')->subject('OTP Verification');
-                 }
-             );
             $otp->save();
-            $check_email = User::where('email', $request->email)->first();
-            if (empty ($check_email)) {
+            $user = User::where('email', $request->email)->first();
+            if (empty($user)) {
                 $user = new User();
                 $user->role = 3;
                 $user->status = 1;
                 $user->email = $request->email;
                 $user->save();
             }
-
+            GeneralHelper::sendEmail($user->toArray(), 'signup-email', 'OTP Verification',null, $random);
             return response()->json([
                 'status' => 200,
                 'message' => 'OTP Sent'
             ]);
         }
     }
-
-
-    // public function emailOtp(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'email' => 'required',
-    //     ]);
-    //     $random = random_int(1000, 9999);
-    //     if ($validator->fails()) {
-    //         return response()->json(
-    //             ['status' => 400, 'errors' => $validator->errors()->toArray()]
-    //         );
-    //     } else {
-
-    //         $otp = new OtpVerification();
-    //         $otp->email = $request->email;
-    //         $otp->otp = $random;
-    //         // $data = [
-    //         //     'email' => $request->email,
-    //         //     'otp' => $random,
-    //         // ];
-    //         // $emailuser = $request->email;
-    //         // Mail::send(
-    //         //     'emails.otp_email',
-    //         //     ['data' => $data],
-    //         //     function ($message) use ($emailuser) {
-    //         //         $message->to($emailuser, 'user')->subject('OTP Verification');
-    //         //         $message->bcc(env('CC_EMAIL'), env('CC_EMAIL_NAME'));
-    //         //         $message->bcc(env('BCC_EMAIL'), env('BCC_EMAIL_NAME'));
-
-    //         //     }
-    //         // );
-    //         $otp->save();
-    //         $check_email = User::where('email', $request->email)->first();
-    //         if (empty ($check_email)) {
-    //             $user = new User();
-    //             $user->role = 3;
-    //             $user->status = 1;
-    //             $user->email = $request->email;
-    //             $user->save();
-    //         }
-
-    //         return response()->json([
-    //             'status' => 200,
-    //             'message' => 'OTP Sent'
-    //         ]);
-    //     }
-    // }
-
 
    public function emailVerify(Request $request)
 {

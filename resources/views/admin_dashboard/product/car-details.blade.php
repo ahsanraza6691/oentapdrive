@@ -218,13 +218,70 @@
                                         <input class="form-control" id="car_model" type="text" placeholder="Models"
                                             name="car_model" value="{{ $details->model_name ?? '' }}" disabled>
                                     </div>
+                                
+
                                     <div class="col-md-4 col-12">
+                                        <label for="version">Categories</label>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        {{-- <input type="text" class="form-control" name="category" id="category_car" value="{{$edit->category}}"> --}}
+                                        <div class="select-dropdown">
+                                            <select class="form-control" id="category_car" name="category">
+                                                <option value="Sedan" @if($details->category == 'Sedan') selected @endif>Sedan</option>
+                                                <option value="Coupe"  @if($details->category == 'Coupe') selected @endif>Coupe</option>
+                                                <option value="Hatchback"  @if($details->category == 'Hatchback') selected @endif>Hatchback</option>
+                                                <option value="Convertible"  @if($details->category == 'Convertible') selected @endif>Convertible</option>
+                                               <option value="Compact"  @if($details->category == 'Compact') selected @endif>Compact</option>
+                                                <option value="Subcompact"  @if($details->category == 'Subcompact') selected @endif>Subcompact</option>
+                                                <option value="Suv"  @if($details->category == 'Suv') selected @endif>Suv</option>
+                                                <option value="Crossover"  @if($details->category == 'Crossover') selected @endif>Crossover</option>
+                                                <option value="Pickup Truck"  @if($details->category == 'Pickup Truck') selected @endif>Pickup Truck</option>
+                                                <option value="Minivan"  @if($details->category == 'Minivan') selected @endif>Minivan</option>
+                                                <option value="Van"  @if($details->category == 'Van') selected @endif>Van</option>
+                                                <option value="Wagon"  @if($details->category == 'Wagon') selected @endif>Wagon</option>
+                                                <option value="Sports Car"  @if($details->category == 'Sports Car') selected @endif>Sports Car </option>
+                                                <option value="Luxury Car"  @if($details->category == 'Luxury Car') selected @endif>Luxury Car</option>
+                                                <option value="Super Car"  @if($details->category == 'Super Car') selected @endif>Super Car</option>
+                                                <option value="Low Price"  @if($details->category == 'Low Price') selected @endif>Low Price</option>
+                                                <option value="Monthly"  @if($details->category == 'Monthly') selected @endif>Monthly</option>
+                                                <option value="Electric Vehicle (EV)"  @if($details->category == 'Electric Vehicle (EV)') selected @endif>Electric Vehicle (EV)</option>
+                                                <option value="Hybrid Vehicle"  @if($details->category == 'Hybrid Vehicle') selected @endif>Hybrid Vehicle</option>
+                                                <option value="Diesel Vehicle"  @if($details->category == 'Diesel Vehicle') selected @endif>Diesel Vehicle</option>
+                                                <option value="Full-Size Car"  @if($details->category == 'Full-Size Car') selected @endif>Full-Size Car</option>
+                                                <option value="Mid-Size Car"  @if($details->category == 'Mid-Size Car') selected @endif>Mid-Size Car</option>
+                                                <option value="Microcar"  @if($details->category == 'Microcar') selected @endif>Microcar</option>
+                                                <option value="Roadster"  @if($details->category == 'Roadster') selected @endif>Roadster</option>
+                                                <option value="Off-Road Vehicle"  @if($details->category == 'Off-Road Vehicle') selected @endif>Off-Road Vehicle</option>
+                                                <option value="Muscle Car"  @if($details->category == 'Muscle Car') selected @endif>Muscle Car</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="col-md-4 col-12">
                                         <label for="version">Version</label>
                                     </div>
                                     <div class="col-md-8 col-12">
                                         <div class="select-dropdown">
                                             <select class="form-control" id="version" name="version">
-                                                <option value="N/A">N/A</option>
+                                                <option value="" >N/A</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-md-4 col-12 mt-3">
+                                        <label for="make_year">City</label> 
+                                    </div>
+                                    <div class="col-md-8 col-12 mt-3">
+                                        <div class="select-dropdown">
+                                            <select class="form-control"  name="city">
+                                            <option value="Dubai" @if($details->city == 'Dubai') selected @endif>Dubai</option>
+                                            <option value="Abu Dhabi" @if($details->city == 'Abu Dhabi') selected @endif>Abu Dhabi</option>
+                                            <option value="Fujairah" @if($details->city == 'Fujairah') selected @endif>Fujairah</option>
+                                            <option value="Ajman" @if($details->city == 'Ajman') selected @endif>Ajman</option>
+                                            <option value="Al Ain" @if($details->city == 'Al Ain') selected @endif>Al Ain</option>
+                                            <option value="Sharjah" @if($details->city == 'Sharjah') selected @endif>Sharjah</option>
+                                            <option value="Ras Al Khaimah" @if($details->city == 'Ras Al Khaimah') selected @endif>Ras Al Khaimah</option>
+                                            <option value="Umm Al Qwain" @if($details->city == 'Umm Al Qwain') selected @endif>Umm Al Qwain</option>
                                             </select>
                                         </div>
                                     </div>

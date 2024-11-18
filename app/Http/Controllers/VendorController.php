@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserConsumePackageItem;
+use App\Services\EncryptionService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +21,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CarWithDriver;
 use App\Models\CarBooking;
+use App\Models\Package;
+use App\Models\PackageItem;
+use App\Models\UserOrderHistory;
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -82,25 +88,9 @@ class VendorController extends Controller
             return back()->with($notification);
     }
 
-    public function refreshCars(Request $request,$id){
-        $check_refreshes = User::where('id',Auth::id())->first();
-        if($check_refreshes->refresh_cars >  $check_refreshes->used_refreshes){
-            $refresh_cars = Product::find($id);
-            $refresh_cars->updated_at  = now();
-            $refreshes =  $check_refreshes->used_refreshes;
-            $today_refreshes =  $refreshes +  1;
-            // return $today_refreshes;
-            $check_refreshes->used_refreshes =  $today_refreshes;
-            $check_refreshes->save();
-            $refresh_cars->save();
-            $notification = array('message' => 'Car Listing updated successfully !', 'alert-type' => 'success');
-            return redirect()->back()->with($notification);
-        }else {
-            $notification = array('message' => 'Your refresh limit for day has been ended !', 'alert-type' => 'error');
-            return redirect()->back()->with($notification);
-        }
+    
 
-    }
+
     public function vendorHome(){
         $count_products  = Product::where('user_id',Auth::id())->count();
         $car_with_drivers = CarWithDriver::where('user_id',Auth::id())->count();
@@ -115,8 +105,55 @@ class VendorController extends Controller
         return view('vendor_dashboard.users.index',get_defined_vars());
     }
 
+
+
     public function login(Request $request){
         return view('frontend.vender-login');
+    }
+
+    public function setupPassword(Request $request){
+        $token = $request->query('token');
+        if (empty($token)) {
+            abort(404);
+        }
+        $user = json_decode(EncryptionService::decrypt($token), true);
+        $userDetails = User::where(['email' => $user['user_email']])->first();
+        if (!empty($userDetails->password)) {
+            abort(403);
+        }
+        return view('frontend.setup-password', ['user_details' => $userDetails]);
+    }
+    public function postSetupPassword(Request $request){
+        // Validate the form data
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $token = $request->get('token');
+        if (empty($token)) {
+            abort(404);
+        }
+        $user = json_decode(EncryptionService::decrypt($token), true);
+        $userDetails = User::where(['email' => $user['user_email']])->first();
+        if (!empty($userDetails->password)) {
+            abort(403);
+        }
+        $userDetails->password = bcrypt($validated['password']);
+        $userDetails->save();
+        $userDetails->refresh();
+        Auth::login($userDetails);
+
+        if (Auth::check() && Auth::user()->role == 1) {
+            Auth::logout();
+        }
+        if (Auth::check() && Auth::user()->role == 2) {
+            $notification = array('message' => 'Login Successfully !', 'alert-type' => 'success');
+            return redirect('vendor-dashboard')->with($notification);
+        } else {
+            Auth::logout();
+            $notification = array('message' => 'You are not allowed to login here !', 'alert-type' => 'error');
+            return  redirect()->back()->withInput()->with($notification);
+        }
     }
 
     public function vendorLogin(Request $request)
@@ -385,5 +422,101 @@ class VendorController extends Controller
         $detail = CarBooking::where('id',$id)->with('get_product')->first();
         return view('vendor_dashboard.enquiries.detail',get_defined_vars());
     }
+
+
+
+
+
+    // Code written by Ubaid 
+
+    public function buyRefreshes(Request $request)
+    {
+        $packages = Package::with('packageItems')->get();
+        return view('vendor_dashboard.buyRefreshes.index', compact('packages'));
+    }
+
+    public function getPackageDetails($id)
+    {
+        $package = Package::with('packageItems')->find($id);
+        if (!$package) {
+            return response()->json(['error' => 'Package not found'], 404);
+        }
+        return response()->json(['package' => $package]);
+    }
+
+    public function storeOrderHistory(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'package_items_id' => 'required|exists:package_items,id',
+            'company_account_no' => 'required|string|max:255',
+            'receipt' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first(),
+            ], 400);
+        }
+        if ($request->hasFile('receipt')) {
+            $file = $request->file('receipt');
+            $path = $file->store('receipts', 'public');
+        }
+
+        $userOrder = new UserOrderHistory();
+        $userOrder->user_id = auth()->id();
+        $userOrder->package_items_id = $request->input('package_items_id');
+        $userOrder->company_account_no = $request->input('company_account_no');
+        $userOrder->receipt = $path ?? null;
+        $userOrder->status = 'pending';
+
+        if ($userOrder->save()) {
+            return redirect()->route('order-history');
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to submit payment.',
+        ], 500);
+    }
+
+    public function orderHistory(Request $request){
+        $userOrderHistory = UserOrderHistory::with(['packageItem.package'])
+                        ->where('user_id', auth()->id())
+                        ->orderBy('id','desc')
+                        ->get();               
+        return view('vendor_dashboard.buyRefreshes.order-history', compact('userOrderHistory'));
+    }
+
+    public function refreshCars(Request $request,$id){
+
+        $userConsumeItem = UserConsumePackageItem::where('user_id', auth()->id() )->first();                
+        
+        $availableRefresh = $userConsumeItem->qty;
+        $packageId = $userConsumeItem->package_item_id;
+        $usedRefresh = $userConsumeItem->used;
+
+        if($availableRefresh >  $usedRefresh){
+
+            $refresh_cars = Product::find($id);
+            $refresh_cars->updated_at  = now();
+            
+            $refreshes =  $usedRefresh;
+            $today_refreshes =  $refreshes +  1;
+            $userConsumeItem->used =  $today_refreshes;
+            $userConsumeItem->package_item_id =  $packageId;
+            
+            $userConsumeItem->save();
+            $refresh_cars->save();
+            
+            $notification = array('message' => 'Car Listing updated successfully !', 'alert-type' => 'success');
+            return redirect()->back()->with($notification);
+        }else {
+            $notification = array('message' => 'Your refresh limit for day has been ended !', 'alert-type' => 'error');
+            return redirect()->back()->with($notification);
+        }
+
+    }
+
 
 }

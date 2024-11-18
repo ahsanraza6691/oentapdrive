@@ -142,7 +142,7 @@
                                         @foreach ($services as $service_type)
                                             <li>
                                                 <a class="dropdown-item"
-                                                   href="{{ route('car-with-driver', ['service_type' => $service_type]) }}">
+                                                   href="{{ route('car-with-driver', ['service_type' => str_replace(" ", "-",strtolower($service_type))]) }}">
                                                     {{ $service_type }} <strong class="float-end">»</strong>
                                                 </a>
                                             </li>
@@ -158,10 +158,11 @@
             <div class="headerSearchBar">
                 <form action="">
                     <div class="inputCont">
-                        <input type="search" placeholder="Search">
-                        <button class="serachBtn">
+                        <input type="search" id="searchField" placeholder="Search" autocomplete="off">
+                        <button class="searchBtn">
                             <i class="fas fa-search"></i>
                         </button>
+                        <div id="suggestions" class="suggestions-list"></div> <!-- Div to display suggestions -->
                     </div>
                 </form>
                 @if (!Auth::check())
@@ -468,17 +469,19 @@
                 <button class="subMenuCloseBtn">
                     <i class="fas fa-times"></i>
                 </button>
-                <ul>
-                   @foreach ($brands as $brand)
-                        <li>
-                            <a href="{{ route('brand-car-rental', ['brand' => urlencode($brand->slug)]) }}">
-                                <img src="{{ asset('brands/' . $brand->brand_image) }}"
-                                     alt="">
-                                <span>{{ $brand->brand_name }}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                @if (!empty($brands))
+                    <ul>
+                    @foreach ($brands as $brand)
+                            <li>
+                                <a href="{{ route('brand-car-rental', ['brand' => urlencode($brand->slug)]) }}">
+                                    <img src="{{ asset('brands/' . $brand->brand_image) }}"
+                                        alt="">
+                                    <span>{{ $brand->brand_name }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
             <div class="subMenu" id="cwd">
                 <button class="subMenuCloseBtn">
@@ -487,7 +490,7 @@
                 <ul>
                     @foreach ($services as $service_type)
                         <li>
-                            <a href="{{route('car-with-driver',['service_type' => $service_type])}}">
+                            <a href="{{route('car-with-driver',['service_type' => str_replace(" ", "-",strtolower($service_type))])}}">
                                 <span>{{$service_type}}</span>
                             </a>
                         </li>

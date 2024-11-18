@@ -1,7 +1,13 @@
 @extends('frontend.layouts.new_header')
 @section('title', 'Services | OneTapDrive')
 @section('content')
-
+    <style>
+        label.error{
+            color:red;
+            font-size: 10px !important;
+            font-weight: 400 !important;
+        }
+    </style>
     <div class="sliderBanner swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -80,56 +86,56 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <form action="" class="enquiryForm">
+                    <form class="enquiryForm" id="enquiryForm">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Your Name</label>
-                                        <input type="text" placeholder="Enter Your Name">
+                                        <input type="text" name="name" placeholder="Enter Your Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Company Name</label>
-                                        <input type="text" placeholder="Enter Company Name">
+                                        <input type="text" name="company_name" placeholder="Enter Company Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Job Title</label>
-                                        <input type="text" placeholder="Enter Job Title">
+                                        <input type="text" placeholder="Enter Job Title" name="job_title">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Fleet Size</label>
-                                        <select name="" id="">
-                                            <option value="" selected disabled>Select Fleet Size</option>
-                                            <option value="">5-10 cars</option>
-                                            <option value="">Upto to 50 cars</option>
-                                            <option value="">Upto to 100 cars</option>
-                                            <option value="">Upto to 500 cars</option>
-                                            <option value="">500+ cars</option>
+                                        <select name="fleet_size" id="">
+                                            <option value="">Select Fleet Size</option>
+                                            <option value="5-10 cars">5-10 cars</option>
+                                            <option value="Upto to 50 cars">Upto to 50 cars</option>
+                                            <option value="Upto to 100 cars">Upto to 100 cars</option>
+                                            <option value="Upto to 500 cars">Upto to 500 cars</option>
+                                            <option value="500+ cars">500+ cars</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Contact No.</label>
-                                        <input type="text" placeholder="Enter Contact No.">
+                                        <input type="text" placeholder="Enter Contact No." name="contact" class="contact">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Email Address</label>
-                                        <input type="text" placeholder="Enter Email Address">
+                                        <input type="text" name="email" placeholder="Enter Email Address">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Country</label>
-                                        <input type="text" placeholder="Enter Country">
+                                        <input type="text" name="country" placeholder="Enter Country">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
@@ -153,13 +159,13 @@
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Company Logo</label>
-                                        <input type="file">
+                                        <input type="file" name="company_logo" id="company_logo">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6">
                                     <div class="inputCont">
                                         <label for="">Company License</label>
-                                        <input type="file">
+                                        <input type="file" name="company_license" id="company_license">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -471,136 +477,115 @@
     </section>
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $("#registerCompany").validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                name: {
-                    required: true
-                },
-                company_name: {
-                    required: true
-                },
-                job_title: {
-                    required: true,
-                },
-                fleet_size: {
-                    required: true,
-                },
-                contact: {
-                    required: true,
-                },
-                country: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
+        $(document).ready(function(){
+            new Cleave('.contact', {
+                prefix: '+971',
+                delimiters: [' ', ' ', ' '],
+                blocks: [4, 3, 3, 4],
+                numericOnly: true
+            });
 
-                password: {
-                    required: true,
-                    minlength: 6
-                },
-                confirm_password: {
-                    required: true,
-                    equalTo: "#password"
-                },
-                company_logo: {
-                    required: true,
-                },
-                company_license: {
-                    required: true,
-                },
-
-            },
-            messages: {
-                name: {
-                    required: 'Your name is  required.'
-                },
-                company_name: {
-                    required: 'Company name is  required.'
-                },
-                email: {
-                    required: 'Email is required.'
-                },
-                job_title: {
-                    required: 'Job title is  required.'
-                },
-                fleet_size: {
-                    required: 'Fleet size is  required.'
-                },
-                contact: {
-                    required: 'Contact is  required.'
-                },
-                country: {
-                    required: 'Country is  required.'
-                },
-                city: {
-                    required: 'City is  required.'
-                },
-                password: {
-                    required: 'Password is required.',
-                    minlength: 'Password must be at least 6 characters long.'
-                },
-                confirm_password: {
-                    required: 'Please confirm your password.',
-                    equalTo: 'Passwords do not match.'
-                },
-                company_logo: {
-                    required: 'Company Logo  is  required.'
-                },
-                company_license: {
-                    required: 'Company License  is  required.'
-                },
-
-            },
-
-            submitHandler: function (form, e) {
-                e.preventDefault();
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                let formData = new FormData(document.getElementById('registerCompany'));
-                $.ajax({
-                    url: "{{ route('register-company') }}",
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function () {
-                        $("#preloaderSmall").removeClass('loader-active');
+            $("#enquiryForm").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
                     },
-                    success: function (response, data) {
-                        $("#preloaderSmall").addClass('loader-active');
-                        $.each(response.errors, function (prefix, val) {
-                            toastr.error(val[0]);
-                        });
-                        if (response.status == 503) {
-                            toastr.error(response.message)
-                            return false;
+                    name: {
+                        required: true
+                    },
+                    company_name: {
+                        required: true
+                    },
+                    job_title: {
+                        required: true,
+                    },
+                    fleet_size: {
+                        required: true,
+                    },
+                    contact: {
+                        required: true,
+                    },
+                    country: {
+                        required: true,
+                    },
+                    city: {
+                        required: true,
+                    },
+                    company_logo: {
+                        required: true,
+                    },
+                    company_license: {
+                        required: true,
+                    },
+    
+                },
+                messages: {
+                    name: {
+                        required: 'Your name is required.'
+                    },
+                    company_name: {
+                        required: 'Company name is required.'
+                    },
+                    email: {
+                        required: 'Email is required.'
+                    },
+                    job_title: {
+                        required: 'Job title is required.'
+                    },
+                    fleet_size: {
+                        required: 'Fleet size is required.'
+                    },
+                    contact: {
+                        required: 'Contact is required.'
+                    },
+                    country: {
+                        required: 'Country is required.'
+                    },
+                    city: {
+                        required: 'City is required.'
+                    },
+                    company_logo: {
+                        required: 'Company Logo  is required.'
+                    },
+                    company_license: {
+                        required: 'Company License  is required.'
+                    },
+    
+                },
+    
+                submitHandler: function (form, e) {
+                    e.preventDefault();
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    let formData = new FormData(document.getElementById('enquiryForm'));
+    
+                    const company_logo = document.getElementById('company_logo');
+                    const company_license = document.getElementById('company_license');
+                    formData.append('company_logo', company_logo.files[0]);
+                    formData.append('company_license', company_license.files[0]);
+                    formData.append('_token', "{{ csrf_token() }}");
+                    $.ajax({
+                        url: "{{ route('vendorStore') }}",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function () {
+                            $("#preloaderSmall").removeClass('loader-active');
+                        },
+                        success: function (response, data) {
+                            $("#preloaderSmall").addClass('loader-active');
+                            if (response.status) {
+                                toastr.success(response.message);
+                                $('#enquiryForm')[0].reset();
+                            }
                         }
-                        // if(response.status ==  400){
-
-                        // }
-                        if (response.status == 502) {
-                            toastr.error('Invalid OTP !');
-                        }
-                        if (response.status == 200) {
-                            swal({
-                                title: "Company Registration!",
-                                text: response.message,
-                                type: "success",
-                                icon: "success",
-                            }).then(function () {
-                            });
-
-                            $('#registerCompany')[0].reset();
-                        }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        })
     </script>
 @endsection
 @endsection

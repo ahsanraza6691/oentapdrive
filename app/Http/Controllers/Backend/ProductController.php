@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Helpers\GeneralHelper;
 use to;
 use Carbon\Carbon;
 use App\Models\BillingInfo;
@@ -103,7 +104,6 @@ class ProductController extends Controller
                 'images' => 'required',
 
             ]);
-
         $product = new Product();
         $brand = Brand::where('id',$request->brand_name)->first();
         $brandName = $brand->brand_name;
@@ -125,6 +125,7 @@ class ProductController extends Controller
         $product->model_name = $request->car_model;
         $product->slug = Str::slug($brandName.' '.$request->car_model,'-');
         $product->make_year = $request->make_year;
+        $product->city = $request->city;
         $product->category = $request->category;
         $product->price_per_day = $request->price_per_day;
         $product->per_day_mileage = $request->per_day_kilometers;
@@ -209,12 +210,9 @@ class ProductController extends Controller
             }
         }
 
+        GeneralHelper::sendAdminEmail('new-car-email','New Car Added to Inventory – Please Review!');
+
         return redirect()->route('rent-car.index')->with('listing','Your car listing is currently pending. Please wait for admin approval.!');
-        // $notification = array('message' => 'Your car listing is currently pending. Please wait for admin approval.! ', 'alert-type' => 'success');
-        // return redirect()->route('rent-car.index')->withInput()->with($notification);
-
-
-
     }
 
     /**
@@ -286,6 +284,7 @@ class ProductController extends Controller
         $edit_product->model_name = $request->car_model;
         $edit_product->slug = Str::slug($brandName.' '.$request->car_model,'-');
         $edit_product->make_year = $request->make_year;
+        $edit_product->city = $request->city;
         $edit_product->category = $request->category;
         $edit_product->price_per_day = $request->price_per_day;
         $edit_product->per_day_mileage = $request->per_day_kilometers;

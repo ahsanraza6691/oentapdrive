@@ -196,6 +196,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // ...
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'GeneralHelper' => \App\Http\Helpers\GeneralHelper::class,
+        'Helper' => \App\Helpers\Helper::class,
+        'EncryptionService' => \App\Services\EncryptionService::class,
 
     ])->toArray(),
 

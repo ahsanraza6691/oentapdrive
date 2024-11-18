@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Frontend\CarController;
+use App\Http\Controllers\Frontend\FrontendVendorController;
 use App\Http\Controllers\VendorController;
 use Carbon\Carbon;
 use App\Models\BillingInfo;
@@ -229,6 +231,8 @@ Route::group(['middleware' =>  ['preventBackHistory','adminmiddleware'],'prefix'
     //  Product Routes
 
     Route::get('car-listing',[ProductController::class,'carListing'])->name('car-listing');
+    Route::get('packages-orders',[AdminController::class,'packagesOrders'])->name('packages-orders');
+    Route::post('update-order-status',[AdminController::class,'updateVendorOrder'])->name('update-order-status');
     Route::get('car-with-driver-listing',[ProductController::class,'carWithDriverListing'])->name('car-with-driver-listing');
     Route::get('car-with-driver-listing-details/{id}',[ProductController::class,'carWithDriverListingDetails'])->name('car-with-driver-listing-details');
     Route::get('delete-car/{id}',[ProductController::class,'deleteCar'])->name('delete-car');
@@ -379,17 +383,15 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('country-driving-license',[FrontendController::class,'drivingLicense'])->name('country-driving-license');
     Route::get('desert-safari',[FrontendController::class,'desertSafari'])->name('desert-safari');
     Route::get('rent-a-car-dubai/{slug?}',[FrontendController::class,'ourServices'])->name('rent-a-car-dubai');
-    Route::get('list-your-rental-cars',[FrontendController::class,'carRental'])->name('list-your-rental-cars');
+    Route::get('list-your-rental-cars',[FrontendVendorController::class,'carRental'])->name('list-your-rental-cars');
+    Route::post('vendorStore',[FrontendVendorController::class,'storeVendor'])->name('vendorStore');
+
     Route::get('our-locations',[FrontendController::class,'ourLocations'])->name('our-locations');
     Route::get('privacy-policy',[FrontendController::class,'privacyPolicy'])->name('privacy-policy');
     Route::get('terms-and-conditions',[FrontendController::class,'termsConditions'])->name('terms-and-conditions');
     Route::get('terms-of-use',[FrontendController::class,'termsOfuse'])->name('terms-of-use');
     Route::get('about-us',[FrontendController::class,'aboutUs'])->name('about-us');
     Route::get('pricing',[FrontendController::class,'ourPricing'])->name('pricing');
-    Route::get('car-details/{slug}',[FrontendController::class,'carDetails'])->name('car-details');
-    Route::get('chauffeur-service/{slug}',[FrontendController::Class,'chauffeurDetails'])->name('chauffeur-service');
-    Route::get('dubai-car-with-driver/{slug}',[FrontendController::class,'carWithDriverDetails'])->name('dubai-car-with-driver');
-    Route::get('rent/{slug}/dubai',[FrontendController::class,'rentCars'])->name('rent');
     Route::post('email-otp',[FrontendController::class,'emailOtp'])->name('email-otp');
     Route::post('email-verify',[FrontendController::class,'emailVerify'])->name('email-verify');
 
@@ -410,16 +412,23 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('companies',[FrontendController::class,'allCompanies'])->name('companies');
     Route::get('company-details/{slug}',[FrontendController::class,'companyDetails'])->name('company-details');
     Route::get('details-new',[FrontendController::Class,'detailsNew'])->name('details-new');
-  	Route::get('rent-cheap-economy-cars-dubai',[FrontendController::class,'economyDubai'])->name('rent-cheap-economy-cars-dubai');
-    Route::get('luxury-car-rental-dubai',[FrontendController::class,'luxuryDubai'])->name('luxury-car-rental-dubai');
-    Route::get('rent-sports-cars-in-dubai',[FrontendController::class,'sportsDubai'])->name('rent-sports-cars-in-dubai');
-    Route::get('rent-special-edition-car-dubai',[FrontendController::class,'specialEditionDubai'])->name('rent-special-edition-car-dubai');
-    Route::get('rent-muscles-cars-in-dubai',[FrontendController::class,'muscleCars'])->name('rent-muscles-cars-in-dubai');
-    Route::get('rent-hybrid-electrical-cars-dubai',[FrontendController::class,'electricCarsDubai'])->name('rent-hybrid-electrical-cars-dubai');
-    // Route::get('/car-rentals/{type}', [FrontendController::class, 'show'])->name('car-rentals');
-    Route::get('{type}-car-rentals', [FrontendController::class, 'show'])->name('car-rentals');
-    // Route::get('{type}-car-rental', [FrontendController::class, 'carBrands'])->name('car-brands');
-    Route::get('/brands/{brand?}-car-rental', [FrontendController::class, 'showBrand'])->where('brand', '[A-Za-z0-9\-]+')->name('brand-car-rental');
+
+  	Route::get('rent-cheap-economy-cars-dubai',[CarController::class,'economyDubai'])->name('rent-cheap-economy-cars-dubai');
+    Route::get('luxury-car-rental-dubai',[CarController::class,'luxuryDubai'])->name('luxury-car-rental-dubai');
+    Route::get('rent-sports-cars-in-dubai',[CarController::class,'sportsDubai'])->name('rent-sports-cars-in-dubai');
+    Route::get('rent-special-edition-car-dubai',[CarController::class,'specialEditionDubai'])->name('rent-special-edition-car-dubai');
+    Route::get('rent-muscles-cars-in-dubai',[CarController::class,'muscleCars'])->name('rent-muscles-cars-in-dubai');
+    Route::get('rent-hybrid-electrical-cars-dubai',[CarController::class,'electricCarsDubai'])->name('rent-hybrid-electrical-cars-dubai');
+    Route::get('{type}-car-rentals', [CarController::class, 'show'])->name('car-rentals');
+    Route::get('/brands/{brand?}-car-rental', [CarController::class, 'showBrand'])->where('brand', '[A-Za-z0-9\-]+')->name('brand-car-rental');
+
+    Route::get('car-details/{slug}',[CarController::class,'carDetails'])->name('car-details');
+    Route::get('chauffeur-service/{slug}',[CarController::Class,'chauffeurDetails'])->name('chauffeur-service');
+    Route::get('car-with-driver/{service_type?}',[CarController::class,'carwithDriver'])->name('car-with-driver');
+    Route::get('dubai-car-with-driver/{slug}',[CarController::class,'carWithDriverDetails'])->name('dubai-car-with-driver');
+    Route::get('rent/{slug}/dubai',[CarController::class,'rentCars'])->name('rent');
+    Route::get('/search-suggestions', [CarController::class, 'searchSuggestions'])->name('search.suggestions');
+
     // vendor routes
 
 
@@ -445,6 +454,8 @@ Route::controller(GoogleController::class)->group(function(){
 
 Route::get('login',[VendorController::class,'login'])->name('login');
 Route::post('vendor-login',[VendorController::class,'vendorLogin'])->name('vendor-login');
+Route::get('setup-password',[VendorController::class,'setupPassword'])->name('setup-password');
+Route::post('setup-password',[VendorController::class,'postSetupPassword'])->name('post-setup-password');
 Route::post('add-password',[FrontendController::class,'addPassword'])->name('add-password');
 
 Route::get('set-password',[FrontendController::class,'setPassword'])->name('set-password');
@@ -460,6 +471,13 @@ Route::middleware(['preventBackHistory','usermiddleware'])->group(function () {
     Route::post('update-account',[VendorController::class,'updateAccount'])->name('update-account');
     Route::get('vendor-dashboard',[VendorController::class,'vendorHome'])->name('vendor-dashboard');
     Route::get('vendor-profile',[VendorController::class,'vendorProfile'])->name('vendor-profile');
+
+    Route::get('buy-refreshes',[VendorController::class,'buyRefreshes'])->name('buy-refreshes');
+    Route::get('/package-details/{id}', [VendorController::class, 'getPackageDetails'])->name('package.details');
+    Route::post('store-order-history',[VendorController::class,'storeOrderHistory'])->name('store-order-history');
+
+
+    Route::get('order-history',[VendorController::class,'orderHistory'])->name('order-history');
     Route::get('trade-license',[VendorController::class,'tradeLicense'])->name('trade-license');
     Route::post('upload-license',[VendorController::class,'uploadLicense'])->name('upload-license');
     Route::post('update-vendorProfile',[VendorController::class,'updateVendorProfile'])->name('update-vendorProfile');
@@ -510,3 +528,38 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     });
+
+    // email-template-routes
+
+    Route::get('/email-template', function () {
+        return view('email_template.new-user-signup');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.new-car-list');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.password-reset');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.chat');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.new-account');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.car-approved');
+    })->name('');
+
+    Route::get('/email-template', function () {
+        return view('email_template.signup');
+    })->name('');
+   
+
+    Route::get('/email-template', function () {
+        return view('email_template.welcome');
+    })->name('');
